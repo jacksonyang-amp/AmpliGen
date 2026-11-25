@@ -1,5 +1,5 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 0 — Static scaffold and deployment (correction: record the live-deployment evidence)
 **Dispatch ID:** phase-0-log-push-005
 **Phase type:** BUILD
@@ -22,3 +22,6 @@ Objective: Push the already-reviewed Phase 0 log commit and open one pull reques
 Git permissions: Commit: No | Merge: No
 - Branch creation/switching: No. Push: Yes, once, of commit `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24` to `cursor/phase-0-complete-log-fc41` only. PR creation: Yes, exactly one PR into `main`. Deployment: No. Destructive git operations: No.
 - Report the push result and PR URL through the agent channel, then stop.
+
+## Stop
+Dispatch `phase-0-log-push-005` is complete. PR #9 is open at head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Do not push again, merge, or deploy. A merge of PR #9 needs a separate named Approve.
