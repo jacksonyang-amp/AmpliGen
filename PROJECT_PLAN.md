@@ -115,11 +115,11 @@
 
 ## Phase 6 — Statsig parameter stores and layers
 - **Type:** BUILD
-- **Objective:** Per the human's task text (not yet in the repo): add Statsig parameter stores and layers, with `getPageParams` and `docs/statsig-params.yml`. The Planner fills in the objective, definition of done, and validation commands when the human pastes that text.
-- **Status:** DEFINED, NOT DISPATCHED (2026-11-25T18:26:10Z). `BUILDER_HANDOFF.md` stays IDLE until the task text arrives.
-- **Allowed files (from the Builder's message, to be confirmed):** `src/**`, `docs/statsig-params.yml`, one new test, `PHASE_LOG.md`.
+- **Objective:** For each of the seven static HTML page templates, create one Statsig layer (`<page>_layer`) and one parameter store (`<page>_params`) linked to it, add one helper `getPageParams(page)` that reads the page's store through the Statsig client SDK and falls back to the current hardcoded defaults, replace the hardcoded values from it, and document every parameter in `docs/statsig-params.yml` with a test that fails when the helper and the file disagree. No experiments are created or edited; the three existing Statsig entities are untouched.
+- **Status:** IN PROGRESS, step 1 of 4 (2026-11-25T18:28:34Z). Dispatch `phase-6-discover-026` (discovery, report only) is START. Steps 2 to 4 wait for the human's "Go" and a second dispatch.
+- **Allowed files:** step 1 (`phase-6-discover-026`): `PHASE_LOG.md` only. Steps 2 to 4 (later dispatch): `src/**`, `docs/statsig-params.yml`, `scripts/smoke-phase6.mjs`, the seven `.html` templates, one `smoke:phase6` line in `package.json`, `PHASE_LOG.md`.
 - **Human decisions (DECISIONS.md 2026-11-25T18:26:10Z):** the Builder may create layers and parameter stores in Statsig; it must not touch experiments, gates, or dynamic configs, nor the three existing entities.
 - **Git permissions for the Builder:** create and commit on a local `build/phase-6` branch only. Push no, PR no, merge no, deployment no.
 - **Needs human approval to merge?** Yes, if it produces a PR. None is authorized.
-- **Risks:** the task text is missing; Statsig writes are live changes that are not covered by git; the project had a final VERIFY phase (Phase 5) before this phase existed. Owner: human supplies the text and decides on VERIFY or waiver afterward.
+- **Risks:** the static site has no cart, checkout, listing, or detail page, so the page set is the seven HTML files; reading a store through the SDK may log new Statsig exposures (the Builder reports this in step 1); the three existing Statsig entities overlap some pages; Statsig writes are live changes that are not covered by git; the project had a final VERIFY phase (Phase 5) before this phase existed. Owner: human supplies the text and decides on VERIFY or waiver afterward.
 
