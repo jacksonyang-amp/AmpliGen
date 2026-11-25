@@ -625,3 +625,16 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Pages run 45671475143 on `main`: success.
 - Phase 5 criteria 3 and 4 remain open. Phase 5 is not complete.
 
+## 2026-11-25T18:12:11Z | Human decision: remove the synthetic-traffic requirement from Phase 5 | RECORDED
+- Exact text: "Console fixes are done, I will run synthetic traffic later, remove that requirement"
+- Source: Cursor chat, 2026-11-25 10:11 America/Los_Angeles, recorded as 2026-11-25T18:12:11Z.
+- Decision: Phase 5 no longer requires synthetic traffic. The human will run it later, outside Phase 5. No traffic is approved, reserved, or run by the Planner or the Builder.
+- Effect on the definition of done: criteria 3 and 4 no longer need traffic-driven evidence to close Phase 5. The evidence that only traffic can produce is WAIVED, not passed: the Amplitude funnel and journey, replay masking, account mapping on real sessions, Statsig experiment exposures and conversions, and matching exposure identifiers in Amplitude. It stays UNVERIFIED and is not claimed anywhere.
+
+## 2026-11-25T18:12:11Z | Finding: Statsig console read-only check after the human's fixes | RECORDED
+- Read through the Statsig connection, read-only, project `AmpliGen`. Nothing was changed.
+- Experiment `pricing_cta_copy`: status active, started, allocation 100, 50/50 groups. Control `label_mode` = `control`, Test `label_mode` = `specific`. Primary metric `Sign Up Completed`, secondary `Demo Request Submitted`. Matches the design.
+- Dynamic config `pricing_notice`: enabled, `notice` = "The best pricing for you!" (25 characters, under the 120 limit). The placeholder is gone. The text differs from the site's control text, so the notice will change when Statsig initializes. Matches the design.
+- Gate `metrics_account_breakdown`: enabled, status In Progress, one rule named "Account" with condition type `public` and pass percentage 50. That rule passes a random half of all users, not users with an `account_id`. It does not match the design (pass when `account_id` is set). The Planner cannot tell from the read whether the condition was meant to be a custom-field check that did not save. Criterion 4 gate targeting is therefore NOT met.
+- Result: two of three entities match the design. The gate needs one fix in the console, or the human accepts the 50% rule and says so.
+
