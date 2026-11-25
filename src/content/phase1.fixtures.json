@@ -1,0 +1,65 @@
+{
+  "platformName": "Lumora API Platform",
+  "demoLabel": "Fictional demo",
+  "basePath": "/AmpliGen/",
+  "nav": [
+    { "label": "Home", "href": "/AmpliGen/" },
+    { "label": "Product", "href": "/AmpliGen/product/" },
+    { "label": "Pricing", "href": "/AmpliGen/pricing/" },
+    { "label": "Demo request", "href": "/AmpliGen/demo-request/" },
+    { "label": "Sign up", "href": "/AmpliGen/sign-up/" }
+  ],
+  "routes": ["/AmpliGen/", "/AmpliGen/product/", "/AmpliGen/pricing/", "/AmpliGen/demo-request/", "/AmpliGen/sign-up/"],
+  "products": [
+    {
+      "name": "Lumora Gateway",
+      "description": "Route, authenticate, and rate-limit API traffic.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    },
+    {
+      "name": "Lumora Metrics",
+      "description": "See usage and conversion by account and team.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    },
+    {
+      "name": "Lumora Connect",
+      "description": "Send webhooks and connect to prebuilt business tools.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    }
+  ],
+  "productPageCtas": [
+    { "label": "Request a demo", "href": "/AmpliGen/demo-request/" },
+    { "label": "View pricing", "href": "/AmpliGen/pricing/" }
+  ],
+  "pricingLabel": "Illustrative demo pricing. Not offered.",
+  "plans": [
+    {
+      "name": "Starter",
+      "price": "$49 per month",
+      "ctaLabel": "Start a trial",
+      "ctaHref": "/AmpliGen/sign-up/"
+    },
+    {
+      "name": "Growth",
+      "price": "$249 per month",
+      "ctaLabel": "Start a trial",
+      "ctaHref": "/AmpliGen/sign-up/"
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom pricing",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    }
+  ],
+  "demoRequest": {
+    "copy": "Demo requests are not connected yet. This page is a placeholder, and nothing you enter is sent anywhere."
+  },
+  "signUp": {
+    "copy": "Mock sign-up is not available yet. No account is created.",
+    "backLink": { "label": "Back to pricing", "href": "/AmpliGen/pricing/" }
+  }
+}
