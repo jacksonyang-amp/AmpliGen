@@ -151,6 +151,13 @@ const FORBIDDEN_TERMS = [
   { name: 'Fictional demo', pattern: /fictional demo/i },
   { name: 'API Platform Demo', pattern: /api platform demo/i },
   { name: 'demo-banner', pattern: /demo-banner/ },
+  { name: 'simulated', pattern: /simulated/i },
+  { name: 'illustrative', pattern: /illustrative/i },
+  { name: 'not offered', pattern: /not offered/i },
+  { name: 'nothing is sent', pattern: /nothing is sent/i },
+  { name: 'nothing was sent', pattern: /nothing was sent/i },
+  { name: 'no real customers', pattern: /no real customers/i },
+  { name: 'Static site', pattern: /static site/i },
 ];
 
 function checkSharedPageContent(pages, fixture) {
@@ -205,16 +212,12 @@ function checkHomePage(html, fixture) {
   const lede = elementByMarker(html, 'p', 'class="lede"');
   record('home page lede matches the fixture', lede !== null && textOf(lede) === home.lede);
 
-  const aboutLink = anchorsIn(/<nav\b[^>]*aria-label="On this page"[^>]*>([\s\S]*?)<\/nav>/.exec(html)?.[1] ?? '').find(
-    (anchor) => anchor.href === '#about',
+  const pageNavAnchors = anchorsIn(/<nav\b[^>]*aria-label="On this page"[^>]*>([\s\S]*?)<\/nav>/.exec(html)?.[1] ?? '');
+  record(
+    'home page in-page nav lists only Overview and Capabilities, with no About link',
+    pageNavAnchors.length === 2 && pageNavAnchors[0].href === '#overview' && pageNavAnchors[1].href === '#capabilities',
   );
-  record('home page in-page nav about link matches the fixture', aboutLink?.label === home.about.navLabel);
-
-  const aboutSection = /<section id="about"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1] ?? '';
-  const aboutHeading = /<h2\b[^>]*>([\s\S]*?)<\/h2>/.exec(aboutSection)?.[1];
-  record('home page about heading matches the fixture', aboutHeading !== undefined && textOf(aboutHeading) === home.about.heading);
-  const aboutCopy = /<p\b[^>]*>([\s\S]*?)<\/p>/.exec(aboutSection)?.[1];
-  record('home page about copy matches the fixture', aboutCopy !== undefined && textOf(aboutCopy) === home.about.copy);
+  record('home page has no About section', !/id="about"/.test(html) && !/About this site/i.test(html));
 
   const ctas = elementByMarker(html, 'p', 'data-home-ctas') ?? '';
   const anchors = anchorsIn(ctas);
@@ -253,7 +256,7 @@ function checkProductPage(html, fixture) {
 
 function checkPricingPage(html, fixture) {
   const label = elementByMarker(html, 'p', 'data-pricing-label');
-  record('pricing page shows the illustrative pricing label', label !== null && textOf(label) === fixture.pricingLabel);
+  record('pricing page shows the pricing notice from the fixture', label !== null && textOf(label) === fixture.pricingLabel);
   for (const plan of fixture.plans) {
     const item = itemByAttribute(html, 'plan', plan.name);
     record(`pricing page lists the ${plan.name} plan`, item !== null);
@@ -296,9 +299,9 @@ async function checkPhaseBoundaries() {
   const sdkInBundle = [];
   for (const name of scripts) {
     const source = await readFile(join(assetDir, name), 'utf8');
-    if (/statsig/i.test(source)) sdkInBundle.push(name);
+    if (/@statsig\/(?!js-client\b)|statsig-js/i.test(source)) sdkInBundle.push(name);
   }
-  record('built scripts include no Statsig code', scripts.length > 0 && sdkInBundle.length === 0);
+  record('built scripts include no Statsig package other than @statsig/js-client', scripts.length > 0 && sdkInBundle.length === 0);
 
   const sourceDir = join(ROOT, 'src');
   const sourceFiles = (await readdir(sourceDir, { recursive: true })).filter((name) => /\.(ts|js)$/.test(name));
@@ -312,12 +315,14 @@ async function checkPhaseBoundaries() {
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
   const dependencyNames = Object.keys({ ...manifest.dependencies, ...manifest.devDependencies });
   record(
-    'package.json declares no Statsig package and no Amplitude package other than @amplitude/unified',
-    !dependencyNames.some((name) => /statsig/i.test(name) || (/amplitude/i.test(name) && name !== '@amplitude/unified')),
+    'package.json declares no Statsig package other than @statsig/js-client and no Amplitude package other than @amplitude/unified',
+    !dependencyNames.some(
+      (name) => (/statsig/i.test(name) && name !== '@statsig/js-client') || (/amplitude/i.test(name) && name !== '@amplitude/unified'),
+    ),
   );
   record(
-    'the only runtime dependency in package.json is @amplitude/unified',
-    JSON.stringify(Object.keys(manifest.dependencies ?? {})) === JSON.stringify(['@amplitude/unified']),
+    'the only runtime dependencies in package.json are @amplitude/unified and @statsig/js-client',
+    JSON.stringify(Object.keys(manifest.dependencies ?? {}).sort()) === JSON.stringify(['@amplitude/unified', '@statsig/js-client']),
   );
 }
 

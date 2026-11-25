@@ -84,7 +84,7 @@ async function checkServedSite(origin) {
   record('home page includes the AmpliGen brand', html.includes('<span class="brand-name">AmpliGen</span>'));
   record(
     'home page has in-page navigation targets',
-    html.includes('href="#overview"') && html.includes('id="capabilities"') && html.includes('id="about"'),
+    html.includes('href="#overview"') && html.includes('id="capabilities"'),
   );
 
   const refs = [...html.matchAll(/(?:src|href)="([^"]+)"/g)].map((m) => m[1]);

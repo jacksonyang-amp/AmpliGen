@@ -567,7 +567,10 @@ async function listFiles(dir) {
 async function checkSources() {
   const sourceFiles = (await listFiles(join(ROOT, 'src'))).filter((file) => /\.(ts|js)$/.test(file));
   const ANALYTICS_DIR = join(ROOT, 'src', 'analytics') + sep;
+  const STATSIG_DIR = join(ROOT, 'src', 'statsig') + sep;
   const ALLOWED_KEY_READ = 'import.meta.env.VITE_AMPLITUDE_API_KEY';
+  const ALLOWED_STATSIG_KEY_READ = 'import.meta.env.VITE_STATSIG_CLIENT_KEY';
+  const STATSIG_ENTRY_IMPORT = './statsig/entry.ts';
   const banned = [
     ['fetch call', /\bfetch\s*\(/, false],
     ['XMLHttpRequest', /XMLHttpRequest/, false],
@@ -584,7 +587,19 @@ async function checkSources() {
   for (const file of sourceFiles) {
     const text = await readFile(file, 'utf8');
     const inAnalytics = file.startsWith(ANALYTICS_DIR);
+    const inStatsig = file.startsWith(STATSIG_DIR);
     for (const [label, pattern, allowedInAnalytics] of banned) {
+      if (label === 'Statsig') {
+        if (inStatsig) continue;
+        if (pattern.test(text.split(STATSIG_ENTRY_IMPORT).join(''))) offenders.push(`${file.replace(ROOT + sep, '')}: ${label}`);
+        continue;
+      }
+      if (label === 'environment access' && inStatsig) {
+        if (pattern.test(text.split(ALLOWED_STATSIG_KEY_READ).join(''))) {
+          offenders.push(`${file.replace(ROOT + sep, '')}: ${label} beyond ${ALLOWED_STATSIG_KEY_READ}`);
+        }
+        continue;
+      }
       if (allowedInAnalytics && inAnalytics) {
         if (label === 'environment access' && pattern.test(text.split(ALLOWED_KEY_READ).join(''))) {
           offenders.push(`${file.replace(ROOT + sep, '')}: ${label} beyond ${ALLOWED_KEY_READ}`);
@@ -595,7 +610,7 @@ async function checkSources() {
     }
   }
   record(
-    'src/ has no network API, Statsig, password or environment access (Amplitude, initAll and the one key read only inside src/analytics/)',
+    'src/ has no network API, password or environment access, and Statsig only inside src/statsig/ (Amplitude, initAll and the one Amplitude key read only inside src/analytics/; the one Statsig key read only inside src/statsig/)',
     sourceFiles.length > 0 && offenders.length === 0,
     offenders.join('; '),
   );
@@ -608,8 +623,8 @@ async function checkSources() {
 
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
   record(
-    'the only runtime dependency in package.json is @amplitude/unified',
-    same(Object.keys(manifest.dependencies ?? {}), ['@amplitude/unified']),
+    'the only runtime dependencies in package.json are @amplitude/unified and @statsig/js-client',
+    same(Object.keys(manifest.dependencies ?? {}).sort(), ['@amplitude/unified', '@statsig/js-client']),
   );
   record(
     'package.json dev dependencies are only typescript and vite',
@@ -736,7 +751,10 @@ async function checkBuiltOutput() {
     record('built welcome page has an empty data-guide-anchor div', /<div id="guide-anchor" data-guide-anchor><\/div>/.test(welcome));
     record('built welcome page links to the product page', /href="\/AmpliGen\/product\/"/.test(welcome));
     record('built welcome page has a Reset sample visitor button', /Reset sample visitor/.test(welcome));
-    record('built success page states the request is simulated', /simulated/.test(pages['/AmpliGen/demo-request/success/']) && /Nothing was sent/.test(pages['/AmpliGen/demo-request/success/']));
+    record(
+      'built success page confirms the request and says the team will follow up at the work email',
+      pages['/AmpliGen/demo-request/success/'].includes('Your demo request is in. We will follow up at the work email you entered.'),
+    );
 
     const scripts = [...new Set(Object.values(pages).flatMap((html) => [...html.matchAll(/src="(\/AmpliGen\/assets\/[^"]+\.js)"/g)].map((match) => match[1])))];
     let scriptsOk = scripts.length > 0;

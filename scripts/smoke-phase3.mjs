@@ -31,6 +31,7 @@ const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DIST = join(ROOT, 'dist');
 const BASE_PATH = '/AmpliGen/';
 const ADAPTER = join('src', 'analytics', 'amplitude-adapter.ts');
+const STATSIG_ADAPTER = join('src', 'statsig', 'statsig-adapter.ts');
 
 const CONTENT_TYPES = {
   '.html': 'text/html',
@@ -155,14 +156,17 @@ async function listFiles(dir) {
 
 async function checkDependencies() {
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
-  record('package.json runtime dependencies are exactly @amplitude/unified', same(Object.keys(manifest.dependencies ?? {}), ['@amplitude/unified']));
+  record(
+    'package.json runtime dependencies are exactly @amplitude/unified and @statsig/js-client',
+    same(Object.keys(manifest.dependencies ?? {}).sort(), ['@amplitude/unified', '@statsig/js-client']),
+  );
 
   const sections = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
   const amplitudeNames = sections.flatMap((section) => Object.keys(manifest[section] ?? {})).filter((name) => /amplitude/i.test(name));
   record('no other Amplitude package is declared in package.json', same(amplitudeNames, ['@amplitude/unified']), amplitudeNames.join(', '));
   record(
-    'no Statsig package is declared in package.json',
-    !sections.flatMap((section) => Object.keys(manifest[section] ?? {})).some((name) => /statsig/i.test(name)),
+    'no Statsig package other than @statsig/js-client is declared in package.json',
+    !sections.flatMap((section) => Object.keys(manifest[section] ?? {})).some((name) => /statsig/i.test(name) && name !== '@statsig/js-client'),
   );
   record(
     'dev dependencies are still only typescript and vite',
@@ -172,8 +176,8 @@ async function checkDependencies() {
   const lock = JSON.parse(await readFile(join(ROOT, 'package-lock.json'), 'utf8'));
   const root = lock.packages?.[''] ?? {};
   record(
-    'package-lock.json root lists only @amplitude/unified as a direct dependency',
-    same(Object.keys(root.dependencies ?? {}), ['@amplitude/unified']),
+    'package-lock.json root lists only @amplitude/unified and @statsig/js-client as direct dependencies',
+    same(Object.keys(root.dependencies ?? {}).sort(), ['@amplitude/unified', '@statsig/js-client']),
   );
 
   const sourceFiles = (await listFiles(join(ROOT, 'src'))).filter((file) => /\.(ts|js)$/.test(file));
@@ -186,7 +190,7 @@ async function checkDependencies() {
     const text = await readFile(file, 'utf8');
     for (const match of text.matchAll(importPattern)) {
       const specifier = match[1];
-      if (/statsig/i.test(specifier)) statsigImports += 1;
+      if (!specifier.startsWith('.') && /statsig/i.test(specifier) && !(rel === STATSIG_ADAPTER && specifier === '@statsig/js-client')) statsigImports += 1;
       if (/^@amplitude(\/|$)/.test(specifier)) {
         if (rel === ADAPTER) adapterSpecifiers.push(specifier);
         else outside.push(`${rel}: ${specifier}`);
@@ -199,7 +203,7 @@ async function checkDependencies() {
     adapterSpecifiers.length > 0 && adapterSpecifiers.every((specifier) => specifier === '@amplitude/unified'),
     adapterSpecifiers.join(', '),
   );
-  record('no Statsig import in src/', statsigImports === 0);
+  record('no Statsig import in src/ except @statsig/js-client from src/statsig/statsig-adapter.ts', statsigImports === 0);
 
   let initAllSites = [];
   let assignmentCalls = [];
@@ -823,7 +827,10 @@ async function checkBuiltOutput() {
   const entryText = mainChunks.join('\n');
   record('the entry chunk reads the key from the build environment and holds no literal key', mainChunks.length > 0 && !/VITE_AMPLITUDE_API_KEY/.test(entryText));
   const allScripts = await Promise.all(assets.map((file) => readFile(file, 'utf8')));
-  record('built scripts contain no Statsig code', allScripts.every((text) => !/statsig/i.test(text)));
+  record(
+    'built scripts contain no Statsig package other than @statsig/js-client',
+    allScripts.every((text) => !/@statsig\/(?!js-client\b)|statsig-js/i.test(text)),
+  );
 
   const server = await startServer();
   try {
