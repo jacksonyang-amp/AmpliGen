@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 3 — Amplitude analytics and replay
-**Dispatch ID:** phase-3-push-016
+**Dispatch ID:** phase-3-push-016 (reviewed; PR #17 open at 8127b0d; IDLE)
 **Phase type:** BUILD (git action only; the build itself is already accepted)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

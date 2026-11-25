@@ -354,5 +354,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Reviewed commit: `8127b0dc321ba56d206f8ead26b739afdeaf5705` (local branch `build/phase-3` head, verified by the Planner before this record). Review: Phase 3 criteria 1-3 PASS (DECISIONS.md 2026-11-25T04:50:00Z).
 - Authorized action: dispatch `phase-3-push-016` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-3` once, at that commit, to `origin` as `build/phase-3`, and open exactly one PR into `main`. No merge.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow, redeploys the public site with the Amplitude key, and starts recording sessions unmasked at 100%. That merge is not approved.
-- State: RESERVED for dispatch `phase-3-push-016`. Not yet USED.
+- State: USED at 2026-11-25T05:01:00Z by dispatch `phase-3-push-016`. Planner verified: `origin/build/phase-3` is `8127b0dc321ba56d206f8ead26b739afdeaf5705`; PR #17 (https://github.com/jacksonyang-amp/AmpliGen/pull/17) is OPEN, not a draft, base `main`, head that SHA, auto-merge off. The Builder changed no files. No Pages run started for `build/phase-3`.
 - Still not authorized: merging the resulting PR, any new commit, any force-push, deployment, Statsig, or live verification.
+
+## 2026-11-25T05:01:00Z | Review of dispatch phase-3-push-016 | ACCEPTED (push and PR only; merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `git ls-remote` shows `refs/heads/build/phase-3` at `8127b0dc321ba56d206f8ead26b739afdeaf5705`. PR #17 is open, not a draft, base `main`, head `build/phase-3` at that SHA, auto-merge off, and its body states that merging deploys and starts recording.
+- Result: the push and the one PR are complete. Phase 3 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #17 and head `8127b0dc321ba56d206f8ead26b739afdeaf5705`, with the replay consequence restated.
+- Next: none without the human's merge approval.
