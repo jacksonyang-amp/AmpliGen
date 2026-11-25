@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AmpliGen sign-up: a placeholder page. No account is created." />
+    <meta name="description" content="AmpliGen sign-up. The sign-up is simulated and no account is created." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Sign up | AmpliGen</title>
     <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/pages/sign-up.ts"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -28,9 +29,60 @@
       <section class="hero" aria-labelledby="signup-title">
         <p class="eyebrow">Sign up</p>
         <h1 id="signup-title">Start a trial</h1>
-        <div class="notice" role="note" data-placeholder-notice>
-          <p>Mock sign-up is not available yet. No account is created.</p>
+        <div class="notice" role="note" data-form-notice>
+          <p>This sign-up is simulated. No account is created and nothing is sent.</p>
         </div>
+        <noscript>
+          <p class="form-note">This form needs JavaScript to run.</p>
+        </noscript>
+
+        <form id="conversion-form" class="form" novalidate hidden>
+          <div class="field">
+            <label for="field-persona">Sample visitor (optional)</label>
+            <select id="field-persona" name="persona">
+              <option value="">No sample visitor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="field-name">Name</label>
+            <input id="field-name" name="name" type="text" autocomplete="off" maxlength="200" aria-describedby="error-name" />
+            <p id="error-name" class="field-error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="field-email">Work email</label>
+            <input id="field-email" name="email" type="email" autocomplete="off" aria-describedby="error-email" />
+            <p id="error-email" class="field-error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="field-product">Product</label>
+            <select id="field-product" name="product" aria-describedby="error-product">
+              <option value="">Choose a product</option>
+              <option value="ampligen_gateway">AmpliGen Gateway</option>
+              <option value="ampligen_metrics">AmpliGen Metrics</option>
+              <option value="ampligen_connect">AmpliGen Connect</option>
+            </select>
+            <p id="error-product" class="field-error" role="alert" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="field-plan">Plan</label>
+            <select id="field-plan" name="plan" aria-describedby="error-plan">
+              <option value="">Choose a plan</option>
+              <option value="starter">Starter</option>
+              <option value="growth">Growth</option>
+            </select>
+            <p id="error-plan" class="field-error" role="alert" hidden></p>
+          </div>
+
+          <p class="actions">
+            <button id="submit-form" class="button button-primary" type="submit">Start trial</button>
+            <button id="reset-persona" class="button button-secondary" type="button">Reset sample visitor</button>
+          </p>
+        </form>
+
         <p class="actions">
           <a class="button button-secondary" href="/AmpliGen/pricing/">Back to pricing</a>
         </p>
