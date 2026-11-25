@@ -514,3 +514,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Criterion 4 is BLOCKED until a human either creates the three entities in this project, or confirms which project the client key belongs to. Creating entities is a console change, which the Phase 5 scope does not authorize. It needs a separate human instruction.
 - Amplitude MCP is not yet connected; criterion 3 remains UNVERIFIED.
 
+## 2026-11-25T06:19:00Z | Finding: Amplitude console read-only check | RECORDED (criterion 3 PARTIAL)
+- Human action: "Connected Amplitude" (Cursor chat, 2026-11-24 22:18 America/Los_Angeles, recorded as 2026-11-25T06:18:00Z). The Amplitude MCP connection was used read-only.
+- Connected org: `EE SE Custom Sandbox`. Project: `AmpliGen` (appId `906170`), `main` branch.
+- Ingestion has started. In the last 30 days, the project has 7 unplanned (`unexpected`) events: `session_start` (3), `[Amplitude] Page Viewed` (9), `[Amplitude] Viewport Content Updated` (11), `[Amplitude] Element Clicked` (6), `[Amplitude] Replay Captured` (2), `[Guides-Surveys] Engagement Booted` (9), and `session_end` (1). The first arrival is 2026-11-25T05:12:55Z, the Phase 3 deploy. Every row is unplanned: none is in the tracking plan.
+- The contract events `Demo Request Submitted` and `Sign Up Completed` have NOT been ingested. They are absent from `main`. The Phase 5 walkthrough has not submitted a valid form yet, so this is expected at this point; it is not a finding about the code.
+- Replay: the project has 2 replays in the last 24 hours (sessions `96349fd0...`, 2,060 s, and `34cb407e...`, 0 s). Masking of sensitive fields has NOT been checked. Criterion 3 requires playable replay with masking verified in the replay itself. That check is UNVERIFIED.
+- Unplanned events to resolve before criterion 3 passes: the SDK sends these automatically, so the tracking plan needs either an explicit decision to accept them or a filter. The Planner recommends accepting the `[Amplitude]` and `session_*` events and deciding on `[Guides-Surveys] Engagement Booted`. This is for a human decision, not a Builder change.
+- Next: after the walkthrough submits one valid demo request and one valid sign-up, re-read the events. The two contract events must appear with the sample visitor's `vis_` user id and `is_synthetic` set.
+- Still not authorized: any change to the Amplitude taxonomy, replay settings, or data. Any synthetic volume beyond the walkthrough limit.
+
