@@ -20,7 +20,7 @@
   4. After the approved merge/deployment, a follow-up dispatch confirms a successful Actions run for the merged revision and HTTP 200 with the expected home-page content at the public URL; record the URL, revision, and run link in PHASE_LOG.md. Keep Phase 0 open until this passes.
 - **Risks:** Repository/base-path configuration, Pages availability, and Actions permissions may need human setup. The Planner reviews local checks for merge readiness, obtains approval, and dispatches deployment verification within Phase 0; do not mark the phase complete or start Phase 1 before the live check passes.
 - **Needs human approval to merge?** Yes.
-- **Git permissions for the Builder:** Commit yes, only when granted in the phase handoff; Merge no, pending a separate approved dispatch.
+- **Git permissions for the Builder:** When the Phase 0 handoff grants it, create and switch to `build/phase-0` and commit there. Push, merge, and deployment remain no until separately authorized.
 
 ## Phase 1 — Product and pricing pages
 - **Type:** BUILD

@@ -8,7 +8,9 @@
 Objective: Create a minimal static site that GitHub Actions can build and deploy to GitHub Pages.
 
 ## Prerequisites
-- No Builder exists yet. Create the first Builder in Cursor with instructions to read BUILDER.md and remain IDLE; record its actual returned agent ID here before issuing START. Do not guess an ID or start replacement threads.
+- PROJECT_BRIEF.md must exist in the repository before a Builder is created. Do not start a Builder while it is missing.
+- No Builder exists yet. After PROJECT_BRIEF.md exists, the Planner creates one Builder in Cursor with instructions to read BUILDER.md and remain IDLE, then records its actual returned agent ID here. Do not guess an ID or start replacement threads.
+- Keep this handoff IDLE until those prerequisites are resolved and the placeholder Builder agent ID is replaced with that actual ID. Do not issue START before then.
 - Read BUILDER.md, PROJECT_BRIEF.md, PROJECT_PLAN.md, and PHASE_LOG.md. Stop if this dispatch already has a COMPLETE or BLOCKED entry.
 - Inspect the repository, current branch, existing stack, package manager, and deployment configuration. Preserve unrelated work; log BLOCKED if required repository details or permissions cannot be determined.
 
@@ -36,7 +38,7 @@ Objective: Create a minimal static site that GitHub Actions can build and deploy
    Commit only these references, never actual key values. Do not print values. The Phase 0 scaffold must build without keys; defer SDK installation and app reads through `import.meta.env.VITE_AMPLITUDE_API_KEY` / `import.meta.env.VITE_STATSIG_CLIENT_KEY` to their assigned phases.
 6. Implement `npm run smoke:phase0` as one non-browser check: serve the built output under the configured base path, request the home page and referenced local assets, assert HTTP 200 and expected content types, check the workflow’s build command/output path and both exact secret-to-Vite mappings without resolving or printing values, then stop the temporary server. Exit nonzero on failure.
 7. Run typecheck, build, and the smoke command. Fix failures within scope. Do not run full test suites, browser walkthroughs, screenshots, or video.
-8. Document local commands and required Pages/Actions setup in README.md. Commit only phase-owned changes on the existing suitable working branch. Log BLOCKED using the BUILDER.md template with local evidence and “Awaiting authorized PR, merge, and deployment verification” as the remaining blocker; notify the Planner and stop. If the current branch is unsuitable, log BLOCKED rather than creating or switching branches.
+8. Document local commands and required Pages/Actions setup in README.md. Create and switch to `build/phase-0` if not already on it, then commit only phase-owned changes there. Do not push. Log BLOCKED using the BUILDER.md template with local evidence and “Awaiting authorized PR, merge, and deployment verification” as the remaining blocker; notify the Planner through PHASE_LOG.md and the agent channel, and stop.
 9. After the Planner reviews local evidence, obtain a new Phase 0 dispatch through the same Builder thread for any authorized push/PR work and approval-bound merge/deployment. Do not execute those operations under this dispatch.
 10. Under the follow-up dispatch, check that the approved revision has a successful Pages Actions run and the public URL returns HTTP 200 with the expected home-page content. Record the clickable URL, deployed revision, run link, and command result in PHASE_LOG.md; only then log COMPLETE for Phase 0 and notify the Planner.
 
@@ -48,10 +50,10 @@ Objective: Create a minimal static site that GitHub Actions can build and deploy
 
 Git permissions: Commit: Yes | Merge: No
 
-- Branch creation/switching: No. Push: No. PR creation: No. Deployment execution: No. Destructive git operations: No.
-- Commit permission applies only to this phase’s allowed changes; inspect staged files before committing and exclude unrelated changes.
-- Human approval is required to merge and deploy. The Planner must issue separate permissions for pushing/opening a PR and an approval-bound dispatch for merge/deployment.
-- Log BLOCKED for missing credentials, unapproved cost, unclear scope, or missing permissions; contact only the Planner, never the human in Slack.
+- Branch creation/switching: Yes, only to create and switch to `build/phase-0`. Push: No. PR creation: No. Deployment execution: No. Destructive git operations: No.
+- Commit permission applies only on `build/phase-0` and only to this phase’s allowed changes. Inspect staged files before committing and exclude unrelated changes.
+- Push, merge, and deployment remain disallowed until separately authorized. The Planner must issue separate permissions for pushing or opening a PR, and an approval-bound dispatch for merge or deployment.
+- Log BLOCKED for missing credentials, unapproved cost, unclear scope, or missing permissions. Report only through PHASE_LOG.md and the agent channel. Do not contact the human.
 - Report passing local checks as ready for merge review, with deployment verification still BLOCKED. Keep Phase 0 open until the follow-up live check passes; do not begin Phase 1 beforehand. This HTTP check does not authorize a full browser walkthrough.
 
 Do NOT proceed past this phase without checking in.
