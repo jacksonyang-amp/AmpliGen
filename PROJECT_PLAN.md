@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 PR #17 merged at `b982f973d3e5fc93c1e9cb953a3fe61356670317` (2026-11-25T05:06:43Z); the site is deployed with the Amplitude key and replay records unmasked at 100% (DECISIONS.md 2026-11-25T05:10:00Z). Phase 3 live delivery and replay are UNVERIFIED until Phase 5. Phase 4 not started.
+- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 PR #17 merged at `b982f973d3e5fc93c1e9cb953a3fe61356670317` (2026-11-25T05:06:43Z); the site is deployed with the Amplitude key and replay records unmasked at 100% (DECISIONS.md 2026-11-25T05:10:00Z). Phase 3 live delivery and replay are UNVERIFIED until Phase 5. Phase 4 is ACTIVE: dispatch `phase-4-build-018` (BUILD), authorized 2026-11-25T05:18:00Z, local commits only.
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
@@ -93,9 +93,11 @@
   1. `npm run typecheck` exits 0.
   2. `npm run build` exits 0 with a pricing CTA experiment, one mock-product feature gate, one content dynamic config, and safe fallbacks; reuse the Phase 2 fixture runner and existing event/identity contract rather than adding a new traffic generator.
   3. `npm run smoke:phase4` checks deterministic control/treatment and gate/config fixtures, fallback behavior, one intended exposure per evaluation contract, exposure forwarding to the mocked Amplitude boundary, and matching conversion identities/events at both SDK boundaries; run the bot runner in dry-run mode only.
-- **Risks:** Verify supported Statsig exposure forwarding against current official documentation before coding; do not invent an integration. The Planner must define assignment units, exposure semantics, conversion metrics, and the initial hypothesis. Live bot volume, target projects, and any resulting cost require explicit authorization; synthetic outcomes must not be presented as causal evidence.
-- **Needs human approval to merge?** Yes.
-- **Git permissions for the Builder:** Commit yes, only when granted in the phase handoff; Merge no, pending a separate approved dispatch.
+- **Risks:** Exposure forwarding to Amplitude is a Statsig console integration (Amplitude Native), not a client call. The site must not also emit exposure events through Amplitude. Forwarding custom events from that integration would duplicate `Demo Request Submitted` and `Sign Up Completed`, which this site already sends. Live assignment needs the three named entities in the Statsig project. Synthetic results are not causal evidence. Live bot volume is not authorized.
+- **Status:** ACTIVE — dispatched as `phase-4-build-018` on 2026-11-25T05:18:00Z. Local commits on `build/phase-4` only. Push, PR, and merge are not authorized. Selections are in DECISIONS.md 2026-11-25T05:18:00Z.
+- **Planner selections:** assignment unit is the contract `user_id`. Experiment `pricing_cta_copy` parameter `label_mode` (`control` or `specific`). Gate `metrics_account_breakdown` on the product page. Dynamic config `pricing_notice` parameter `notice`. Primary metric `Sign Up Completed`; secondary `Demo Request Submitted`. One exposure per evaluation, logged to Statsig only.
+- **Needs human approval to merge?** Yes. Merging deploys the site and, when the client key is present, starts Statsig evaluation and event logging.
+- **Git permissions for the Builder:** Branch creation: yes, `build/phase-4` only. Commit: yes, local commits on `build/phase-4` only. Push: no. PR creation: no. Merge: no. Deployment: no. Destructive operations: no.
 
 ## Phase 5 — Final verification and demo readiness
 - **Type:** VERIFY

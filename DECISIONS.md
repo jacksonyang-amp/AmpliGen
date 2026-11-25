@@ -378,3 +378,20 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: Phase 3 build and deployment checks PASS. Live Amplitude delivery, replay capture, the Amplitude project's own mask setting, account reporting, and browser form behavior are UNVERIFIED. The SDK's bundled defaults include `fetchOnStart: true`; this build passes `false` for Feature Experiment, which Phase 5 must confirm at runtime.
 - Consequence now live: Session Replay records every session at 100% with form fields unmasked. The form pages say nothing is sent. This is the accepted choice from DECISIONS.md 2026-11-25T04:38:00Z and 2026-11-25T05:05:00Z.
 - Next: Phase 5 VERIFY, which must test the live site with the key before the project is declared complete. Phase 4 is not started and needs its own scope authorization.
+
+## 2026-11-25T05:18:00Z | Human instruction: continue to Phase 4 | AUTHORIZED (scope only; local commits only)
+- Exact text: "continue to Phase 4"
+- Source: Cursor chat, 2026-11-24 21:18 America/Los_Angeles, recorded as 2026-11-25T05:18:00Z.
+- Accepted as scope authorization to start Phase 4 (Statsig experiments and controls). This does not approve a push, a pull request, a merge, or a deployment.
+- Authorized: dispatch `phase-4-build-018` (BUILD) to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. The Builder may create `build/phase-4` from `origin/main`, commit locally there, install `@statsig/js-client`, and run the checks in BUILDER_HANDOFF.md.
+- Authorized with it, as a necessary consequence of adding the SDK: narrow edits to `scripts/smoke-phase1.mjs`, `scripts/smoke-phase2.mjs`, and `scripts/smoke-phase3.mjs`. Those scripts assert that no Statsig package or code exists. The assertions change to allow only `@statsig/js-client`, imported only from `src/statsig/statsig-adapter.ts`, as listed in the handoff. Every other check stays.
+- Planner selections, fixed for this phase:
+  - Assignment unit: the contract `user_id`, shared with Amplitude. Custom attributes are `is_synthetic` and, when mapped, `account_id`. No email, name, or free text.
+  - Experiment `pricing_cta_copy`, parameter `label_mode`. Control keeps the current labels. Treatment `specific` changes Starter and Growth to "Start a free trial" and Enterprise to "Talk to sales". Hrefs do not change. Hypothesis: more specific labels increase `Sign Up Completed` among visitors who see pricing. `Demo Request Submitted` is the secondary metric. Synthetic results are not causal evidence.
+  - Gate `metrics_account_breakdown` on the product page. The section "Account breakdown shows usage and conversion for the mapped account." is hidden unless the gate passes. It shows no account name or email.
+  - Dynamic config `pricing_notice`, string parameter `notice`, rendered as text into the existing pricing label. Fallback remains "Illustrative pricing. Not offered." Values that are not a string, or are longer than 120 characters, use the fallback.
+  - One exposure per evaluation, logged by the Statsig client. No `Experiment Exposure` business event, and no Amplitude `track` call for an exposure. The documented forwarding path is the Statsig console integration Amplitude Native, which this repository cannot turn on. Live forwarding is UNVERIFIED.
+  - The two contract events are logged once to Statsig and once to Amplitude, with the same `event_id`.
+- Consequence, recorded now and to be restated at merge: with a client key, the deployed site sends those two events and the exposures to Statsig, while the form and welcome pages still say nothing is sent. That matches the earlier choice to keep the copy.
+- Not authorized: push, PR creation, merge, deployment, live bot traffic, a second Statsig package, Amplitude-controlled assignment, guide or survey content, or any console change.
+- Credential note: live evaluation needs the GitHub secret `NEXT_PUBLIC_STATSIG_CLIENT_KEY` to be the project's browser client key. The Planner cannot see repository secrets. The three console entities above also have to exist before live assignment works. Neither is verified. The build must work with the fallbacks when the key is absent.
