@@ -201,3 +201,70 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Prior record: PR #8 merged at 2026-11-25T03:24:52Z (`596e7ec`). The push approval 2026-11-25T03:18:00Z is USED (PR #9 open at 57ae413).
 - State: USED at 2026-11-25T03:25:58Z. PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45539939585 succeeded on that SHA. The Builder ran the merge once, pinned to the approved head, with no auto-merge.
 - Post-merge check (Planner, 2026-11-25T03:26Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>API Platform Demo</title>`. `main` PHASE_LOG.md holds the COMPLETE entry.
+
+## 2026-11-25T03:35:00Z | Scope authorization: start Phase 1 | RECORDED (scope only; no git action)
+- Exact text: "Start with Phase 1"
+- Source: Cursor chat with the human, 2026-11-24 19:34 America/Los_Angeles, recorded as 2026-11-25T03:35:00Z.
+- Authorized: Planner dispatches `phase-1-build-007` (BUILD, product and pricing pages) to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. The Builder may create `build/phase-1`, commit locally there, and run the listed checks.
+- Not authorized by this entry: push, PR creation, merge, or deployment. Each needs its own RESERVED approval bound to the reviewed commit and PR.
+
+## 2026-11-25T03:35:00Z | Planner selections for Phase 1 | RECORDED
+- Platform: Lumora API Platform (fictional demo name). Products: Lumora Gateway, Lumora Metrics, Lumora Connect.
+- Pricing: Starter $49 per month and Growth $249 per month, both "Start a trial" to `/AmpliGen/sign-up/`; Enterprise custom, "Request a demo" to `/AmpliGen/demo-request/`. All labeled "Illustrative demo pricing. Not offered."
+- Reason: Phase 1 requires these to be fixed before dispatch. They are fictional and carry no commercial commitment.
+- Demo-request and sign-up show temporary notices with no input fields, so no data is collected or sent in this phase.
+
+## 2026-11-25T03:42:00Z | Review of dispatch phase-1-build-007 | SENT BACK FOR ONE PLANNER CORRECTION
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: Planner clean-worktree run at `3a6ba6d4ad639e53ae7ca3e1e4494a857fcf89f1`: typecheck exit 0, build exit 0 (five route files in `dist/`), `smoke:phase1` exit 0 (91 passed), `smoke:phase0` exit 0 (28 passed). Scope and forbidden-content scans clean.
+- Criteria: 1 PASS, 2 PASS, 3 PASS.
+- Finding: the home page keeps the Phase 0 brand and the sentence "Product, pricing, and account pages will be added in later phases", and its hero CTAs do not link to the new pages. Cause: the Planner's handoff 007 said to keep home content. Decision: correct before any push, because a merge would publish a self-contradicting home page.
+- Not authorized: push, PR, merge, or deployment. No approval has been requested for them yet.
+
+## 2026-11-25T03:43:00Z | Dispatch phase-1-fix-008 issued | RECORDED
+- Same Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Scope: home page alignment only (brand, stale sentence, hero CTAs, fixture, smoke:phase1 checks). It needs no new scope authorization: it is inside the Phase 1 scope authorized at 2026-11-25T03:35:00Z and it leaves `scripts/smoke-phase0.mjs` untouched.
+- Git: local commits on the existing `build/phase-1` only. No push, PR, merge, or deployment.
+
+## 2026-11-25T03:45:00Z | Review of dispatch phase-1-fix-008 | ACCEPTED
+- Handoff set to IDLE before review.
+- Evidence: Planner clean-worktree run at `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`: typecheck 0, build 0, smoke:phase1 0 (105 passed), smoke:phase0 0 (28 passed). Home page title, brand, CTAs, and absence of the stale sentence checked in `dist/index.html`. Changed files: index.html, fixture, smoke:phase1 script, PHASE_LOG.md, plus Phase 1 files from 007.
+- Result: Phase 1 criteria 1-3 PASS on local `build/phase-1`. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
+- Next: request the human's push and PR approval bound to `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`. No approval is recorded yet.
+
+## 2026-11-25T03:43:00Z | Human instruction: rename the product and remove fictional/demo labels | AUTHORIZED (content only; no git action)
+- Exact text: "This all looks good, but change "Lumora" to "AmpliGen" - that should be the name of the product moving forward. I also don't want any references on the site to it being "fictional" or "demo" either"
+- Source: Cursor chat, 2026-11-24 19:43 America/Los_Angeles, recorded as 2026-11-25T03:43:00Z.
+- Authorized: dispatch `phase-1-fix-009` renames the product to AmpliGen across the Phase 1 site, removes the "Fictional demo" banner, and removes "fictional" and "demo" wording that describes the site or its content.
+- Authorized edit of `scripts/smoke-phase0.mjs`, lines 83-84 only, because they assert the removed wording. Its other checks are unchanged.
+- Kept (Planner interpretation, to be reported to the human): the "Demo request" nav label, the `/demo-request/` route, "Request a demo" CTAs, and the demo-request notice. They name a request feature rather than describing the site. The sign-up notice keeps "Mock", as the brief requires simulated sign-up to be labeled.
+- Not authorized by this entry: any change to `PROJECT_BRIEF.md`, which still describes the platform as fictional; push, PR, merge, or deployment.
+- Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-1-fix-009`. Local commits on `build/phase-1` only.
+
+## 2026-11-25T03:48:00Z | Review of dispatch phase-1-fix-009 | ACCEPTED
+- Handoff set to IDLE before review.
+- Evidence: Planner clean-worktree run at `937b0f52d4921b96b8bd898c88c5a87e8b838609`: typecheck 0, build 0, smoke:phase1 0 (144 passed), smoke:phase0 0 (28 passed). Built HTML scan for `lumora|fictional|demonstration|demo-banner|api platform demo` outside attribute values: 0 hits. `git diff` of `scripts/smoke-phase0.mjs` is 4 lines (two assertions replaced).
+- Result: Phase 1 criteria 1-3 PASS. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
+- Next: request the human's push and PR approval bound to `937b0f52d4921b96b8bd898c88c5a87e8b838609`. No approval is recorded yet.
+- Note: PROJECT_BRIEF.md still describes the platform as fictional. It was not edited, because the authorization did not name it.
+
+## 2026-11-25T03:49:00Z | Approval: push build/phase-1 and open one PR | RESERVED
+- Exact text: "Approve pushing build/phase-1 at commit 937b0f52d4921b96b8bd898c88c5a87e8b838609 and opening one PR into main, no merge"
+- Source: Cursor chat, 2026-11-24 19:48 America/Los_Angeles, recorded as 2026-11-25T03:49:00Z.
+- Reviewed commit: `937b0f52d4921b96b8bd898c88c5a87e8b838609` (branch `build/phase-1` head, verified by the Planner). Review: Phase 1 criteria 1-3 PASS (DECISIONS.md 2026-11-25T03:48:00Z).
+- Authorized action: dispatch `phase-1-push-010` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-1` once, at that commit, to `origin` as `build/phase-1`, and open exactly one PR into `main`. No merge.
+- Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
+- Dispatch: `phase-1-push-010`. State: USED at 2026-11-25T03:50:00Z. Planner verified: `origin/build/phase-1` is `937b0f52d4921b96b8bd898c88c5a87e8b838609`; PR #12 (https://github.com/jacksonyang-amp/AmpliGen/pull/12) is OPEN, not a draft, base `main`, head that SHA; merge-tree against current `main` has no conflicts. The Builder did not append a PHASE_LOG entry for this dispatch, which the handoff made optional.
+- Still not authorized: merging PR #12. That needs a separate named Approve bound to head `937b0f52d4921b96b8bd898c88c5a87e8b838609`.
+
+## 2026-11-25T03:51:00Z | Approval: merge PR #12 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/12 merge of commit 937b0f52d4921b96b8bd898c88c5a87e8b838609"
+- Source: Cursor chat, 2026-11-24 19:49 America/Los_Angeles, recorded as 2026-11-25T03:51:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/12 (OPEN, not a draft, base `main`). Reviewed head: `937b0f52d4921b96b8bd898c88c5a87e8b838609`. Verified by the Planner: merge-tree against `main` at `0dc5df6` has no conflicts.
+- Authorized action: dispatch `phase-1-merge-011` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #12 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence: the merge runs the Pages workflow and redeploys the public site with the AmpliGen pages.
+- State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.
+
+## 2026-11-25T03:52:00Z | Approval: merge PR #12 | USED
+- Merged at 2026-11-25T03:50:36Z as `2abd6ff9dc6205a884e3ccf0555e452282becf32` (merge commit; `origin/main` now at that SHA). Pinned to head `937b0f52d4921b96b8bd898c88c5a87e8b838609` with `--match-head-commit`, once, no auto-merge.
+- Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45542736922 succeeded on `2abd6ff9dc6205a884e3ccf0555e452282becf32`.
+- Planner post-merge check (2026-11-25T03:52Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>AmpliGen</title>`; `/product/`, `/pricing/`, `/demo-request/`, and `/sign-up/` return HTTP 200 with titles `Product | AmpliGen`, `Pricing | AmpliGen`, `Request a demo | AmpliGen`, and `Sign up | AmpliGen`. The home page contains no `lumora`, `fictional`, or `demo-banner`.

@@ -1,28 +1,25 @@
 # BUILDER_HANDOFF
 **Status:** IDLE
-**Phase:** 0 — Static scaffold and deployment (correction: record the live-deployment evidence)
-**Dispatch ID:** phase-0-merge-006 (complete)
+**Phase:** 1 — Product and pricing pages (merge only)
+**Dispatch ID:** phase-1-merge-011 (complete; PR #12 merged)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Merge PR #9 into main, and nothing else. PR #9 is https://github.com/jacksonyang-amp/AmpliGen/pull/9 with head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Its diff is PHASE_LOG.md only.
+Objective: Merge PR #12 into `main` once, and nothing else.
 
 ## Prerequisites
-- Authority: the user's named Approve, recorded in DECISIONS.md as RESERVED: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/9 merge of commit 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24".
-- Before merging, check that PR #9 is OPEN, not a draft, has head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`, and that its three-dot diff against main is PHASE_LOG.md only. If any check fails, stop and report BLOCKED. Do not merge.
-
-## Allowed files
-- None. Do not edit any file and do not commit.
+- The human's named approval is RESERVED in DECISIONS.md on `origin/cursor/phase-1-handoff-fc41` (entry 2026-11-25T03:51:00Z). Read it with `git fetch origin cursor/phase-1-handoff-fc41` and `git show origin/cursor/phase-1-handoff-fc41:DECISIONS.md`. Do not check out or edit that branch.
+- Check first with `gh pr view 12 --repo jacksonyang-amp/AmpliGen --json state,isDraft,headRefOid,baseRefName`. It must be OPEN, not a draft, base `main`, head `937b0f52d4921b96b8bd898c88c5a87e8b838609`. If any check fails, stop and report BLOCKED. Do not merge.
 
 ## Steps
-1. Run the prerequisite checks above with `gh pr view 9 --json state,isDraft,headRefOid,baseRefName`.
-2. Merge with a merge commit, pinned to the approved head: `gh pr merge 9 --merge --match-head-commit 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Do not use `--auto`. Do not use squash or rebase.
-3. Verify the result: `git fetch origin main` and confirm origin/main contains PHASE_LOG.md with the COMPLETE entry. Record the new main SHA.
-4. Watch the Pages workflow triggered by the push to main until it finishes, and record its run URL and conclusion. Do not re-run it or trigger any other workflow.
-5. Stop. Do not push, open PRs, change settings, or deploy anything else.
+1. Merge once with a merge commit, pinned to the head: `gh pr merge 12 --repo jacksonyang-amp/AmpliGen --merge --match-head-commit 937b0f52d4921b96b8bd898c88c5a87e8b838609`. Do not use `--auto`, squash, or rebase.
+2. `git fetch origin main`. Confirm `origin/main` contains `src/content/phase1.fixtures.json` and `product/index.html`. Record the merge commit SHA and the new `origin/main` SHA.
+3. Find the "Deploy to GitHub Pages" run for the merge commit (`gh run list --repo jacksonyang-amp/AmpliGen --branch main --limit 5`), and watch it with `gh run watch <id> --repo jacksonyang-amp/AmpliGen --exit-status`. Record its URL and conclusion. Do not re-run anything.
+4. Do not edit files, commit, push, open PRs, or merge anything else.
 
-Git permissions: Commit: No | Branch creation/switching: No | Push: No | PR creation: No | Merge: Yes, once, PR #9 only, pinned to the head above | Deployment: No beyond the merge's own Pages run | Destructive git operations: No.
-- Report: the PR #9 merge commit SHA, the new origin/main SHA, the Pages run URL and conclusion, and any blocker. Then stop.
+## Git permissions
+- Merge: yes, once, PR #12 only, pinned to the head above.
+- Commit: no. Push: no. PR creation: no. Branch creation: no. Deployment: only the merge's own Pages run. Destructive operations: no.
 
-## Result
-PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run 45539939585 succeeded on that SHA. The handoff is IDLE. No further dispatch is open.
+## Report
+Final reply: the PR #12 merge commit SHA, the new `origin/main` SHA, the Pages run URL and conclusion, and any BLOCKED reason. Then stop.
