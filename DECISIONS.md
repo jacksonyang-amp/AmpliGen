@@ -129,3 +129,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-0-push-002`.
 - Reviewed commit: none existed at approval. The head SHA the Builder reports is not yet approved for merge. A later merge needs a named Approve bound to that SHA.
 - State: RESERVED for dispatch `phase-0-push-002`. Becomes USED after the Builder reports the push and PR.
+
+## 2026-11-25T03:10:00Z | Approval for dispatch phase-0-push-002 | USED
+- Approval text and scope: see the RESERVED entry above (2026-11-25T03:08:00Z).
+- Execution evidence: PR #6, https://github.com/jacksonyang-amp/AmpliGen/pull/6, base `main`, open, not a draft, mergeable. Head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`. Commits: `13bca56` (scaffold, from `253badc`) and `d0621b0` (BLOCKED log, from `45cf208`). Branch `cursor/phase-0-scaffold-fc41`, pushed once.
+- Planner verification: `origin/main` at `754e818`; changed files only the 12 Phase 0 files plus `PHASE_LOG.md`; Planner-owned files identical to `main`; no `node_modules/` or `dist/`; no key-like literals. The workflow still triggers only on push to `main`.
+- Builder reports: `npm ci`, `npm run typecheck`, `npm run build`, and `npm run smoke:phase0` (23 passed) all exit 0.
+- Deviation: the Builder created the PR with the `gh` CLI because its session had no PR tool. The PR content matches the approved action. Recorded here for the audit trail.
+- Handoff note: `BUILDER_HANDOFF.md` still reads IDLE on `main`. The dispatch is recorded in this file and in the Builder’s report, not in the handoff.
+- Still not approved: merging PR #6, merging any other PR into `main`, and deployment. A merge needs a named Approve bound to head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`.
