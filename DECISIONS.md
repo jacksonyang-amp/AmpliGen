@@ -105,3 +105,17 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 
 ### Decision 3 — a Phase 0 merge publishes the site
 - State: recorded as confirmation of the existing rule. No Phase 0 pull request exists, so there is no reviewed commit and no merge or deployment authorization.
+
+## 2026-11-25T03:04:00Z | Report that PR #3 merged | HELD: fresh approval needed for the push
+- Source timestamp: 2026-11-24 19:04 America/Los_Angeles, recorded as 2026-11-25T03:04:00Z.
+- Exact text: `PR #3 is Merged, continue`
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/3, merged 2026-11-25T03:03:30Z as `7db28fa3699bf958a31d6f514b83b84a66d2246d`. Reviewed head `e21f0ee72d06977a209c2d3cd2e3163722f33fdb`.
+- Verified on `origin/main`: no `node_modules/` or `dist/`; PR #2 Planner files intact.
+- This is a status report plus “continue”. It is not an approval for a new commit, so it does not bind any SHA.
+
+### Decision 1 (push `build/phase-0` and open one PR) stays UNUSED and is not dispatched
+- Reason: `build/phase-0` at `45cf2089a3d903f09061d5717b873c39f0037b12` is based on `b267dbd`, which predates the Planner decisions now on `main`. Its PR diff against `main` would delete 37 lines of `DECISIONS.md`, 3 lines of `PROJECT_PLAN.md`, and restore the START handoff. Merging `main` into it conflicts in `DECISIONS.md` and `PROJECT_PLAN.md`, and resolving those is Planner work the Builder may not do.
+- Proposed fix (not yet executed): on a new branch from `origin/main`, cherry-pick the Builder's commits `253badcf20a5a232fc5150a33fdab3c7e2251ba8` (scaffold) and `45cf2089a3d903f09061d5717b873c39f0037b12` (PHASE_LOG BLOCKED entry). Dry run: the scaffold applies cleanly to `main`; the log entry touches only `PHASE_LOG.md`, which is empty on both bases.
+- The cherry-picked commits get new SHAs, so the original approval for `45cf208` does not cover them. Fresh approval is required (PLANNER.md: “Require fresh approval for a changed scope or commit”).
+- Still not authorized: merge, deployment, and any merge of this proposed Phase 0 PR. A merge to `main` deploys the site via `.github/workflows/deploy-pages.yml`.
+- Required approval text (named Approve, one PR-or-branch, one action): to be issued in chat after the proposed branch exists and its head SHA is reported.
