@@ -1,27 +1,29 @@
 # BUILDER_HANDOFF
 **Status:** IDLE
-**Phase:** 2 — Simulated conversions and identities (merge only)
-**Dispatch ID:** phase-2-merge-014 (done; PR #14 merged at cc19af9)
-**Phase type:** BUILD
+**Phase:** 3 — Amplitude analytics and replay
+**Dispatch ID:** phase-3-push-016 (reviewed; PR #17 open at 8127b0d; IDLE)
+**Phase type:** BUILD (git action only; the build itself is already accepted)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Merge PR #14 into `main` once, and nothing else.
+Objective: Push the already-reviewed local branch `build/phase-3` at commit `8127b0dc321ba56d206f8ead26b739afdeaf5705` to `origin`, and open exactly one pull request into `main`. Do not merge. Do not change any file.
 
 ## Prerequisites
-- The human's named approval is RESERVED in DECISIONS.md on `origin/cursor/phase-2-handoff-fc41` (entry 2026-11-25T04:21:00Z). Read it with `git fetch origin cursor/phase-2-handoff-fc41` and `git show origin/cursor/phase-2-handoff-fc41:DECISIONS.md`. Do not check out or edit that branch.
-- Read this handoff from that same ref: `git show origin/cursor/phase-2-handoff-fc41:BUILDER_HANDOFF.md`.
-- Check first with `gh pr view 14 --repo jacksonyang-amp/AmpliGen --json state,isDraft,headRefOid,baseRefName,mergeable`. It must be OPEN, not a draft, base `main`, head `fd8bae63dae88216f376c5668ba095daff20c8c1`, and mergeable. If any check fails, stop and report BLOCKED. Do not merge.
-- `origin/main` is `0f21228c0fafb3b26043942fd8375554710dec5d` (the squash of PR #13, docs only). That does not change the approved head. If `origin/main` has moved past that commit with any file other than `BUILDER_HANDOFF.md`, `DECISIONS.md`, or `PROJECT_PLAN.md`, stop and report BLOCKED.
+- Dispatch `phase-3-build-015` is COMPLETE and accepted (DECISIONS.md 2026-11-25T04:50:00Z). The reviewed head is local `build/phase-3` at `8127b0dc321ba56d206f8ead26b739afdeaf5705`.
+- This push and PR are authorized by DECISIONS.md 2026-11-25T04:59:00Z, state RESERVED, dispatch `phase-3-push-016`. Read the handoff and that entry from `origin/cursor/record-phase-3-decisions-fc41` after `git fetch origin cursor/record-phase-3-decisions-fc41`. Do not check out or edit that branch.
+- Confirm `git rev-parse build/phase-3` prints `8127b0dc321ba56d206f8ead26b739afdeaf5705`. If that commit is not present, stop and report BLOCKED. Do not rebuild, cherry-pick, amend, or create a new commit. A different SHA voids this approval.
 
 ## Steps
-1. Merge once with a merge commit, pinned to the head: `gh pr merge 14 --repo jacksonyang-amp/AmpliGen --merge --match-head-commit fd8bae63dae88216f376c5668ba095daff20c8c1`. Do not use `--auto`, squash, or rebase.
-2. `git fetch origin main`. Confirm `origin/main` contains `demo-request/success/index.html` and `scripts/smoke-phase2.mjs`. Record the merge commit SHA and the new `origin/main` SHA.
-3. Find the "Deploy to GitHub Pages" run for the merge commit (`gh run list --repo jacksonyang-amp/AmpliGen --branch main --limit 5`), and watch it with `gh run watch <id> --repo jacksonyang-amp/AmpliGen --exit-status`. Record its URL and conclusion. Do not re-run anything.
-4. Do not edit files, commit, push, open PRs, or merge anything else.
+1. `git fetch origin main` and `git fetch origin build/phase-3` (the second may fail if the branch was never pushed; that is expected). Confirm the local head is exactly `8127b0dc321ba56d206f8ead26b739afdeaf5705` and the worktree for that commit is clean. Do not commit.
+2. Push once: `git push -u origin 8127b0dc321ba56d206f8ead26b739afdeaf5705:refs/heads/build/phase-3`. If `origin/build/phase-3` already exists at a different commit, stop and report BLOCKED. Do not force-push.
+3. Open exactly one pull request, not a draft, base `main`, head `build/phase-3`. Title: `Add Amplitude analytics and unmasked session replay`. Body: this adds `@amplitude/unified` behind one guarded `initAll()`; the only custom events are `Demo Request Submitted` and `Sign Up Completed`; page views and clicks come from Autocapture; replay is configured at 100% with form fields unmasked; merging deploys the public site and starts recording, and this pull request does not merge. Do not enable auto-merge.
+4. Do not edit `PHASE_LOG.md` or any other file. A new commit would change the approved SHA.
+5. Report the pull request URL, the remote SHA of `build/phase-3`, and confirm the push did not start a Pages deployment. The workflow runs only on `main`.
 
 ## Git permissions
-- Merge: yes, once, PR #14 only, pinned to the head above.
-- Commit: no. Push: no. PR creation: no. Branch creation: no. Deployment: only the merge's own Pages run. Destructive operations: no.
+- Push: yes, once, ref `build/phase-3` at `8127b0dc321ba56d206f8ead26b739afdeaf5705` only.
+- PR creation: yes, exactly one pull request into `main`. Not a draft. No second pull request.
+- Branch creation: no. Commit: no. Merge: no. Deployment: no. Force-push: no. Destructive git operations: no.
+- A push of `build/phase-3` does not deploy. Merging into `main` would deploy the site with the Amplitude key and start recording sessions unmasked at 100%. That merge is not approved.
 
-## Report
-Final reply: the PR #14 merge commit SHA, the new `origin/main` SHA, the Pages run URL and conclusion, and any BLOCKED reason. Then stop.
+## Stop
+After the pull request is open, stop. Do not start Phase 4. Do not merge.
