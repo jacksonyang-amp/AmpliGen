@@ -697,3 +697,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Review settings unchanged: production `reviewRequired` true; development and staging false. Any write to production-environment entities may need a review step.
 - Decision needed from the human: issue a Statsig key with write scope (not `personal_read_only`) and tell the Planner; or stop Phase 6 Steps 2 to 4 and ship the helper, defaults, docs, and test only. The Builder's code work (Steps A and B) is not started either; it is also gated on the Builder's Prerequisite 1 in the handoff. A later dispatch may allow code-only work with Statsig writes off.
 
+## 2026-11-25T18:45:56Z | Human decision: Phase 6 code-only; Statsig creation deferred | RECORDED; DISPATCH phase-6-code-028 ISSUED
+- Source: Cursor chat, 2026-11-25 10:45 America/Los_Angeles, recorded as 2026-11-25T18:45:56Z. Human answer to the question on Statsig write access: "code_only" (proceed code-only now: helper, docs, test, and template changes, with no Statsig writes; layers and stores come later).
+- Dispatch: `phase-6-code-028` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`, Steps A and B only: 32 parameters in code, `getPageParams`, the seven templates, `docs/statsig-params.yml` with status planned, `smoke:phase6`, offline checks, local commits on `build/phase-6` from head `c356009`. No Statsig call of any kind.
+- Not authorized: any Statsig create, read, or write; layer or store creation; push, PR, merge, deployment.
+- Still open: Statsig creation (7 layers, 7 linked stores) needs a write-scoped key for the Builder's connection. The human has not issued one. The Planner's connection is also `personal_read_only`.
+- Next after this dispatch: review the code and PHASE_LOG entry; the Statsig creation dispatch stays on hold until the key exists.
+
