@@ -1,27 +1,28 @@
 # BUILDER_HANDOFF
 **Status:** IDLE
 **Phase:** 0 — Static scaffold and deployment (correction: record the live-deployment evidence)
-**Dispatch ID:** phase-0-log-push-005
+**Dispatch ID:** phase-0-merge-006 (complete)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Push the already-reviewed Phase 0 log commit and open one pull request. Do not change the commit.
+Objective: Merge PR #9 into main, and nothing else. PR #9 is https://github.com/jacksonyang-amp/AmpliGen/pull/9 with head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Its diff is PHASE_LOG.md only.
 
 ## Prerequisites
-- You are agent `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch `phase-0-log-004` is already accepted. This dispatch has no log entry yet.
-- Local branch `cursor/phase-0-complete-log-fc41` must be exactly `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. If it is not, stop and report BLOCKED. Do not amend, rebase, or add a commit.
+- Authority: the user's named Approve, recorded in DECISIONS.md as RESERVED: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/9 merge of commit 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24".
+- Before merging, check that PR #9 is OPEN, not a draft, has head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`, and that its three-dot diff against main is PHASE_LOG.md only. If any check fails, stop and report BLOCKED. Do not merge.
 
 ## Allowed files
-- None. Do not edit files.
+- None. Do not edit any file and do not commit.
 
 ## Steps
-1. Push that commit once: `git push -u origin 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24:cursor/phase-0-complete-log-fc41`.
-2. Open exactly one pull request into `main` for that branch. Title: "Record Phase 0 live deployment evidence". Body: state the head SHA, that the diff is `PHASE_LOG.md` only, and that merging re-runs the Pages workflow and redeploys an unchanged site. This approval does not authorize the merge.
-3. Do not push again, merge, or deploy.
+1. Run the prerequisite checks above with `gh pr view 9 --json state,isDraft,headRefOid,baseRefName`.
+2. Merge with a merge commit, pinned to the approved head: `gh pr merge 9 --merge --match-head-commit 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Do not use `--auto`. Do not use squash or rebase.
+3. Verify the result: `git fetch origin main` and confirm origin/main contains PHASE_LOG.md with the COMPLETE entry. Record the new main SHA.
+4. Watch the Pages workflow triggered by the push to main until it finishes, and record its run URL and conclusion. Do not re-run it or trigger any other workflow.
+5. Stop. Do not push, open PRs, change settings, or deploy anything else.
 
-Git permissions: Commit: No | Merge: No
-- Branch creation/switching: No. Push: Yes, once, of commit `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24` to `cursor/phase-0-complete-log-fc41` only. PR creation: Yes, exactly one PR into `main`. Deployment: No. Destructive git operations: No.
-- Report the push result and PR URL through the agent channel, then stop.
+Git permissions: Commit: No | Branch creation/switching: No | Push: No | PR creation: No | Merge: Yes, once, PR #9 only, pinned to the head above | Deployment: No beyond the merge's own Pages run | Destructive git operations: No.
+- Report: the PR #9 merge commit SHA, the new origin/main SHA, the Pages run URL and conclusion, and any blocker. Then stop.
 
-## Stop
-Dispatch `phase-0-log-push-005` is complete. PR #9 is open at head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Do not push again, merge, or deploy. A merge of PR #9 needs a separate named Approve.
+## Result
+PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run 45539939585 succeeded on that SHA. The handoff is IDLE. No further dispatch is open.
