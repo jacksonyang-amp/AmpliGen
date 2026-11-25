@@ -147,3 +147,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Action: the Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` merges PR #6 once, bound to the head SHA, dispatch `phase-0-merge-003`. Method: merge commit. Then the Builder runs read-only deployment verification (Actions run for the merge commit; HTTP 200 at https://jacksonyang-amp.github.io/AmpliGen/ with the expected home-page content).
 - No other merge or deploy action is authorized. Phase 0 remains open until the live check passes.
 - State: RESERVED. Becomes USED after the merge is reported.
+
+## 2026-11-25T03:14:00Z | Approval: merge PR #6 | USED
+- Execution evidence: PR #6 merged 2026-11-25T03:12:01Z as `c8593de06523a07b596a4cef28967ec0d7f49c2b`, via `gh pr merge 6 --merge --match-head-commit d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f` (exit 0, once).
+- Planner verification: `origin/main` is `c8593de`; head `d0621b0` is an ancestor; no `node_modules/` or `dist/` on `main`. Pages run 45538301854 is completed/success on `c8593de`. https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>API Platform Demo</title>`; `/AmpliGen/assets/index-Dfv1CCUN.css`, `/AmpliGen/assets/index-FVyABazW.js`, and `/AmpliGen/favicon.svg` return 200.
+- Phase 0 is COMPLETE in PROJECT_PLAN.md (criterion 4 PASS).
+- Open follow-up: `PHASE_LOG.md` on `main` still holds only the earlier BLOCKED entry for `phase-0-build-001`. The Builder-owned completion entry is not yet recorded; request it from the Builder through a new dispatch, not by Planner edit.
+- Still not authorized: any other merge, and any Phase 1 work. Phase 1 needs its own START dispatch and approval.
