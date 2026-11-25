@@ -179,10 +179,12 @@ function checkSharedPageContent(pages, fixture) {
     const brand = /<span class="brand-name">([\s\S]*?)<\/span>/.exec(html)?.[1];
     record(`route ${route} header brand is "${fixture.platformName}"`, brand !== undefined && textOf(brand) === fixture.platformName);
 
-    record(
-      `route ${route} has no form controls`,
-      !/<(form|input|textarea|select)\b/i.test(html),
-    );
+    if (!fixture.formRoutes.includes(route)) {
+      record(
+        `route ${route} has no form controls`,
+        !/<(form|input|textarea|select)\b/i.test(html),
+      );
+    }
   }
 }
 
@@ -268,18 +270,18 @@ function checkPricingPage(html, fixture) {
   }
 }
 
-function checkPlaceholderPages(pages, fixture) {
+function checkFormNotices(pages, fixture) {
   const base = fixture.basePath;
-  const demo = elementByMarker(pages[`${base}demo-request/`], 'div', 'data-placeholder-notice');
+  const demo = elementByMarker(pages[`${base}demo-request/`], 'div', 'data-form-notice');
   record(
-    'demo-request page shows the temporary notice from the fixture',
+    'demo-request page shows the form notice from the fixture',
     demo !== null && textOf(demo) === fixture.demoRequest.copy,
   );
 
   const signUpHtml = pages[`${base}sign-up/`];
-  const signUp = elementByMarker(signUpHtml, 'div', 'data-placeholder-notice');
+  const signUp = elementByMarker(signUpHtml, 'div', 'data-form-notice');
   record(
-    'sign-up page shows the temporary notice from the fixture',
+    'sign-up page shows the form notice from the fixture',
     signUp !== null && textOf(signUp) === fixture.signUp.copy,
   );
   record(
@@ -344,7 +346,7 @@ async function main() {
     checkHomePage(pages[fixture.basePath], fixture);
     checkProductPage(pages[`${fixture.basePath}product/`], fixture);
     checkPricingPage(pages[`${fixture.basePath}pricing/`], fixture);
-    checkPlaceholderPages(pages, fixture);
+    checkFormNotices(pages, fixture);
     await checkPhaseBoundaries();
   } finally {
     await new Promise((done) => server.close(done));
