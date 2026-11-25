@@ -1,26 +1,25 @@
 # BUILDER_HANDOFF
-**Status:** IDLE
-**Phase:** 1 — Product and pricing pages (push and PR only)
-**Dispatch ID:** phase-1-push-010 (complete; PR #12 open, no merge)
+**Status:** START
+**Phase:** 1 — Product and pricing pages (merge only)
+**Dispatch ID:** phase-1-merge-011
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Push `build/phase-1` once and open one PR into `main`. Do not change any file or commit.
+Objective: Merge PR #12 into `main` once, and nothing else.
 
 ## Prerequisites
-- The human's named approval is RESERVED in DECISIONS.md on `origin/cursor/phase-1-handoff-fc41` (entry 2026-11-25T03:49:00Z). Read it with `git fetch origin cursor/phase-1-handoff-fc41`, then `git show origin/cursor/phase-1-handoff-fc41:DECISIONS.md`. Do not check out or edit that branch.
-- Local branch `build/phase-1` must point to `937b0f52d4921b96b8bd898c88c5a87e8b838609`. If it does not, stop and log BLOCKED. Do not amend, rebase, or add a commit.
+- The human's named approval is RESERVED in DECISIONS.md on `origin/cursor/phase-1-handoff-fc41` (entry 2026-11-25T03:51:00Z). Read it with `git fetch origin cursor/phase-1-handoff-fc41` and `git show origin/cursor/phase-1-handoff-fc41:DECISIONS.md`. Do not check out or edit that branch.
+- Check first with `gh pr view 12 --repo jacksonyang-amp/AmpliGen --json state,isDraft,headRefOid,baseRefName`. It must be OPEN, not a draft, base `main`, head `937b0f52d4921b96b8bd898c88c5a87e8b838609`. If any check fails, stop and report BLOCKED. Do not merge.
 
 ## Steps
-1. `git push -u origin 937b0f52d4921b96b8bd898c88c5a87e8b838609:refs/heads/build/phase-1`. Push once. Do not force.
-2. Open exactly one PR from `build/phase-1` into `main`. Title: "Phase 1: AmpliGen product and pricing pages". Body: head SHA `937b0f52d4921b96b8bd898c88c5a87e8b838609`; Phase 1 criteria 1-3 PASS on the Planner's clean-worktree run; the diff is limited to the Phase 1 allowed files plus the Phase 0 smoke assertions on lines 83-84; no merge is authorized, and merging redeploys the public site. Use `gh pr create --base main --head build/phase-1`. Do not use `--auto`.
-3. Append one PHASE_LOG.md entry with dispatch `phase-1-push-010`, the push result, and the PR URL. Do not edit any other file. You may commit this entry only on a new commit on `build/phase-1` if the Planner later asks; otherwise leave the entry uncommitted and say so.
-4. Do not merge, deploy, edit any file other than PHASE_LOG.md, or push anything else.
+1. Merge once with a merge commit, pinned to the head: `gh pr merge 12 --repo jacksonyang-amp/AmpliGen --merge --match-head-commit 937b0f52d4921b96b8bd898c88c5a87e8b838609`. Do not use `--auto`, squash, or rebase.
+2. `git fetch origin main`. Confirm `origin/main` contains `src/content/phase1.fixtures.json` and `product/index.html`. Record the merge commit SHA and the new `origin/main` SHA.
+3. Find the "Deploy to GitHub Pages" run for the merge commit (`gh run list --repo jacksonyang-amp/AmpliGen --branch main --limit 5`), and watch it with `gh run watch <id> --repo jacksonyang-amp/AmpliGen --exit-status`. Record its URL and conclusion. Do not re-run anything.
+4. Do not edit files, commit, push, open PRs, or merge anything else.
 
 ## Git permissions
-- Push: yes, once, of commit `937b0f52d4921b96b8bd898c88c5a87e8b838609` to `build/phase-1` only.
-- PR creation: yes, exactly one PR into `main`.
-- Commit: no. Branch creation: no. Merge: no. Deployment: no. Destructive operations: no.
+- Merge: yes, once, PR #12 only, pinned to the head above.
+- Commit: no. Push: no. PR creation: no. Branch creation: no. Deployment: only the merge's own Pages run. Destructive operations: no.
 
 ## Report
-Final reply: push exit code, remote SHA, PR URL, and any BLOCKED reason. Then stop.
+Final reply: the PR #12 merge commit SHA, the new `origin/main` SHA, the Pages run URL and conclusion, and any BLOCKED reason. Then stop.

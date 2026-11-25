@@ -255,3 +255,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
 - Dispatch: `phase-1-push-010`. State: USED at 2026-11-25T03:50:00Z. Planner verified: `origin/build/phase-1` is `937b0f52d4921b96b8bd898c88c5a87e8b838609`; PR #12 (https://github.com/jacksonyang-amp/AmpliGen/pull/12) is OPEN, not a draft, base `main`, head that SHA; merge-tree against current `main` has no conflicts. The Builder did not append a PHASE_LOG entry for this dispatch, which the handoff made optional.
 - Still not authorized: merging PR #12. That needs a separate named Approve bound to head `937b0f52d4921b96b8bd898c88c5a87e8b838609`.
+
+## 2026-11-25T03:51:00Z | Approval: merge PR #12 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/12 merge of commit 937b0f52d4921b96b8bd898c88c5a87e8b838609"
+- Source: Cursor chat, 2026-11-24 19:49 America/Los_Angeles, recorded as 2026-11-25T03:51:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/12 (OPEN, not a draft, base `main`). Reviewed head: `937b0f52d4921b96b8bd898c88c5a87e8b838609`. Verified by the Planner: merge-tree against `main` at `0dc5df6` has no conflicts.
+- Authorized action: dispatch `phase-1-merge-011` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #12 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence: the merge runs the Pages workflow and redeploys the public site with the AmpliGen pages.
+- State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.
