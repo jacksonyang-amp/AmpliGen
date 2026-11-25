@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 6 — Statsig parameter stores and layers for every page template (code-only part)
-**Dispatch ID:** phase-6-code-028
+**Dispatch ID:** phase-6-code-028 (COMPLETE; reviewed 2026-11-25T18:52:36Z; IDLE)
 **Phase type:** BUILD (Steps A and B only: code, docs, test, offline checks; NO Statsig writes and NO Statsig calls at all)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

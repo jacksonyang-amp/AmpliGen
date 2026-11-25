@@ -704,3 +704,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Still open: Statsig creation (7 layers, 7 linked stores) needs a write-scoped key for the Builder's connection. The human has not issued one. The Planner's connection is also `personal_read_only`.
 - Next after this dispatch: review the code and PHASE_LOG entry; the Statsig creation dispatch stays on hold until the key exists.
 
+## 2026-11-25T18:52:36Z | Review of dispatch phase-6-code-028 | ACCEPTED (code-only, Steps A and B); Step C (Statsig) still HELD
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence (Planner ran these itself in `/tmp/ampligen-phase6`, head `f6c90ad`, local `build/phase-6` only, not pushed): `npm run typecheck` exit 0; `npm run build` exit 0; `npm run smoke:phase6` 99 passed, 0 failed; `smoke:phase0` through `smoke:phase4` exit 0; `package-lock.json` unchanged.
+- Bot dry-run: its output is byte-identical to `origin/main` at `4d67783`. The Builder's sha256 `ec7d5edd...` was taken after skipping three lines of output, and the Planner's own run skipped four lines and got `23a16d85...`. Both slicings give the same result on `main`, so the bot output is unchanged. The Builder's figure was a slicing error, not a behavior change.
+- Diff review: 17 files changed. The seven templates get `data-param` attributes only. The overlap rows are untouched: the pricing plan CTA labels, the pricing notice, and the Metrics sentence. `docs/statsig-params.yml` is JSON with every layer and store marked `planned`. `getPageParams` reads each parameter once per page load, and each parameter is read only if the page has an element for it.
+- Accepted deviations (both logged by the Builder): (1) `getPageParams` takes `(page, read, isUsed)` rather than `(page)`, so the controller can keep its per-page-load memo. (2) With `show_capabilities_section` false, the page-nav link to `#capabilities` is hidden too. The human has not reviewed (2); it is a small extra beyond the handoff, and the Planner accepts it for now. Say if it should go.
+- Product: `card_cta_label` appears on three cards and is read once, then applied to all three. The Builder's 34 elements for 32 parameters are explained by that.
+- Still open: Step C (seven layers, seven linked stores in Statsig) needs a write-scoped key. Neither the Builder's nor the Planner's Statsig connection has one. The branch `build/phase-6` is local only; a push or PR needs a separate approval.
+- Unverified by design: live store values with the real client key, and any exposure events in Statsig.
+
