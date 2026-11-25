@@ -191,3 +191,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Planner verification: PR diff (three-dot against `main` at `cfa7509`) is `PHASE_LOG.md` only. A trial merge of the branch into current `main` has no conflicts, and the resulting Planner files match `main`.
 - Still not authorized: merging PR #9. That needs a named Approve bound to head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Merging re-runs the Pages workflow and redeploys an unchanged site.
 - Phase 0 stays OPEN in `PROJECT_PLAN.md` until PR #9 is merged and its log entry is on `main`.
+
+## 2026-11-25T03:25:00Z | Approval: merge PR #9 | RESERVED
+- Exact text: `Approve https://github.com/jacksonyang-amp/AmpliGen/pull/9 merge of commit 57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`
+- Timestamp: 2026-11-24 19:25 America/Los_Angeles, recorded as 2026-11-25T03:25:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/9 (OPEN, not a draft, base main). Reviewed head: `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Three-dot diff: PHASE_LOG.md only. Trial merge into main at `596e7ec`: no conflicts.
+- Authorized action: merge PR #9 once with a merge commit, pinned to the head above, via dispatch `phase-0-merge-006` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Nothing else is authorized.
+- Consequence: the merge runs the Pages workflow and redeploys an unchanged site. Merging PR #8 earlier (`596e7ec`) also triggered a Pages run on the docs-only change.
+- Prior record: PR #8 merged at 2026-11-25T03:24:52Z (`596e7ec`). The push approval 2026-11-25T03:18:00Z is USED (PR #9 open at 57ae413).
+- State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.
