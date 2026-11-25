@@ -474,3 +474,18 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: the push and the PR update are complete. Phase 4 remains BUILD REVIEWED, not COMPLETE. The merge of PR #20 needs its own RESERVED approval naming PR #20 and head `49b8aac462658b6a96481ac4158467a6b972641a`, with the deploy and Statsig consequences restated.
 - Next: none without the human's merge approval. Live verification of the dark theme and the Statsig boundary remains Phase 5.
 
+## 2026-11-25T06:13:00Z | Approval: merge PR #20 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/20 merge of commit 49b8aac462658b6a96481ac4158467a6b972641a"
+- Source: Cursor chat, 2026-11-24 22:12 America/Los_Angeles, recorded as 2026-11-25T06:13:00Z. An earlier message reading only "approved" was not treated as this approval; the Planner asked for the exact text first.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/20 (OPEN, not a draft, base `main` at `48cac6c`, mergeable, auto-merge off). Reviewed head: `49b8aac462658b6a96481ac4158467a6b972641a` (review at DECISIONS.md 2026-11-25T06:05:00Z; push at 2026-11-25T06:12:00Z).
+- Authorized action: dispatch `phase-4-merge-023` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #20 once, as a merge commit, only while its head is exactly `49b8aac462658b6a96481ac4158467a6b972641a`. Nothing else.
+- Consequences, accepted with this approval:
+  1. The merge runs the Pages workflow and redeploys the public site with the dark theme and the removal of the disclaimer copy.
+  2. If the `NEXT_PUBLIC_STATSIG_CLIENT_KEY` secret is set, the deployed site initializes Statsig. It assigns the pricing experiment, the product gate, and the pricing notice config, and logs one exposure per evaluation to Statsig.
+  3. With the key, the two business events `Demo Request Submitted` and `Sign Up Completed` are also sent to Statsig, carrying `event_id`, `user_id`, `is_synthetic`, `account_id` when mapped, and product and plan properties.
+  4. The Statsig client stores a device ID in `localStorage`, sends its own diagnostics, attaches the page URL, and exposes the request IP and user agent to Statsig.
+  5. Amplitude replay has recorded every session since the Phase 3 deploy (DECISIONS.md 2026-11-25T05:10:00Z), with form fields unmasked at 100%. This merge does not change that.
+  6. The three Statsig console entities and a valid browser client key are UNVERIFIED. Exposure forwarding to Amplitude stays off until the human enables it in the console.
+- Still not authorized: any new commit, force-push, rebase, a second PR, Phase 5 work, or live bot traffic.
+- State: RESERVED at 2026-11-25T06:13:00Z by dispatch `phase-4-merge-023`. It becomes USED after the Planner verifies that `origin/main` is a merge commit whose second parent is `49b8aac462658b6a96481ac4158467a6b972641a`.
+
