@@ -547,3 +547,14 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Criterion 4: BLOCKED until the human creates the three entities or confirms the project of the client key.
 - Next: none authorized. Awaiting the human's decisions and approvals.
 
+## 2026-11-25T06:31:00Z | Human decisions: key confirmed, adopt contract events, traffic approval | AUTHORIZED (partial; see items)
+- Exact text: "yes that's the correct key for the AmpliGen statsig project, adopt the two contract events, don't accept the SDK events yet. is_simulated can stay. Don't worry if something is not yet in the Tracking plan. I approve synthetic volume"
+- Source: Cursor chat, 2026-11-24 22:30 America/Los_Angeles, recorded as 2026-11-25T06:31:00Z.
+- Item 1, key: the human confirms that the `NEXT_PUBLIC_STATSIG_CLIENT_KEY` secret belongs to the `AmpliGen` Statsig project (`5IyUpVQB2DLse1abn3E2Oh`). That project lists 0 experiments, gates, and dynamic configs (DECISIONS.md 2026-11-25T06:19:00Z). The Statsig connection is read-only, so the Planner cannot create the three entities. Criterion 4 stays BLOCKED until a human creates them.
+- Item 2, adopt the two contract events: AUTHORIZED. Add `Demo Request Submitted` and `Sign Up Completed` to the `AmpliGen` tracking plan on `main` (`main` is not protected; naming convention is `none`). Method: `manage_amp_events` action `create`, kind `event`, project `906170`. Only these two events. Properties are not part of this approval.
+- Item 3, SDK events: NOT accepted. `[Amplitude] ...`, `session_start`, `session_end`, and `[Guides-Surveys] Engagement Booted` stay unplanned.
+- Item 4, `is_simulated`: stays as it is in the contract. No rename.
+- Item 5, tracking plan gaps: the human accepts that other items may remain unplanned.
+- Item 6, "I approve synthetic volume": the approval covers the principle only. Volume, time window, and driver were not named. Under the Phase 5 rule, traffic needs an approval naming the project, volume, and time window, so it is NOT yet RESERVED. The Planner has asked the human for those three details. The repository has no live bot mode. The human's own bots are a possible driver, which the human would run.
+- State: item 2 AUTHORIZED at 2026-11-25T06:31:00Z, pending the write.
+
