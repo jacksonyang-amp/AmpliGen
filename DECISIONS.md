@@ -297,3 +297,20 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
 - State: USED at 2026-11-25T04:18:00Z. Planner verified: `origin/build/phase-2` is `fd8bae63dae88216f376c5668ba095daff20c8c1`; PR #14 (https://github.com/jacksonyang-amp/AmpliGen/pull/14) is OPEN, not a draft, base `main`, head that SHA, auto-merge off; GitHub reports it mergeable. The Builder did not edit or commit any file. A push of `build/phase-2` does not deploy, because `.github/workflows/deploy-pages.yml` runs only on `main`.
 - Still not authorized: merging PR #14. That needs a separate named Approve bound to head `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merging redeploys the public site.
+
+## 2026-11-25T04:21:00Z | Approval: merge PR #14 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/14 merge of commit fd8bae63dae88216f376c5668ba095daff20c8c1"
+- Source: Cursor chat, 2026-11-24 20:20 America/Los_Angeles, recorded as 2026-11-25T04:21:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/14 (OPEN, not a draft, base `main`). Reviewed head: `fd8bae63dae88216f376c5668ba095daff20c8c1`, confirmed on `origin/build/phase-2`.
+- Base moved: `origin/main` is `0f21228c0fafb3b26043942fd8375554710dec5d`, the squash of PR #13 (BUILDER_HANDOFF.md, DECISIONS.md, PROJECT_PLAN.md only). Merge-tree of PR #14 onto that main has no conflicts. The approved head did not change.
+- Authorized action: dispatch `phase-2-merge-014` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #14 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence: the merge runs the Pages workflow and redeploys the public site with the simulated demo-request and sign-up forms.
+- State: USED at 2026-11-25T04:22:28Z. Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` merged PR #14 once, with a merge commit, pinned to `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merge commit `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`, which is the new `origin/main`. Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45546338461 concluded success on that commit.
+- Planner verified: `origin/main` contains `demo-request/success/index.html` and `scripts/smoke-phase2.mjs`. The live site returns HTTP 200 for `/`, `/product/`, `/pricing/`, `/demo-request/`, `/demo-request/success/`, `/sign-up/`, and `/welcome/`. `/sign-up/` shows the simulated notice and has no password input.
+- Nothing else is authorized: no further merge, no deployment, no live bot traffic, and no vendor SDK.
+
+## 2026-11-25T04:24:00Z | Review of dispatch phase-2-merge-014 | ACCEPTED
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`; Pages run 45546338461 succeeded; live pages return HTTP 200 with the expected titles; sign-up shows the simulated notice; no password input on the live sign-up page.
+- Result: Phase 2 criteria 1-3 PASS and the live deployment check PASS. Phase 2 is COMPLETE. Browser behavior of the forms (focus after an error, persona prefill, storage, real navigation, reload not emitting) is still UNVERIFIED and is assigned to the Phase 5 verify phase.
+- Next: Phase 3 needs a human-approved Amplitude event contract and its own scope authorization before any dispatch. None is recorded yet.
