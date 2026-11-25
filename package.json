@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "build": "vite build",
     "preview": "vite preview",
-    "smoke:phase0": "node scripts/smoke-phase0.mjs"
+    "smoke:phase0": "node scripts/smoke-phase0.mjs",
+    "smoke:phase1": "node scripts/smoke-phase1.mjs"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
