@@ -296,9 +296,9 @@ async function checkPhaseBoundaries() {
   const sdkInBundle = [];
   for (const name of scripts) {
     const source = await readFile(join(assetDir, name), 'utf8');
-    if (/statsig/i.test(source)) sdkInBundle.push(name);
+    if (/@statsig\/(?!js-client\b)|statsig-js/i.test(source)) sdkInBundle.push(name);
   }
-  record('built scripts include no Statsig code', scripts.length > 0 && sdkInBundle.length === 0);
+  record('built scripts include no Statsig package other than @statsig/js-client', scripts.length > 0 && sdkInBundle.length === 0);
 
   const sourceDir = join(ROOT, 'src');
   const sourceFiles = (await readdir(sourceDir, { recursive: true })).filter((name) => /\.(ts|js)$/.test(name));
@@ -312,12 +312,14 @@ async function checkPhaseBoundaries() {
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
   const dependencyNames = Object.keys({ ...manifest.dependencies, ...manifest.devDependencies });
   record(
-    'package.json declares no Statsig package and no Amplitude package other than @amplitude/unified',
-    !dependencyNames.some((name) => /statsig/i.test(name) || (/amplitude/i.test(name) && name !== '@amplitude/unified')),
+    'package.json declares no Statsig package other than @statsig/js-client and no Amplitude package other than @amplitude/unified',
+    !dependencyNames.some(
+      (name) => (/statsig/i.test(name) && name !== '@statsig/js-client') || (/amplitude/i.test(name) && name !== '@amplitude/unified'),
+    ),
   );
   record(
-    'the only runtime dependency in package.json is @amplitude/unified',
-    JSON.stringify(Object.keys(manifest.dependencies ?? {})) === JSON.stringify(['@amplitude/unified']),
+    'the only runtime dependencies in package.json are @amplitude/unified and @statsig/js-client',
+    JSON.stringify(Object.keys(manifest.dependencies ?? {}).sort()) === JSON.stringify(['@amplitude/unified', '@statsig/js-client']),
   );
 }
 

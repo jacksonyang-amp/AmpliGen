@@ -567,7 +567,10 @@ async function listFiles(dir) {
 async function checkSources() {
   const sourceFiles = (await listFiles(join(ROOT, 'src'))).filter((file) => /\.(ts|js)$/.test(file));
   const ANALYTICS_DIR = join(ROOT, 'src', 'analytics') + sep;
+  const STATSIG_DIR = join(ROOT, 'src', 'statsig') + sep;
   const ALLOWED_KEY_READ = 'import.meta.env.VITE_AMPLITUDE_API_KEY';
+  const ALLOWED_STATSIG_KEY_READ = 'import.meta.env.VITE_STATSIG_CLIENT_KEY';
+  const STATSIG_ENTRY_IMPORT = './statsig/entry.ts';
   const banned = [
     ['fetch call', /\bfetch\s*\(/, false],
     ['XMLHttpRequest', /XMLHttpRequest/, false],
@@ -584,7 +587,19 @@ async function checkSources() {
   for (const file of sourceFiles) {
     const text = await readFile(file, 'utf8');
     const inAnalytics = file.startsWith(ANALYTICS_DIR);
+    const inStatsig = file.startsWith(STATSIG_DIR);
     for (const [label, pattern, allowedInAnalytics] of banned) {
+      if (label === 'Statsig') {
+        if (inStatsig) continue;
+        if (pattern.test(text.split(STATSIG_ENTRY_IMPORT).join(''))) offenders.push(`${file.replace(ROOT + sep, '')}: ${label}`);
+        continue;
+      }
+      if (label === 'environment access' && inStatsig) {
+        if (pattern.test(text.split(ALLOWED_STATSIG_KEY_READ).join(''))) {
+          offenders.push(`${file.replace(ROOT + sep, '')}: ${label} beyond ${ALLOWED_STATSIG_KEY_READ}`);
+        }
+        continue;
+      }
       if (allowedInAnalytics && inAnalytics) {
         if (label === 'environment access' && pattern.test(text.split(ALLOWED_KEY_READ).join(''))) {
           offenders.push(`${file.replace(ROOT + sep, '')}: ${label} beyond ${ALLOWED_KEY_READ}`);
@@ -595,7 +610,7 @@ async function checkSources() {
     }
   }
   record(
-    'src/ has no network API, Statsig, password or environment access (Amplitude, initAll and the one key read only inside src/analytics/)',
+    'src/ has no network API, password or environment access, and Statsig only inside src/statsig/ (Amplitude, initAll and the one Amplitude key read only inside src/analytics/; the one Statsig key read only inside src/statsig/)',
     sourceFiles.length > 0 && offenders.length === 0,
     offenders.join('; '),
   );
@@ -608,8 +623,8 @@ async function checkSources() {
 
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
   record(
-    'the only runtime dependency in package.json is @amplitude/unified',
-    same(Object.keys(manifest.dependencies ?? {}), ['@amplitude/unified']),
+    'the only runtime dependencies in package.json are @amplitude/unified and @statsig/js-client',
+    same(Object.keys(manifest.dependencies ?? {}).sort(), ['@amplitude/unified', '@statsig/js-client']),
   );
   record(
     'package.json dev dependencies are only typescript and vite',
