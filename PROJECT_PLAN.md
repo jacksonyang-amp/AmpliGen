@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 is ACTIVE: dispatch `phase-3-build-015` (BUILD), authorized 2026-11-25T04:38:00Z. Event contract approved for Phase 3 at 2026-11-25T04:35:00Z; replay is unmasked at 100% by the human's choice (DECISIONS.md 04:38:00Z).
+- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 build REVIEWED at 2026-11-25T04:50:00Z (local `build/phase-3` at `8127b0d`); awaiting push and PR approval, then merge approval. Dispatch `phase-3-build-015` (BUILD), authorized 2026-11-25T04:38:00Z. Event contract approved for Phase 3 at 2026-11-25T04:35:00Z; replay is unmasked at 100% by the human's choice (DECISIONS.md 04:38:00Z).
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
