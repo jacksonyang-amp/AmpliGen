@@ -68,3 +68,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Executed: one Builder created with an IDLE assignment, returned agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`, recorded in BUILDER_HANDOFF.md and PROJECT_PLAN.md. Handoff set to START for dispatch `phase-0-build-001` (Commit: Yes, Merge: No; branch `build/phase-0` only; push, PR creation, merge, deployment: No).
 - Processed once; do not execute again.
 - Merge and deployment remain unauthorized. Merging to main needs a named Approve in this chat naming exactly one PR, its reviewed head commit, and the action.
+
+## 2026-11-25T02:58:00Z | Review of phase-0-build-001 | BLOCKED (awaiting permissions)
+- Builder [bc-26af2fe0-92fa-5211-810f-eb3a21fea559] reported BLOCKED via PHASE_LOG.md (branch `build/phase-0`, head `45cf208ae0ea` as logged; code commit `253badcf20a5a232fc5150a33fdab3c7e2251ba8`). Dispatch status set to IDLE.
+- Review: DoD 1-3 PASS (Planner re-ran typecheck, build, smoke:phase0 in a clean worktree; all exit 0, 23/23). DoD 4 UNVERIFIED. Scope and secret scan clean.
+- Observations: stack is new (Vite ^8.3.8, TypeScript ^5.9.3, Node >=22.12, npm); base path `/AmpliGen/` matches Pages URL https://jacksonyang-amp.github.io/AmpliGen/. `build/phase-0` is branched from the Planner branch `cursor/dispatch-phase-0-builder-fc41` (PR #2), so it carries those commits; PR #2 should merge first or the Phase 0 PR will include them.
+- Deployment consequence: `.github/workflows/deploy-pages.yml` runs on push to `main`; merging the Phase 0 PR publishes the public site.
+- No approval recorded. Push, PR creation, merge, deployment remain unauthorized pending the human.

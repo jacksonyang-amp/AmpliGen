@@ -1,5 +1,5 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 0 — Static scaffold and deployment
 **Dispatch ID:** phase-0-build-001
 **Phase type:** BUILD
