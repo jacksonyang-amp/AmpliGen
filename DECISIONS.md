@@ -620,3 +620,8 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Consequence: the merge runs the Pages workflow on `main` and redeploys the site. The site code does not change. Phase 5 criteria 3 and 4 stay open.
 - Still not authorized: a new commit, a force-push, traffic, or any change to the Statsig console.
 
+## 2026-11-25T18:12:00Z | Merge PR #21 | USED
+- Approval 2026-11-25T18:04:00Z used by merging PR #21 at head `4bf3e265f5c174ad7ccf242a2f69d34f65d712df` as merge commit `4d677832cb5026304c5728d9360dc409db38d486` on `main`.
+- Pages run 45671475143 on `main`: success.
+- Phase 5 criteria 3 and 4 remain open. Phase 5 is not complete.
+
