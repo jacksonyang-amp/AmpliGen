@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 1 — Product and pricing pages (push and PR only)
-**Dispatch ID:** phase-1-push-010
+**Dispatch ID:** phase-1-push-010 (complete; PR #12 open, no merge)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

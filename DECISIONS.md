@@ -253,4 +253,5 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Reviewed commit: `937b0f52d4921b96b8bd898c88c5a87e8b838609` (branch `build/phase-1` head, verified by the Planner). Review: Phase 1 criteria 1-3 PASS (DECISIONS.md 2026-11-25T03:48:00Z).
 - Authorized action: dispatch `phase-1-push-010` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-1` once, at that commit, to `origin` as `build/phase-1`, and open exactly one PR into `main`. No merge.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
-- Dispatch: `phase-1-push-010`. State: RESERVED. Becomes USED after the Builder reports the push and PR result.
+- Dispatch: `phase-1-push-010`. State: USED at 2026-11-25T03:50:00Z. Planner verified: `origin/build/phase-1` is `937b0f52d4921b96b8bd898c88c5a87e8b838609`; PR #12 (https://github.com/jacksonyang-amp/AmpliGen/pull/12) is OPEN, not a draft, base `main`, head that SHA; merge-tree against current `main` has no conflicts. The Builder did not append a PHASE_LOG entry for this dispatch, which the handoff made optional.
+- Still not authorized: merging PR #12. That needs a separate named Approve bound to head `937b0f52d4921b96b8bd898c88c5a87e8b838609`.
