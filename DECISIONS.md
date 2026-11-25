@@ -689,3 +689,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Review settings: the Step 1 report says production requires review and a release pipeline. If creating entities needs a review or an approval, the Builder stops with BLOCKED and lists what exists. The Planner does not authorize a workaround.
 - Unverified by design: live browser evaluation with the real client key, and the actual exposure events in Statsig.
 
+## 2026-11-25T18:42:49Z | Review of dispatch phase-6-build-027 | BLOCKED (Prerequisite 1: Statsig connection read-only); nothing created
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Builder result: BLOCKED at Prerequisite 1. `Get_Context` on the Builder's connection shows `apiKeyType` CONSOLE, scopes `personal_read_only`, `readOnly` true, `canWrite` false. The Builder wrote no code and called no Statsig write tool. Its local `build/phase-6` gained one log commit, `c356009`, on `b2349f8`; nothing was pushed. Baseline on the unchanged tree: `npm ci`, typecheck, build, smoke:phase0 to phase4, and bot:dry-run all exit 0.
+- Planner check, read-only, at 2026-11-25T18:42:49Z: `Get_Context` on the Planner's Statsig connection shows the same: `personal_read_only`, `canWrite` false. `mcpReadOnly` is false. Statsig's accessible products are all `read_only`.
+- So the human's statement "it is now write-enabled" (DECISIONS.md 2026-11-25T18:39 entry) is not reflected in either connection. The key's scope is the cause; the Planner cannot change it.
+- Review settings unchanged: production `reviewRequired` true; development and staging false. Any write to production-environment entities may need a review step.
+- Decision needed from the human: issue a Statsig key with write scope (not `personal_read_only`) and tell the Planner; or stop Phase 6 Steps 2 to 4 and ship the helper, defaults, docs, and test only. The Builder's code work (Steps A and B) is not started either; it is also gated on the Builder's Prerequisite 1 in the handoff. A later dispatch may allow code-only work with Statsig writes off.
+
