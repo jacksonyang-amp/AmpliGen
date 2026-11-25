@@ -138,3 +138,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Deviation: the Builder created the PR with the `gh` CLI because its session had no PR tool. The PR content matches the approved action. Recorded here for the audit trail.
 - Handoff note: `BUILDER_HANDOFF.md` still reads IDLE on `main`. The dispatch is recorded in this file and in the Builder’s report, not in the handoff.
 - Still not approved: merging PR #6, merging any other PR into `main`, and deployment. A merge needs a named Approve bound to head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`.
+
+## 2026-11-25T03:11:00Z | Approval: merge PR #6 | RESERVED
+- Source timestamp: 2026-11-24 19:11 America/Los_Angeles, recorded as 2026-11-25T03:11:00Z.
+- Exact text: `Approve https://github.com/jacksonyang-amp/AmpliGen/pull/6 merge of commit d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`
+- Checks: contains “Approve”, exactly one PR URL (#6), the action (merge), and head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`, which matches PR #6 at the time of approval (base `main` at `754e818`).
+- Consequence accepted by the approver: merging deploys the public site through `.github/workflows/deploy-pages.yml` (push to `main`).
+- Action: the Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` merges PR #6 once, bound to the head SHA, dispatch `phase-0-merge-003`. Method: merge commit. Then the Builder runs read-only deployment verification (Actions run for the merge commit; HTTP 200 at https://jacksonyang-amp.github.io/AmpliGen/ with the expected home-page content).
+- No other merge or deploy action is authorized. Phase 0 remains open until the live check passes.
+- State: RESERVED. Becomes USED after the merge is reported.
