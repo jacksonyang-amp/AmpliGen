@@ -378,3 +378,79 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: Phase 3 build and deployment checks PASS. Live Amplitude delivery, replay capture, the Amplitude project's own mask setting, account reporting, and browser form behavior are UNVERIFIED. The SDK's bundled defaults include `fetchOnStart: true`; this build passes `false` for Feature Experiment, which Phase 5 must confirm at runtime.
 - Consequence now live: Session Replay records every session at 100% with form fields unmasked. The form pages say nothing is sent. This is the accepted choice from DECISIONS.md 2026-11-25T04:38:00Z and 2026-11-25T05:05:00Z.
 - Next: Phase 5 VERIFY, which must test the live site with the key before the project is declared complete. Phase 4 is not started and needs its own scope authorization.
+
+## 2026-11-25T05:18:00Z | Human instruction: continue to Phase 4 | AUTHORIZED (scope only; local commits only)
+- Exact text: "continue to Phase 4"
+- Source: Cursor chat, 2026-11-24 21:18 America/Los_Angeles, recorded as 2026-11-25T05:18:00Z.
+- Accepted as scope authorization to start Phase 4 (Statsig experiments and controls). This does not approve a push, a pull request, a merge, or a deployment.
+- Authorized: dispatch `phase-4-build-018` (BUILD) to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. The Builder may create `build/phase-4` from `origin/main`, commit locally there, install `@statsig/js-client`, and run the checks in BUILDER_HANDOFF.md.
+- Authorized with it, as a necessary consequence of adding the SDK: narrow edits to `scripts/smoke-phase1.mjs`, `scripts/smoke-phase2.mjs`, and `scripts/smoke-phase3.mjs`. Those scripts assert that no Statsig package or code exists. The assertions change to allow only `@statsig/js-client`, imported only from `src/statsig/statsig-adapter.ts`, as listed in the handoff. Every other check stays.
+- Planner selections, fixed for this phase:
+  - Assignment unit: the contract `user_id`, shared with Amplitude. Custom attributes are `is_synthetic` and, when mapped, `account_id`. No email, name, or free text.
+  - Experiment `pricing_cta_copy`, parameter `label_mode`. Control keeps the current labels. Treatment `specific` changes Starter and Growth to "Start a free trial" and Enterprise to "Talk to sales". Hrefs do not change. Hypothesis: more specific labels increase `Sign Up Completed` among visitors who see pricing. `Demo Request Submitted` is the secondary metric. Synthetic results are not causal evidence.
+  - Gate `metrics_account_breakdown` on the product page. The section "Account breakdown shows usage and conversion for the mapped account." is hidden unless the gate passes. It shows no account name or email.
+  - Dynamic config `pricing_notice`, string parameter `notice`, rendered as text into the existing pricing label. Fallback remains "Illustrative pricing. Not offered." Values that are not a string, or are longer than 120 characters, use the fallback.
+  - One exposure per evaluation, logged by the Statsig client. No `Experiment Exposure` business event, and no Amplitude `track` call for an exposure. The documented forwarding path is the Statsig console integration Amplitude Native, which this repository cannot turn on. Live forwarding is UNVERIFIED.
+  - The two contract events are logged once to Statsig and once to Amplitude, with the same `event_id`.
+- Consequence, recorded now and to be restated at merge: with a client key, the deployed site sends those two events and the exposures to Statsig, while the form and welcome pages still say nothing is sent. That matches the earlier choice to keep the copy.
+- Not authorized: push, PR creation, merge, deployment, live bot traffic, a second Statsig package, Amplitude-controlled assignment, guide or survey content, or any console change.
+- Credential note: live evaluation needs the GitHub secret `NEXT_PUBLIC_STATSIG_CLIENT_KEY` to be the project's browser client key. The Planner cannot see repository secrets. The three console entities above also have to exist before live assignment works. Neither is verified. The build must work with the fallbacks when the key is absent.
+
+## 2026-11-25T05:40:00Z | Review of dispatch phase-4-build-018 | ACCEPTED (build only; push, PR, and merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Reviewed head: local `build/phase-4` at `0ad165dc71a471c03fde776b9f9098110d830389`, based on `origin/main` `cf86b14`. Commits: `0bde841` (Statsig client, evaluations, event log, shared flush), `08af3a4` (`smoke:phase4` and narrow smoke edits), `8321cb2` (README), `0ad165d` (PHASE_LOG.md entry).
+- Evidence: a clean worktree at `0ad165d` ran `npm ci` (0), `typecheck` (0), `build` (0), `smoke:phase4` (0, 157 passed), `smoke:phase3` (0, 101 passed), `smoke:phase2` (0, 132 passed), `smoke:phase1` (0, 151 passed), `smoke:phase0` (0, 30 passed), and `bot:dry-run` (0). No key-like literal in `src/` or `dist/`.
+- Scope: 23 changed files, all on the allowed list. Runtime dependencies are `@amplitude/unified` `^1.2.6` and `@statsig/js-client` `^3.33.8`. Dev dependencies are unchanged. The only Statsig import is in `src/statsig/statsig-adapter.ts`. One `StatsigClient` construction, guarded by a non-empty key and run once per page load.
+- Entities and fallbacks match the handoff: experiment `pricing_cta_copy` (`label_mode`), gate `metrics_account_breakdown`, config `pricing_notice` (`notice`). Each is evaluated once per page load, only on the page that shows it. Treatment labels change only the three CTA texts. Hrefs and control labels are unchanged. The gate section is added by script only and hidden in the markup.
+- Scope deviations accepted: (a) `src/analytics/handle.ts` and one line of `controller.ts` changed so one flush wait covers both services. With no Statsig client it delegates to the Amplitude handle as before. (b) `smoke-phase2` also allows the exact `VITE_STATSIG_CLIENT_KEY` read inside `src/statsig/`. (c) `product/index.html` gained one empty hidden paragraph and `style.css` one spacing rule. (d) An empty or blank `notice` falls back too. All four are small and reasoned in PHASE_LOG.md.
+- Result: Phase 4 build criteria 1-3 PASS on local `build/phase-4`. Phase 4 is NOT COMPLETE: push, PR, and merge are not authorized.
+- Known behavior to check in Phase 5: with a client key, the pricing and product pages render control content first and apply the treatment labels, notice, or gate section after Statsig initializes, which can take up to 3000 ms. The page can change visibly after load.
+- Privacy change to restate at merge: with a key, the deployed site sends the user ID, the two business events (with `event_id`, `user_id`, `is_synthetic`, `account_id` when mapped, and product and plan properties), and the exposures to Statsig. The Statsig client also stores a device ID in `localStorage`, sends its own diagnostics, attaches the page URL, and exposes the request IP and user agent to Statsig servers. The form and welcome pages still say nothing is sent. No email, name, or free text is sent by this repository.
+- UNVERIFIED: live Statsig assignment; exposure forwarding to Amplitude through the console integration; delivery of the two events to Statsig; that the three console entities exist; that `NEXT_PUBLIC_STATSIG_CLIENT_KEY` is a valid browser client key; browser behavior, including the label switch after load and the flush before navigation.
+- Next: request the human's push and PR approval bound to `0ad165dc71a471c03fde776b9f9098110d830389`. No such approval is recorded yet.
+
+## 2026-11-25T05:42:00Z | Approval: push build/phase-4 and open one PR | RESERVED
+- Exact text: "Approve pushing build/phase-4 at commit 0ad165dc71a471c03fde776b9f9098110d830389 and opening one PR into main, no merge"
+- Source: Cursor chat, 2026-11-24 21:39 America/Los_Angeles, recorded as 2026-11-25T05:42:00Z.
+- Reviewed commit: `0ad165dc71a471c03fde776b9f9098110d830389` (local branch `build/phase-4` head, verified by the Planner before this record). Review: Phase 4 criteria 1-3 PASS (DECISIONS.md 2026-11-25T05:40:00Z).
+- Authorized action: dispatch `phase-4-push-019` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-4` once, at that commit, to `origin` as `build/phase-4`, and open exactly one PR into `main`. No merge.
+- Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. If the Statsig client key is present, that deploy initializes Statsig and sends the two business actions and the exposures. That merge is not approved.
+- State: USED at 2026-11-25T05:41:00Z by dispatch `phase-4-push-019`. Planner verified: `origin/build/phase-4` is `0ad165dc71a471c03fde776b9f9098110d830389`; PR #20 is the one PR into `main` for that head (OPEN, not a draft, auto-merge off). The Builder changed no files. No Pages run started for `build/phase-4`.
+- Still not authorized: merging the resulting PR, any new commit, any force-push, deployment, or live verification.
+
+## 2026-11-25T05:43:00Z | Review of dispatch phase-4-push-019 | ACCEPTED (push and PR only; merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `git ls-remote` shows `refs/heads/build/phase-4` at `0ad165dc71a471c03fde776b9f9098110d830389`. PR #20 is open, not a draft, base `main`, head `build/phase-4` at that SHA, auto-merge off. The Builder changed no files and made no commit.
+- Result: the push and the one PR are complete. Phase 4 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #20 and head `0ad165dc71a471c03fde776b9f9098110d830389`.
+- Next: none without the human's merge approval.
+
+## 2026-11-25T05:46:00Z | Human direction: theme, copy, and later exposure forwarding | AUTHORIZED (local commits only)
+- Exact text: "The exposure forwarding will be handled later when I enable it. The data is starting to show up in Amplitude. I want a less bland design for the site (think dark mode with contrasting colors) and remove the text on the site that says things are simulated - no public traffic is actually going to engage with this site in any sort of real way, it's clear that it's fake and will only be used by bots and internal testing"
+- Source: Cursor chat, 2026-11-24 21:46 America/Los_Angeles, recorded as 2026-11-25T05:46:00Z.
+- Exposure forwarding: the human will enable it later in the Statsig console. No client-side forwarder is authorized. The Phase 4 choice to log exposures only to Statsig stands.
+- Amplitude delivery: the human reports that data is appearing in the Amplitude project. The Planner has not opened that project. Recorded as the human's statement. Replay, account reporting, and browser behavior stay UNVERIFIED.
+- Copy: this replaces the earlier choice to keep the "nothing is sent" and "simulated" sentences (DECISIONS.md 2026-11-25T04:38:00Z). Those sentences, and the pricing and footer lines that say the content is illustrative or not offered, come off the site. "Request a demo" and the demo-request route stay. The audience is bots and internal testing; the pages should read as the product.
+- Theme: one dark theme with the contrasting accent colors named in BUILDER_HANDOFF.md. No theme toggle and no new layout.
+- Authorized: dispatch `phase-4-design-020` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. New local commits on the existing `build/phase-4`, on top of `0ad165dc71a471c03fde776b9f9098110d830389`.
+- Not authorized: push, a new pull request, merge, deployment, or any change to events, identity, or Statsig assignment. PR #20 remains at the reviewed head until a later approval names the new commit.
+
+## 2026-11-25T05:55:00Z | Result of dispatch phase-4-design-020 | BLOCKED; correction authorized as phase-4-design-021
+- Handoff set to IDLE for the block, then re-issued below, as PLANNER.md requires.
+- Builder report: BLOCKED. Local `build/phase-4` is `4ff641332950719ba41309b60258a4ce50b7b746` (commits `181ec64` theme and copy, `4ff6413` PHASE_LOG.md). `typecheck`, `build`, `smoke:phase4` (157), `smoke:phase3` (101), `smoke:phase2` (132), `smoke:phase1` (185), and `bot:dry-run` exit 0. `smoke:phase0` exits 1 with 29 passed and 1 failed: "home page has in-page navigation targets".
+- Verified by the Planner: `scripts/smoke-phase0.mjs` requires `id="about"` on the home page. `origin/build/phase-4` is still `0ad165dc71a471c03fde776b9f9098110d830389`, so PR #20 is unchanged.
+- Cause: a Planner error. The 05:46:00Z handoff required removing the About section and forbade editing `smoke-phase0`, which cannot both hold.
+- Decision: the human's direction removes the About section, so the Phase 0 check loses its `id="about"` condition. Authorized as a necessary consequence of that direction: one edit to `scripts/smoke-phase0.mjs`, removing only the `id="about"` condition from that one check. No hidden placeholder element, and no other change to that file. This follows the same pattern as the earlier narrow smoke edits.
+- Authorized: dispatch `phase-4-design-021` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`, new local commits on `build/phase-4` on top of `4ff6413`.
+- Not authorized: push, a new pull request, merge, deployment. The theme and copy are not accepted yet; the Planner reviews the whole revision after this correction.
+
+## 2026-11-25T06:05:00Z | Review of dispatch phase-4-design-021 | ACCEPTED (local only; push and merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Reviewed head: local `build/phase-4` at `49b8aac462658b6a96481ac4158467a6b972641a` (commits `181ec64` theme and copy, `4ff6413` log, `d040d98` smoke:phase0 edit, `49b8aac` log), on top of `0ad165dc71a471c03fde776b9f9098110d830389`. `origin/build/phase-4` is still `0ad165d`, so PR #20 is unchanged.
+- Verified by the Planner in a clean worktree at `49b8aac`: `npm ci`, `typecheck`, and `build` exit 0. `smoke:phase4` 157, `smoke:phase3` 101, `smoke:phase2` 132, `smoke:phase1` 185, and `smoke:phase0` 30 all pass with 0 failures. `bot:dry-run` exits 0 and its output hash is identical to `0ad165d`, so events, identity, and fixtures are unchanged.
+- Scope: 15 files changed against `0ad165d`, all inside the allowed set (`src/style.css`, the seven HTML pages, `src/content/phase1.fixtures.json`, `smoke-phase0/1/2/4`, `README.md`, `PHASE_LOG.md`). No source under `src/analytics`, `src/statsig`, `src/events`, or `src/identity` changed. The `smoke-phase0.mjs` diff is the single authorized line: the `id="about"` condition removed. No hidden About element exists.
+- Copy: the built HTML contains none of `simulat`, `illustrative`, `not offered`, `nothing is sent`, `nothing was sent`, `no real customers`, `static site`, `fictional`, or `lumora`. `smoke:phase1` now fails if any of them returns.
+- Theme: the stylesheet uses the nine handoff colors with `color-scheme: dark`. Error text and the invalid-field border use the focus amber `#ffb020` (the handoff named no error color); accepted.
+- Browser check by the Planner (headless Chrome against `vite preview`, no analytics keys): home, pricing, product, sign-up, and demo-request success rendered at 1280 px and 390 px. Dark canvas, teal primary buttons, outlined secondary buttons, readable text, no overflow, no disclaimer copy; pricing shows "Plans for teams of every size." and control CTA labels. Not exercised: form submission, the label switch after Statsig initializes, and keyed behavior. Those stay UNVERIFIED until Phase 5.
+- Open items for the human, none blocking: `README.md` route table and Phase 2 lines still say "Simulated" and "Nothing is sent" because they describe code behavior; the `package.json` description still reads "Fictional API Platform Demo".
+- Result: the design revision is ACCEPTED as local commits. Phase 4 is NOT COMPLETE. Push of `49b8aac` to update PR #20 needs its own RESERVED approval. Merge needs a separate one.
+

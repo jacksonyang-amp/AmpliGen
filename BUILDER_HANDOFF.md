@@ -1,27 +1,47 @@
 # BUILDER_HANDOFF
 **Status:** IDLE
-**Phase:** 3 — Amplitude analytics and replay
-**Dispatch ID:** phase-3-merge-017 (reviewed; merged as b982f97; IDLE)
-**Phase type:** BUILD (merge only; the build and the pull request are already accepted)
+**Phase:** 4 — Statsig experiments and controls
+**Dispatch ID:** phase-4-design-021
+**Phase type:** BUILD (correction to `phase-4-design-020`)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Merge https://github.com/jacksonyang-amp/AmpliGen/pull/17 once, as a merge commit, pinned to head `8127b0dc321ba56d206f8ead26b739afdeaf5705`. Do not change any file. Do not push any other ref.
+Objective: Clear the one blocker from `phase-4-design-020`. `scripts/smoke-phase0.mjs` requires `id="about"` on the home page, and the human asked for the "About this site" section to be removed. Make the one allowed edit to that script, re-run every check, and commit locally.
+
+## What the Planner decided
+The Planner wrote two instructions that could not both hold: remove the About section, and do not edit `smoke-phase0`. The human's direction (DECISIONS.md 2026-11-25T05:46:00Z) is to remove the section. Option 1 from your report is accepted. Do not add a hidden or empty `id="about"` element, and do not keep any About text.
 
 ## Prerequisites
-- Read this handoff and DECISIONS.md from `origin/cursor/record-phase-3-decisions-fc41` after `git fetch origin cursor/record-phase-3-decisions-fc41`. Do not check out or edit that branch.
-- The approval is the entry 2026-11-25T05:05:00Z, state RESERVED, dispatch `phase-3-merge-017`.
-- Immediately before merging, confirm PR #17 is open, not a draft, base `main`, and its head SHA is exactly `8127b0dc321ba56d206f8ead26b739afdeaf5705`. If the head is anything else, stop and report BLOCKED.
+- Local `build/phase-4` is `4ff641332950719ba41309b60258a4ce50b7b746`, which sits on `181ec64950bdbe2a88b473eadd3fa9f46d30e34c` and `0ad165dc71a471c03fde776b9f9098110d830389`. If it is not, stop and report BLOCKED. Add commits on top. Do not rebase, reset, amend, or create a branch.
+- Read this handoff and DECISIONS.md 2026-11-25T05:55:00Z from `origin/cursor/phase-4-handoff-fc41` after `git fetch origin cursor/phase-4-handoff-fc41`. Do not check out or edit that branch.
+
+## The one edit
+In `scripts/smoke-phase0.mjs`, change only the "home page has in-page navigation targets" check so that it no longer requires `id="about"`:
+
+- Keep `html.includes('href="#overview"')` and `html.includes('id="capabilities"')`.
+- Remove only `html.includes('id="about"')`.
+- Do not change any other line, check, name, or count in that file.
+
+If another Phase 0 check still fails after this edit, stop and report BLOCKED with the failing check name. Do not edit it.
+
+## Allowed files
+- `scripts/smoke-phase0.mjs`, the one-line condition above only
+- `PHASE_LOG.md` (append only)
+
+## Forbidden
+- No other file, no new dependency, no push, no new branch, no PR, no merge, no deployment, no force-push, no rebase.
+- No change to site copy, the theme, events, identity, Statsig entities, or Amplitude.
 
 ## Steps
-1. `origin/main` is `e8cb9ba` (the squash of docs PR #16). The Planner's merge-tree of `origin/build/phase-3` onto that main is clean. Do not rebase `build/phase-3`, do not add a commit, and do not force-push.
-2. Merge PR #17 once using the merge method `merge` (a merge commit). Do not squash and do not rebase. The approved commit must remain in the history of `main`.
-3. Do not edit any file, including `PHASE_LOG.md`. A new commit on `build/phase-3` voids the approval.
-4. Report the merge commit SHA, the new `origin/main` SHA, and the Pages workflow run URL if GitHub has created one. If that run is queued or in progress, report the URL and stop. Do not wait for it to finish.
+1. Confirm `git rev-parse build/phase-4` is `4ff641332950719ba41309b60258a4ce50b7b746`.
+2. Make the one edit and commit it as its own commit.
+3. From the repository root, every one of these exits 0: `npm ci`, `npm run typecheck`, `npm run build`, `npm run smoke:phase4`, `npm run smoke:phase3`, `npm run smoke:phase2`, `npm run smoke:phase1`, `npm run smoke:phase0`, `npm run bot:dry-run`. The bot output stays the same as on `0ad165d`.
+4. Append one PHASE_LOG.md entry for this dispatch with the commit SHAs, the commands, and the result of the former blocker. Commit it. State that the earlier `phase-4-design-020` entry is superseded for the `smoke:phase0` result.
+5. Report COMPLETE or BLOCKED and stop.
 
 ## Git permissions
-- Merge: yes, PR #17 once, as a merge commit, only while its head is `8127b0dc321ba56d206f8ead26b739afdeaf5705`.
-- The merge deploys. That is the authorized consequence: GitHub Actions publishes the site and the Amplitude key is baked into the bundle, which starts recording sessions unmasked at 100%.
-- Commit: no. Push of any other branch: no. A second PR: no. Force-push: no. Rebase: no. Squash: no. Destructive git operations: no.
+- Commit: yes, new commits on the existing local `build/phase-4` only.
+- Branch creation: no. Push: no. PR creation: no. Merge: no. Deployment: no. Force-push: no. Rebase: no.
+- PR #20 stays at `0ad165d` until a later push approval names the new head.
 
 ## Stop
-After the merge is reported, stop. Do not start Phase 4.
+After logging COMPLETE or BLOCKED, stop. Do not start Phase 5.
