@@ -201,3 +201,15 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Prior record: PR #8 merged at 2026-11-25T03:24:52Z (`596e7ec`). The push approval 2026-11-25T03:18:00Z is USED (PR #9 open at 57ae413).
 - State: USED at 2026-11-25T03:25:58Z. PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45539939585 succeeded on that SHA. The Builder ran the merge once, pinned to the approved head, with no auto-merge.
 - Post-merge check (Planner, 2026-11-25T03:26Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>API Platform Demo</title>`. `main` PHASE_LOG.md holds the COMPLETE entry.
+
+## 2026-11-25T03:35:00Z | Scope authorization: start Phase 1 | RECORDED (scope only; no git action)
+- Exact text: "Start with Phase 1"
+- Source: Cursor chat with the human, 2026-11-24 19:34 America/Los_Angeles, recorded as 2026-11-25T03:35:00Z.
+- Authorized: Planner dispatches `phase-1-build-007` (BUILD, product and pricing pages) to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. The Builder may create `build/phase-1`, commit locally there, and run the listed checks.
+- Not authorized by this entry: push, PR creation, merge, or deployment. Each needs its own RESERVED approval bound to the reviewed commit and PR.
+
+## 2026-11-25T03:35:00Z | Planner selections for Phase 1 | RECORDED
+- Platform: Lumora API Platform (fictional demo name). Products: Lumora Gateway, Lumora Metrics, Lumora Connect.
+- Pricing: Starter $49 per month and Growth $249 per month, both "Start a trial" to `/AmpliGen/sign-up/`; Enterprise custom, "Request a demo" to `/AmpliGen/demo-request/`. All labeled "Illustrative demo pricing. Not offered."
+- Reason: Phase 1 requires these to be fixed before dispatch. They are fictional and carry no commercial commitment.
+- Demo-request and sign-up show temporary notices with no input fields, so no data is collected or sent in this phase.

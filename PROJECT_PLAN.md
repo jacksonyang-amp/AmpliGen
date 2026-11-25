@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phase 0 local dispatch `phase-0-build-001` is BLOCKED and the handoff is IDLE. The Planner issues each START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
+- Status: ACTIVE — Phase 0 COMPLETE (2026-11-25T03:26:00Z). Phase 1 is ACTIVE: dispatch `phase-1-build-007` (BUILD). The Planner issues each START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
@@ -33,9 +33,16 @@
   1. `npm run typecheck` exits 0.
   2. `npm run build` exits 0 with home, product, pricing, demo-request, and sign-up routes; unfinished forms display clear temporary information instead of broken controls.
   3. `npm run smoke:phase1` confirms those routes resolve from the built site and checks the product names, pricing copy, and CTA destinations against the phase’s content fixtures.
-- **Risks:** The Planner must select the platform name, products, and fictional prices before dispatch. Use UST’s general visual hierarchy as inspiration without copying branding; specify exact UI details in an approved spec if needed.
+- **Planner selections (fixed for this phase; the Builder must not change them):**
+  - Platform name: Lumora API Platform (fictional demo name).
+  - Products: Lumora Gateway (route, authenticate, and rate-limit API traffic); Lumora Metrics (usage and conversion by account and team); Lumora Connect (webhooks and prebuilt business-tool connectors).
+  - Plans, labeled "Illustrative demo pricing. Not offered.": Starter $49 per month, CTA "Start a trial" to `/AmpliGen/sign-up/`; Growth $249 per month, CTA "Start a trial" to `/AmpliGen/sign-up/`; Enterprise custom pricing, CTA "Request a demo" to `/AmpliGen/demo-request/`.
+  - Routes: `/AmpliGen/`, `/AmpliGen/product/`, `/AmpliGen/pricing/`, `/AmpliGen/demo-request/`, `/AmpliGen/sign-up/`. Demo-request and sign-up show temporary notices with no input fields.
+  - Smoke command: `npm run smoke:phase1`. Regression: `npm run smoke:phase0` must still exit 0.
+- **Status:** ACTIVE — dispatched as `phase-1-build-007` on 2026-11-25T03:35:00Z after the Cursor-chat instruction "Start with Phase 1". No push, PR, or merge is authorized for this phase's Builder work yet.
+- **Risks:** Use general UST-style visual hierarchy as inspiration only; do not copy branding, logos, or marks. Platform name and prices are fictional and must be labeled as such. The Builder adds no SDKs, forms, or network calls in this phase.
 - **Needs human approval to merge?** Yes.
-- **Git permissions for the Builder:** Commit yes, only when granted in the phase handoff; Merge no, pending a separate approved dispatch.
+- **Git permissions for the Builder:** Branch creation: yes, `build/phase-1` only. Commit: yes, local commits on `build/phase-1` only. Push: no. PR creation: no. Merge: no. Deployment: no. Destructive operations: no. Each push and PR needs a separate RESERVED approval in DECISIONS.md.
 
 ## Phase 2 — Simulated conversions and identities
 - **Type:** BUILD
