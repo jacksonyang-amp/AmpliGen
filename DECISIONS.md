@@ -213,3 +213,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Pricing: Starter $49 per month and Growth $249 per month, both "Start a trial" to `/AmpliGen/sign-up/`; Enterprise custom, "Request a demo" to `/AmpliGen/demo-request/`. All labeled "Illustrative demo pricing. Not offered."
 - Reason: Phase 1 requires these to be fixed before dispatch. They are fictional and carry no commercial commitment.
 - Demo-request and sign-up show temporary notices with no input fields, so no data is collected or sent in this phase.
+
+## 2026-11-25T03:42:00Z | Review of dispatch phase-1-build-007 | SENT BACK FOR ONE PLANNER CORRECTION
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: Planner clean-worktree run at `3a6ba6d4ad639e53ae7ca3e1e4494a857fcf89f1`: typecheck exit 0, build exit 0 (five route files in `dist/`), `smoke:phase1` exit 0 (91 passed), `smoke:phase0` exit 0 (28 passed). Scope and forbidden-content scans clean.
+- Criteria: 1 PASS, 2 PASS, 3 PASS.
+- Finding: the home page keeps the Phase 0 brand and the sentence "Product, pricing, and account pages will be added in later phases", and its hero CTAs do not link to the new pages. Cause: the Planner's handoff 007 said to keep home content. Decision: correct before any push, because a merge would publish a self-contradicting home page.
+- Not authorized: push, PR, merge, or deployment. No approval has been requested for them yet.
