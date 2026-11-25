@@ -638,3 +638,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Gate `metrics_account_breakdown`: enabled, status In Progress, one rule named "Account" with condition type `public` and pass percentage 50. That rule passes a random half of all users, not users with an `account_id`. It does not match the design (pass when `account_id` is set). The Planner cannot tell from the read whether the condition was meant to be a custom-field check that did not save. Criterion 4 gate targeting is therefore NOT met.
 - Result: two of three entities match the design. The gate needs one fix in the console, or the human accepts the 50% rule and says so.
 
+## 2026-11-25T18:16:27Z | Human decision: defer gate targeting; Phase 5 closed with waivers | RECORDED
+- Exact text: "don't worry about the gate targeting, there's no account_id field yet in Statsig, I will revisit it later."
+- Source: Cursor chat, 2026-11-25 10:16 America/Los_Angeles, recorded as 2026-11-25T18:16:27Z.
+- Decision: the gate `metrics_account_breakdown` stays as it is (public rule, 50%). The human will revisit account targeting after an `account_id` field exists in Statsig. The Planner changes nothing in the console.
+- Effect: criterion 4 gate targeting is WAIVED for now and stays UNVERIFIED. The site code is unaffected: with this gate, half of users see the extra Metrics sentence, and the control content shows if Statsig does not initialize.
+- Phase 5 result: COMPLETE WITH WAIVERS. Criteria 1, 2, and 5 PASS on evidence (PR #21 merged, Pages run success). Criteria 3 and 4 are closed by human waiver, not by evidence: synthetic traffic (2026-11-25T18:12:11Z entry) and gate targeting (this entry). Everything the waivers cover is UNVERIFIED, and nothing in this repo claims otherwise. All five phases are now closed.
+- Open, optional, not dispatched: the runbook on `main` still marks the Statsig entities UNVERIFIED and holds analysis-link placeholders. Refreshing it needs a new BUILD dispatch, a PR, and its own approvals. Later work the human named: run synthetic traffic, and add the `account_id` field and gate rule in Statsig.
+
