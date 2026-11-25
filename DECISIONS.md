@@ -281,3 +281,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Identity and mapping rules, privacy rules, synthetic labeling, and routes are fixed in PROJECT_PLAN.md Phase 2 and BUILDER_HANDOFF.md. Reason: the plan requires the Planner to define email-to-account mapping, unknown-domain behavior, and synthetic labeling before dispatch.
 - Departure from a first draft: user IDs are not derived from an email hash. The contract file says `user_id` is a stable visitor ID preserved through sign-up, which is also safer.
 - Scope check: no excluded feature is added. There is no real authentication, no password field, no backend, no lead delivery, and no payments.
+
+## 2026-11-25T04:20:00Z | Review of dispatch phase-2-build-012 | ACCEPTED
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: Planner clean-worktree run at `fd8bae63dae88216f376c5668ba095daff20c8c1`: typecheck 0, build 0 (seven routes), smoke:phase2 0 (132 passed), bot:dry-run 0 (16 lines, identical across runs, no email or persona name in output), smoke:phase1 0 (146 passed), smoke:phase0 0 (28 passed). Source read: contract, identity, flow, UI wiring, navigation, bot runner, and page markup match the handoff. Scope check: 35 changed files, none outside the allowed list.
+- Result: Phase 2 criteria 1-3 PASS. Phase 2 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized. Browser behavior of the forms is UNVERIFIED and deferred to Phase 5.
+- Decision on the Builder's flag: persona user IDs containing a fictional name token are accepted (they are fixture labels, not personal data). Reversible later.
+- Next: request the human's push and PR approval bound to `fd8bae63dae88216f376c5668ba095daff20c8c1`. No approval is recorded yet.
