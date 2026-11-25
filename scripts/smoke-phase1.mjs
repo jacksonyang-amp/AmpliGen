@@ -144,9 +144,28 @@ async function checkRoutes(origin, fixture) {
   return pages;
 }
 
+const FORBIDDEN_TERMS = [
+  { name: 'Lumora', pattern: /lumora/i },
+  { name: 'fictional', pattern: /fictional/i },
+  { name: 'demonstration', pattern: /demonstration/i },
+  { name: 'Fictional demo', pattern: /fictional demo/i },
+  { name: 'API Platform Demo', pattern: /api platform demo/i },
+  { name: 'demo-banner', pattern: /demo-banner/ },
+];
+
 function checkSharedPageContent(pages, fixture) {
   for (const [route, html] of Object.entries(pages)) {
-    record(`route ${route} labels itself as a ${fixture.demoLabel.toLowerCase()}`, html.includes(fixture.demoLabel));
+    for (const term of FORBIDDEN_TERMS) {
+      record(`route ${route} has no "${term.name}" in text or markup`, !term.pattern.test(html));
+    }
+
+    const pageTitle = decodeEntities(/<title>([\s\S]*?)<\/title>/.exec(html)?.[1] ?? '');
+    const titleOk =
+      route === fixture.basePath ? pageTitle === fixture.home.title : pageTitle.endsWith(` | ${fixture.platformName}`);
+    record(`route ${route} title uses the ${fixture.platformName} brand`, titleOk, pageTitle);
+
+    const pageFooter = /<footer\b[^>]*>([\s\S]*?)<\/footer>/.exec(html)?.[1] ?? '';
+    record(`route ${route} footer matches the fixture`, textOf(pageFooter) === fixture.footer);
 
     const anchors = anchorsIn(primaryNav(html));
     const navMatches =
@@ -173,16 +192,27 @@ function checkHomePage(html, fixture) {
   record(`home page title is exactly "${home.title}"`, title !== undefined && decodeEntities(title) === home.title);
 
   const description = /<meta\s+name="description"\s+content="([^"]*)"/.exec(html)?.[1] ?? '';
-  record('home page meta description uses the Lumora brand', decodeEntities(description).includes(home.brand));
+  record(`home page meta description uses the ${home.brand} brand`, decodeEntities(description).includes(home.brand));
 
   const heading = /<h1\b[^>]*>([\s\S]*?)<\/h1>/.exec(html)?.[1];
   record(`home page h1 is "${home.brand}"`, heading !== undefined && textOf(heading) === home.brand);
 
-  const footer = /<footer\b[^>]*>([\s\S]*?)<\/footer>/.exec(html)?.[1] ?? '';
-  record('home page footer uses the Lumora brand', textOf(footer).includes(home.brand));
+  const eyebrow = elementByMarker(html, 'p', 'class="eyebrow"');
+  record('home page eyebrow matches the fixture', eyebrow !== null && textOf(eyebrow) === home.eyebrow);
 
   const lede = elementByMarker(html, 'p', 'class="lede"');
   record('home page lede matches the fixture', lede !== null && textOf(lede) === home.lede);
+
+  const aboutLink = anchorsIn(/<nav\b[^>]*aria-label="On this page"[^>]*>([\s\S]*?)<\/nav>/.exec(html)?.[1] ?? '').find(
+    (anchor) => anchor.href === '#about',
+  );
+  record('home page in-page nav about link matches the fixture', aboutLink?.label === home.about.navLabel);
+
+  const aboutSection = /<section id="about"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1] ?? '';
+  const aboutHeading = /<h2\b[^>]*>([\s\S]*?)<\/h2>/.exec(aboutSection)?.[1];
+  record('home page about heading matches the fixture', aboutHeading !== undefined && textOf(aboutHeading) === home.about.heading);
+  const aboutCopy = /<p\b[^>]*>([\s\S]*?)<\/p>/.exec(aboutSection)?.[1];
+  record('home page about copy matches the fixture', aboutCopy !== undefined && textOf(aboutCopy) === home.about.copy);
 
   const ctas = elementByMarker(html, 'p', 'data-home-ctas') ?? '';
   const anchors = anchorsIn(ctas);
@@ -199,6 +229,8 @@ function checkHomePage(html, fixture) {
 }
 
 function checkProductPage(html, fixture) {
+  const lede = elementByMarker(html, 'p', 'class="lede"');
+  record('product page lede matches the fixture', lede !== null && textOf(lede) === fixture.productPageLede);
   for (const product of fixture.products) {
     const item = itemByAttribute(html, 'product', product.name);
     record(`product page lists ${product.name}`, item !== null);
