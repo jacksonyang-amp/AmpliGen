@@ -573,3 +573,27 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Authorized next action: none for the Builder. The Builder stays IDLE.
 - Needed from the human, in any order: (1) create the three Statsig entities (`pricing_cta_copy` with `label_mode`, `metrics_account_breakdown`, `pricing_notice` with `notice`); (2) name the driver, volume, and window for synthetic traffic; (3) optionally approve pushing `build/phase-5` for the runbook and log.
 
+## 2026-11-25T17:45:00Z | Human decisions: Statsig updated, traffic deferred, push build/phase-5 | AUTHORIZED (push only)
+- Exact text: "1. statsig console updated 2. don't worry about the synthetic traffic for now 3. Approve build/phase-5"
+- Source: Cursor chat, 2026-11-25 09:44 America/Los_Angeles, recorded as 2026-11-25T17:45:00Z.
+- Item 1, Statsig console: the human created the three entities. The Planner verified them read-only; the findings are in the next entry.
+- Item 2, synthetic traffic: DEFERRED by the human. This supersedes the 2026-11-25T06:31:00Z statement "I approve synthetic volume", which named no volume, window, or driver. No traffic is approved or reserved. Phase 5 criteria 3 and 4 depend on traffic, so they stay open.
+- Item 3, "Approve build/phase-5": the Planner had asked for approval to push `build/phase-5` so the runbook and log reach origin (DECISIONS.md 2026-11-25T17:25:00Z, item 3). The Planner reads the reply as that push approval only. It names no PR and no merge, so neither is authorized. If the human meant more, they must say so in the chat.
+
+## 2026-11-25T17:45:00Z | Approval: push build/phase-5 | RESERVED
+- Exact text: "Approve build/phase-5"
+- Source: Cursor chat, 2026-11-25 09:44 America/Los_Angeles, recorded as 2026-11-25T17:45:00Z.
+- Reviewed commit: `4bf3e265f5c174ad7ccf242a2f69d34f65d712df` (local `build/phase-5` head, on `origin/main` `dece677`; reviewed at DECISIONS.md 2026-11-25T06:25:00Z; the Planner re-checked the head and a clean worktree at this record). Content: `docs/demo-runbook.md` and a `PHASE_LOG.md` entry.
+- Authorized action: dispatch `phase-5-push-025` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-5` once, at that commit, to `origin` as a new branch `build/phase-5`. A plain push, no PR, no merge.
+- Consequence: a push to a non-main branch does not deploy. The runbook names secrets but holds no key value. A PR and a merge each need their own approval. A merge to `main` runs the Pages workflow and redeploys the site.
+- Still not authorized: a PR, a merge, a new commit, a force-push, deployment, or traffic.
+- State: RESERVED at 2026-11-25T17:45:00Z by dispatch `phase-5-push-025`. It becomes USED after the Planner verifies that `origin/build/phase-5` is `4bf3e265f5c174ad7ccf242a2f69d34f65d712df`.
+
+## 2026-11-25T17:46:00Z | Finding: Statsig entities read-only check | RECORDED (criterion 4 BLOCKED by configuration)
+- All three entities exist in the `AmpliGen` project (`5IyUpVQB2DLse1abn3E2Oh`), created by the human at about 2026-11-25T17:38Z. Each needs a change before it matches the design.
+- Experiment `pricing_cta_copy` is in status `setup`: it has not started, so it assigns no one and logs no exposures. Both groups, Control and Test, have `label_mode` set to an empty string. The site treats an empty value as control, so the Test group would show control labels. The primary metrics are empty, the hypothesis is empty, and the secondary metrics are the Statsig defaults (`wau`, `l7`, `new_dau`, `mau_28d`, `dau`). Required: Test group `label_mode` = `specific`, Control = `control`; primary metric `Sign Up Completed`; secondary metric `Demo Request Submitted`; then start the experiment.
+- Gate `metrics_account_breakdown` is enabled with no rules. With no rule, it fails for everyone, so the product-page sentence stays hidden. The plan did not define a targeting rule. The Planner selects: pass when the custom attribute `account_id` is set, so only mapped accounts see the sentence.
+- Dynamic config `pricing_notice` is enabled and its default value is the Statsig placeholder `{"notice": "Your notice text here"}`. That is a non-blank string under 120 characters, so the site accepts it. With the live key, the pricing page should replace "Plans for teams of every size." with "Your notice text here" after Statsig initializes. This is inferred from the code and the config value; it has NOT been observed in a browser, because no new session was generated. Required: set `notice` to the intended text, for example "Plans for teams of every size.".
+- Effect: until the human fixes the config, the public pricing page likely shows placeholder text. Statsig exposure and conversion evidence (criterion 4) needs the experiment started and traffic, and traffic is deferred.
+- The Statsig connection is read-only. The Planner cannot make these changes.
+
