@@ -505,3 +505,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Not authorized by this entry: synthetic traffic volume for criteria 3 and 4 (funnel, journey, experiment, and gate analysis). Those need a separate RESERVED approval that names the target project, the volume, and the time window. Also not authorized: push, PR, merge, deployment, or any change to Statsig or Amplitude configuration.
 - State: AUTHORIZED at 2026-11-25T06:16:00Z for dispatch `phase-5-verify-024`.
 
+## 2026-11-25T06:19:00Z | Finding: Statsig console read-only check | RECORDED (criterion 4 BLOCKED)
+- Human action: "Connected Statsig" (Cursor chat, 2026-11-24 22:17 America/Los_Angeles, recorded as 2026-11-25T06:17:00Z). The Statsig MCP connection is read-only (`canWrite: false`, `mcpReadOnly: true`).
+- Connected project: `AmpliGen` (project id `5IyUpVQB2DLse1abn3E2Oh`, organization `The Statsig Org`).
+- Result: the project lists 0 experiments, 0 feature gates, and 0 dynamic configs. The three entities the plan requires, `pricing_cta_copy`, `metrics_account_breakdown`, and `pricing_notice`, do not exist in this project.
+- Effect on the live site: none on the public pages. Without assignment, the pricing, product, and notice pages show control content, as the fallbacks specify. Statsig exposures and conversion events from the live site cannot be matched to any entity in this project.
+- Not verified: whether the GitHub secret `NEXT_PUBLIC_STATSIG_CLIENT_KEY` belongs to this project. The Planner cannot read secrets. If it belongs to another project, the entities may exist there.
+- Criterion 4 is BLOCKED until a human either creates the three entities in this project, or confirms which project the client key belongs to. Creating entities is a console change, which the Phase 5 scope does not authorize. It needs a separate human instruction.
+- Amplitude MCP is not yet connected; criterion 3 remains UNVERIFIED.
+
