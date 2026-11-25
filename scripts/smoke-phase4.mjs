@@ -57,7 +57,7 @@ const VALID = { name: 'Test Person', productId: 'ampligen_metrics', planId: 'gro
 const NEW_CONTACT = 'new.contact@northwind-labs.example';
 const AMPLITUDE_KEY = ['fake', 'other', 'key'].join('-');
 
-const FALLBACK_NOTICE = 'Illustrative pricing. Not offered.';
+const FALLBACK_NOTICE = 'Plans for teams of every size.';
 const CONTROL_LABELS = ['Start a trial', 'Start a trial', 'Request a demo'];
 const SPECIFIC_LABELS = ['Start a free trial', 'Start a free trial', 'Talk to sales'];
 const PLANS = ['Starter', 'Growth', 'Enterprise'];

@@ -751,7 +751,10 @@ async function checkBuiltOutput() {
     record('built welcome page has an empty data-guide-anchor div', /<div id="guide-anchor" data-guide-anchor><\/div>/.test(welcome));
     record('built welcome page links to the product page', /href="\/AmpliGen\/product\/"/.test(welcome));
     record('built welcome page has a Reset sample visitor button', /Reset sample visitor/.test(welcome));
-    record('built success page states the request is simulated', /simulated/.test(pages['/AmpliGen/demo-request/success/']) && /Nothing was sent/.test(pages['/AmpliGen/demo-request/success/']));
+    record(
+      'built success page confirms the request and says the team will follow up at the work email',
+      pages['/AmpliGen/demo-request/success/'].includes('Your demo request is in. We will follow up at the work email you entered.'),
+    );
 
     const scripts = [...new Set(Object.values(pages).flatMap((html) => [...html.matchAll(/src="(\/AmpliGen\/assets\/[^"]+\.js)"/g)].map((match) => match[1])))];
     let scriptsOk = scripts.length > 0;

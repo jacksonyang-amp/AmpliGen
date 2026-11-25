@@ -1,6 +1,6 @@
 {
   "platformName": "AmpliGen",
-  "footer": "AmpliGen. Product details and pricing shown on this site are illustrative.",
+  "footer": "AmpliGen. Gateway, metrics, and connections for API programs.",
   "basePath": "/AmpliGen/",
   "nav": [
     { "label": "Home", "href": "/AmpliGen/" },
@@ -14,13 +14,8 @@
   "home": {
     "brand": "AmpliGen",
     "title": "AmpliGen",
-    "eyebrow": "Static site",
+    "eyebrow": "API platform",
     "lede": "A B2B API platform with three products. Explore the products, compare pricing, or request a demo.",
-    "about": {
-      "navLabel": "About this site",
-      "heading": "About this site",
-      "copy": "This site contains no real customers, leads, accounts, or services, and it does not send data to any backend."
-    },
     "forbiddenText": "will be added in later phases",
     "ctas": [
       { "label": "Explore products", "href": "/AmpliGen/product/" },
@@ -52,7 +47,7 @@
     { "label": "Request a demo", "href": "/AmpliGen/demo-request/" },
     { "label": "View pricing", "href": "/AmpliGen/pricing/" }
   ],
-  "pricingLabel": "Illustrative pricing. Not offered.",
+  "pricingLabel": "Plans for teams of every size.",
   "plans": [
     {
       "name": "Starter",
@@ -74,10 +69,10 @@
     }
   ],
   "demoRequest": {
-    "copy": "Nothing you enter is sent anywhere. This request is simulated."
+    "copy": "Tell us about your team and the product you want to see."
   },
   "signUp": {
-    "copy": "This sign-up is simulated. No account is created and nothing is sent.",
+    "copy": "Create your AmpliGen account.",
     "backLink": { "label": "Back to pricing", "href": "/AmpliGen/pricing/" }
   }
 }
