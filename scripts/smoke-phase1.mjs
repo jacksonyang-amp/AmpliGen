@@ -157,11 +157,45 @@ function checkSharedPageContent(pages, fixture) {
     const current = anchors.filter((anchor) => anchor.current).map((anchor) => anchor.href);
     record(`route ${route} marks only its own nav link as current`, current.length === 1 && current[0] === route);
 
+    const brand = /<span class="brand-name">([\s\S]*?)<\/span>/.exec(html)?.[1];
+    record(`route ${route} header brand is "${fixture.platformName}"`, brand !== undefined && textOf(brand) === fixture.platformName);
+
     record(
       `route ${route} has no form controls`,
       !/<(form|input|textarea|select)\b/i.test(html),
     );
   }
+}
+
+function checkHomePage(html, fixture) {
+  const { home } = fixture;
+  const title = /<title>([\s\S]*?)<\/title>/.exec(html)?.[1];
+  record(`home page title is exactly "${home.title}"`, title !== undefined && decodeEntities(title) === home.title);
+
+  const description = /<meta\s+name="description"\s+content="([^"]*)"/.exec(html)?.[1] ?? '';
+  record('home page meta description uses the Lumora brand', decodeEntities(description).includes(home.brand));
+
+  const heading = /<h1\b[^>]*>([\s\S]*?)<\/h1>/.exec(html)?.[1];
+  record(`home page h1 is "${home.brand}"`, heading !== undefined && textOf(heading) === home.brand);
+
+  const footer = /<footer\b[^>]*>([\s\S]*?)<\/footer>/.exec(html)?.[1] ?? '';
+  record('home page footer uses the Lumora brand', textOf(footer).includes(home.brand));
+
+  const lede = elementByMarker(html, 'p', 'class="lede"');
+  record('home page lede matches the fixture', lede !== null && textOf(lede) === home.lede);
+
+  const ctas = elementByMarker(html, 'p', 'data-home-ctas') ?? '';
+  const anchors = anchorsIn(ctas);
+  record(
+    'home page hero has exactly the fixture CTAs in order',
+    anchors.length === home.ctas.length &&
+      home.ctas.every((cta, index) => anchors[index].label === cta.label && anchors[index].href === cta.href),
+  );
+  for (const cta of home.ctas) {
+    record(`home page hero CTA "${cta.label}" goes to ${cta.href}`, hasAnchor(ctas, cta.label, cta.href));
+  }
+
+  record(`home page does not contain "${home.forbiddenText}"`, !textOf(html).includes(home.forbiddenText));
 }
 
 function checkProductPage(html, fixture) {
@@ -275,6 +309,7 @@ async function main() {
     const origin = `http://127.0.0.1:${port}`;
     const pages = await checkRoutes(origin, fixture);
     checkSharedPageContent(pages, fixture);
+    checkHomePage(pages[fixture.basePath], fixture);
     checkProductPage(pages[`${fixture.basePath}product/`], fixture);
     checkPricingPage(pages[`${fixture.basePath}pricing/`], fixture);
     checkPlaceholderPages(pages, fixture);

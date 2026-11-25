@@ -10,6 +10,16 @@
     { "label": "Sign up", "href": "/AmpliGen/sign-up/" }
   ],
   "routes": ["/AmpliGen/", "/AmpliGen/product/", "/AmpliGen/pricing/", "/AmpliGen/demo-request/", "/AmpliGen/sign-up/"],
+  "home": {
+    "brand": "Lumora API Platform",
+    "title": "Lumora API Platform Demo",
+    "lede": "A fictional B2B API platform with three products. Explore the products, compare pricing, or request a demo.",
+    "forbiddenText": "will be added in later phases",
+    "ctas": [
+      { "label": "Explore products", "href": "/AmpliGen/product/" },
+      { "label": "View pricing", "href": "/AmpliGen/pricing/" }
+    ]
+  },
   "products": [
     {
       "name": "Lumora Gateway",
