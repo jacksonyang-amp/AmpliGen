@@ -220,3 +220,7 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Criteria: 1 PASS, 2 PASS, 3 PASS.
 - Finding: the home page keeps the Phase 0 brand and the sentence "Product, pricing, and account pages will be added in later phases", and its hero CTAs do not link to the new pages. Cause: the Planner's handoff 007 said to keep home content. Decision: correct before any push, because a merge would publish a self-contradicting home page.
 - Not authorized: push, PR, merge, or deployment. No approval has been requested for them yet.
+
+## 2026-11-25T03:43:00Z | Dispatch phase-1-fix-008 issued | RECORDED
+- Same Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Scope: home page alignment only (brand, stale sentence, hero CTAs, fixture, smoke:phase1 checks). It needs no new scope authorization: it is inside the Phase 1 scope authorized at 2026-11-25T03:35:00Z and it leaves `scripts/smoke-phase0.mjs` untouched.
+- Git: local commits on the existing `build/phase-1` only. No push, PR, merge, or deployment.
