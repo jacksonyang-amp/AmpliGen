@@ -184,3 +184,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Action: dispatch `phase-0-log-push-005` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` to push that commit once and open one PR into `main`.
 - Consequence: the push itself does not deploy. A later merge into `main` would re-run the Pages workflow and redeploy an unchanged site, and that merge is not approved.
 - State: RESERVED. Becomes USED after the Builder reports the push and PR URL.
+
+## 2026-11-25T03:22:00Z | Approval: push Phase 0 log commit and open one PR | USED
+- Execution evidence: `refs/heads/cursor/phase-0-complete-log-fc41` on `origin` is `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. PR #9, https://github.com/jacksonyang-amp/AmpliGen/pull/9, is OPEN, not a draft, base `main`, head that SHA. It is the only PR for that branch.
+- Builder note: the first push attempt was refused locally (exit 1) because the destination ref was not fully qualified. Nothing reached the remote. The second push, to `refs/heads/cursor/phase-0-complete-log-fc41`, succeeded once. The PR was created with `gh pr create` because the Builder had no PR tool. Recorded as a deviation.
+- Planner verification: PR diff (three-dot against `main` at `cfa7509`) is `PHASE_LOG.md` only. A trial merge of the branch into current `main` has no conflicts, and the resulting Planner files match `main`.
+- Still not authorized: merging PR #9. That needs a named Approve bound to head `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. Merging re-runs the Pages workflow and redeploys an unchanged site.
+- Phase 0 stays OPEN in `PROJECT_PLAN.md` until PR #9 is merged and its log entry is on `main`.
