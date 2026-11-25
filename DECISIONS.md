@@ -119,3 +119,38 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - The cherry-picked commits get new SHAs, so the original approval for `45cf208` does not cover them. Fresh approval is required (PLANNER.md: “Require fresh approval for a changed scope or commit”).
 - Still not authorized: merge, deployment, and any merge of this proposed Phase 0 PR. A merge to `main` deploys the site via `.github/workflows/deploy-pages.yml`.
 - Required approval text (named Approve, one PR-or-branch, one action): to be issued in chat after the proposed branch exists and its head SHA is reported.
+
+## 2026-11-25T03:08:00Z | Approval: push Phase 0 cherry-pick branch and open one PR | RESERVED
+- Source timestamp: 2026-11-24 19:08 America/Los_Angeles, recorded as 2026-11-25T03:08:00Z.
+- Exact text: `I already merged PR #4, Approve pushing the Phase 0 cherry-pick branch and opening one PR into main, no merge`
+- Confirmed: PR #4 merged as `754e818ff77fb0c844bda2900390413ec8943bc8` (2026-11-25T03:07:38Z). `main` contains no `node_modules/` or `dist/`.
+- Approval scope: this is an action approval for one new branch and one new PR. It names no existing PR, so the PR binding is to the new branch. Merge and deployment are NOT approved.
+- Action: from `origin/main` at `754e818`, cherry-pick `253badcf20a5a232fc5150a33fdab3c7e2251ba8` then `45cf2089a3d903f09061d5717b873c39f0037b12` onto branch `cursor/phase-0-scaffold-fc41`; run the Phase 0 BUILD checks; push that branch; open exactly one PR into `main`.
+- Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-0-push-002`.
+- Reviewed commit: none existed at approval. The head SHA the Builder reports is not yet approved for merge. A later merge needs a named Approve bound to that SHA.
+- State: RESERVED for dispatch `phase-0-push-002`. Becomes USED after the Builder reports the push and PR.
+
+## 2026-11-25T03:10:00Z | Approval for dispatch phase-0-push-002 | USED
+- Approval text and scope: see the RESERVED entry above (2026-11-25T03:08:00Z).
+- Execution evidence: PR #6, https://github.com/jacksonyang-amp/AmpliGen/pull/6, base `main`, open, not a draft, mergeable. Head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`. Commits: `13bca56` (scaffold, from `253badc`) and `d0621b0` (BLOCKED log, from `45cf208`). Branch `cursor/phase-0-scaffold-fc41`, pushed once.
+- Planner verification: `origin/main` at `754e818`; changed files only the 12 Phase 0 files plus `PHASE_LOG.md`; Planner-owned files identical to `main`; no `node_modules/` or `dist/`; no key-like literals. The workflow still triggers only on push to `main`.
+- Builder reports: `npm ci`, `npm run typecheck`, `npm run build`, and `npm run smoke:phase0` (23 passed) all exit 0.
+- Deviation: the Builder created the PR with the `gh` CLI because its session had no PR tool. The PR content matches the approved action. Recorded here for the audit trail.
+- Handoff note: `BUILDER_HANDOFF.md` still reads IDLE on `main`. The dispatch is recorded in this file and in the Builder’s report, not in the handoff.
+- Still not approved: merging PR #6, merging any other PR into `main`, and deployment. A merge needs a named Approve bound to head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`.
+
+## 2026-11-25T03:11:00Z | Approval: merge PR #6 | RESERVED
+- Source timestamp: 2026-11-24 19:11 America/Los_Angeles, recorded as 2026-11-25T03:11:00Z.
+- Exact text: `Approve https://github.com/jacksonyang-amp/AmpliGen/pull/6 merge of commit d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`
+- Checks: contains “Approve”, exactly one PR URL (#6), the action (merge), and head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`, which matches PR #6 at the time of approval (base `main` at `754e818`).
+- Consequence accepted by the approver: merging deploys the public site through `.github/workflows/deploy-pages.yml` (push to `main`).
+- Action: the Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` merges PR #6 once, bound to the head SHA, dispatch `phase-0-merge-003`. Method: merge commit. Then the Builder runs read-only deployment verification (Actions run for the merge commit; HTTP 200 at https://jacksonyang-amp.github.io/AmpliGen/ with the expected home-page content).
+- No other merge or deploy action is authorized. Phase 0 remains open until the live check passes.
+- State: RESERVED. Becomes USED after the merge is reported.
+
+## 2026-11-25T03:14:00Z | Approval: merge PR #6 | USED
+- Execution evidence: PR #6 merged 2026-11-25T03:12:01Z as `c8593de06523a07b596a4cef28967ec0d7f49c2b`, via `gh pr merge 6 --merge --match-head-commit d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f` (exit 0, once).
+- Planner verification: `origin/main` is `c8593de`; head `d0621b0` is an ancestor; no `node_modules/` or `dist/` on `main`. Pages run 45538301854 is completed/success on `c8593de`. https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>API Platform Demo</title>`; `/AmpliGen/assets/index-Dfv1CCUN.css`, `/AmpliGen/assets/index-FVyABazW.js`, and `/AmpliGen/favicon.svg` return 200.
+- Phase 0 is COMPLETE in PROJECT_PLAN.md (criterion 4 PASS).
+- Open follow-up: `PHASE_LOG.md` on `main` still holds only the earlier BLOCKED entry for `phase-0-build-001`. The Builder-owned completion entry is not yet recorded; request it from the Builder through a new dispatch, not by Planner edit.
+- Still not authorized: any other merge, and any Phase 1 work. Phase 1 needs its own START dispatch and approval.
