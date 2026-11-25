@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 4 — Statsig experiments and controls
-**Dispatch ID:** phase-4-push-022
+**Dispatch ID:** phase-4-push-022 (reviewed; pushed as 49b8aac; IDLE)
 **Phase type:** PUSH (dispatch only; no build, no file changes)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

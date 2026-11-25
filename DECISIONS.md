@@ -466,5 +466,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Authorized action: dispatch `phase-4-push-022` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-4` once, at that commit, to `origin` as `build/phase-4`, as a plain fast-forward. Nothing else.
 - Consequence: a push to a non-main branch does not deploy. PR #20 then carries the dark theme, the copy removal, and the `smoke-phase0` edit. Merging PR #20 later would deploy the dark theme and the Statsig code, and with the client key present it would start Statsig evaluation and event logging. That merge is not approved and needs its own RESERVED approval naming PR #20 and its head SHA.
 - Still not authorized: merging PR #20, any new commit, any force-push, PR creation or edits, deployment, or live verification.
-- State: RESERVED at 2026-11-25T06:09:00Z by dispatch `phase-4-push-022`. It becomes USED after the Planner verifies `origin/build/phase-4` is `49b8aac462658b6a96481ac4158467a6b972641a`.
+- State: USED at 2026-11-25T06:12:00Z by dispatch `phase-4-push-022`. Planner verified: `origin/build/phase-4` is `49b8aac462658b6a96481ac4158467a6b972641a`, and PR #20 (OPEN, not a draft, base `main`, auto-merge off) shows that head.
+
+## 2026-11-25T06:12:00Z | Review of dispatch phase-4-push-022 | ACCEPTED (push only; merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: the Builder ran one plain push of `build/phase-4` from `0ad165d` to `49b8aac` (fast-forward, output `0ad165d..49b8aac`). The Planner re-checked: `git ls-remote origin refs/heads/build/phase-4` is `49b8aac462658b6a96481ac4158467a6b972641a`. PR #20 is OPEN, not a draft, base `main`, head `49b8aac`, mergeable, auto-merge off, and not merged. No Pages run started for `build/phase-4`. The Builder changed no file and made no commit.
+- Result: the push and the PR update are complete. Phase 4 remains BUILD REVIEWED, not COMPLETE. The merge of PR #20 needs its own RESERVED approval naming PR #20 and head `49b8aac462658b6a96481ac4158467a6b972641a`, with the deploy and Statsig consequences restated.
+- Next: none without the human's merge approval. Live verification of the dark theme and the Statsig boundary remains Phase 5.
 
