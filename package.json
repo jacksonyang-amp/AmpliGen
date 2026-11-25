@@ -16,6 +16,7 @@
     "smoke:phase1": "node scripts/smoke-phase1.mjs",
     "smoke:phase2": "node --experimental-strip-types scripts/smoke-phase2.mjs",
     "smoke:phase3": "node --experimental-strip-types scripts/smoke-phase3.mjs",
+    "smoke:phase4": "node --experimental-strip-types scripts/smoke-phase4.mjs",
     "bot:dry-run": "node --experimental-strip-types scripts/bot-runner.mjs --dry-run"
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "vite": "^8.3.8"
   },
   "dependencies": {
-    "@amplitude/unified": "^1.2.6"
+    "@amplitude/unified": "^1.2.6",
+    "@statsig/js-client": "^3.33.8"
   }
 }

@@ -61,6 +61,7 @@ export function createAnalyticsController(deps: AnalyticsControllerDeps): Analyt
       navigateAfterFlush(navigate) {
         flushThenNavigate({ flush: () => sdk.flush(), navigate });
       },
+      flush: () => sdk.flush(),
     };
     setAnalytics(handle);
     handle.syncIdentity();
