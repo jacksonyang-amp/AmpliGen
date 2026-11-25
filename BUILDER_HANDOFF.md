@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 2 — Simulated conversions and identities (merge only)
-**Dispatch ID:** phase-2-merge-014
+**Dispatch ID:** phase-2-merge-014 (done; PR #14 merged at cc19af9)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
