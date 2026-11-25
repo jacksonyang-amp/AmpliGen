@@ -415,5 +415,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Reviewed commit: `0ad165dc71a471c03fde776b9f9098110d830389` (local branch `build/phase-4` head, verified by the Planner before this record). Review: Phase 4 criteria 1-3 PASS (DECISIONS.md 2026-11-25T05:40:00Z).
 - Authorized action: dispatch `phase-4-push-019` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-4` once, at that commit, to `origin` as `build/phase-4`, and open exactly one PR into `main`. No merge.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. If the Statsig client key is present, that deploy initializes Statsig and sends the two business actions and the exposures. That merge is not approved.
-- State: RESERVED for dispatch `phase-4-push-019`. Not yet USED.
+- State: USED at 2026-11-25T05:41:00Z by dispatch `phase-4-push-019`. Planner verified: `origin/build/phase-4` is `0ad165dc71a471c03fde776b9f9098110d830389`; PR #20 is the one PR into `main` for that head (OPEN, not a draft, auto-merge off). The Builder changed no files. No Pages run started for `build/phase-4`.
 - Still not authorized: merging the resulting PR, any new commit, any force-push, deployment, or live verification.
+
+## 2026-11-25T05:43:00Z | Review of dispatch phase-4-push-019 | ACCEPTED (push and PR only; merge NOT approved)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `git ls-remote` shows `refs/heads/build/phase-4` at `0ad165dc71a471c03fde776b9f9098110d830389`. PR #20 is open, not a draft, base `main`, head `build/phase-4` at that SHA, auto-merge off. The Builder changed no files and made no commit.
+- Result: the push and the one PR are complete. Phase 4 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #20 and head `0ad165dc71a471c03fde776b9f9098110d830389`.
+- Next: none without the human's merge approval.

@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 4 — Statsig experiments and controls
-**Dispatch ID:** phase-4-push-019
+**Dispatch ID:** phase-4-push-019 (reviewed; PR #20 open at 0ad165d; IDLE)
 **Phase type:** BUILD (git action only; the build itself is already accepted)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
