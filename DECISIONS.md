@@ -87,7 +87,16 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - State: UNUSED. Single-use. Not dispatched.
 - Authorized action: the Planner may issue one new START dispatch to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` to push local branch `build/phase-0` at `45cf2089a3d903f09061d5717b873c39f0037b12` and open one pull request into `main`.
 - Not included: merge, deployment, or a second push.
-- Hold: do not dispatch until PR #2 is on `main`, so the Phase 0 pull request does not also carry the planner commits.
+- Hold: do not dispatch until `main` no longer contains `node_modules/` or `dist/`. PR #2 is on `main`, but its merged tree still has those paths.
+
+## 2026-11-25T02:59:00Z | Report that PR #2 merged | VERIFIED, PUSH STILL HELD
+- Source timestamp: 2026-11-24 18:59 America/Los_Angeles, recorded as 2026-11-25T02:59:00Z.
+- Exact text: `PR #2 has been merged`
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/2
+- This is a status report. It is not an approval: it does not contain “Approve” or an authorized action. The Planner did not merge it.
+- Verified: merged at 2026-11-25T02:58:12Z by jacksonyang-amp. Merge commit `e23ba7df1b9721d5cc12371fdc35f28083261778`. The merged head is `6d9c558ec2dae13a57e675195e5109c313d55c62`, not `89f282f694154a2f6455b89a85759f3d6838135a`. `origin/main` contains `node_modules/` and `dist/`. No Pages workflow is on `main`, so this merge did not deploy the site.
+- Decision 1 stays UNUSED. The Builder was not asked to push.
+- Cleanup of `node_modules/` and `dist/` is in this branch and needs its own named Approve before it merges. That merge does not deploy.
 
 ### Decision 2 — merge PR #2 before the Phase 0 pull request
 - State: NOT AUTHORIZED. No merge was performed.
