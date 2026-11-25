@@ -28,7 +28,7 @@
 - If execution is uncertain, stop and reconcile with the Planner before retrying; do not reuse approval for another revision or action.
 
 ## Blockers and communication
-- Never send Slack messages to the human or request approval there; write BLOCKED entries in PHASE_LOG.md and notify the Planner through the agent channel.
+- Do not message the human, read Slack, or request approval. Write BLOCKED and COMPLETE entries in PHASE_LOG.md and notify the Planner through the agent channel. Only the Planner communicates with the human.
 - Stop affected work on missing/exposed credentials or unclear scope.
 - Log BLOCKED before charges, credential/personal-data exposure, deletion or overwrite of existing data, access-control changes, public deployment, or work beyond file/git permissions unless the handoff explicitly authorizes that consequence; never expose secrets.
 - If you cannot determine whether an action crosses these boundaries, log the specific uncertainty and stop that action.
