@@ -297,3 +297,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
 - State: USED at 2026-11-25T04:18:00Z. Planner verified: `origin/build/phase-2` is `fd8bae63dae88216f376c5668ba095daff20c8c1`; PR #14 (https://github.com/jacksonyang-amp/AmpliGen/pull/14) is OPEN, not a draft, base `main`, head that SHA, auto-merge off; GitHub reports it mergeable. The Builder did not edit or commit any file. A push of `build/phase-2` does not deploy, because `.github/workflows/deploy-pages.yml` runs only on `main`.
 - Still not authorized: merging PR #14. That needs a separate named Approve bound to head `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merging redeploys the public site.
+
+## 2026-11-25T04:21:00Z | Approval: merge PR #14 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/14 merge of commit fd8bae63dae88216f376c5668ba095daff20c8c1"
+- Source: Cursor chat, 2026-11-24 20:20 America/Los_Angeles, recorded as 2026-11-25T04:21:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/14 (OPEN, not a draft, base `main`). Reviewed head: `fd8bae63dae88216f376c5668ba095daff20c8c1`, confirmed on `origin/build/phase-2`.
+- Base moved: `origin/main` is `0f21228c0fafb3b26043942fd8375554710dec5d`, the squash of PR #13 (BUILDER_HANDOFF.md, DECISIONS.md, PROJECT_PLAN.md only). Merge-tree of PR #14 onto that main has no conflicts. The approved head did not change.
+- Authorized action: dispatch `phase-2-merge-014` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #14 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence: the merge runs the Pages workflow and redeploys the public site with the simulated demo-request and sign-up forms.
+- State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.

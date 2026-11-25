@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 criteria 1-3 PASS. PR #14 is open at `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merge is not authorized.
+- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 criteria 1-3 PASS. Dispatch `phase-2-merge-014` merges PR #14 at `fd8bae63dae88216f376c5668ba095daff20c8c1`. That merge redeploys the public site.
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
@@ -67,10 +67,10 @@
 - **Planner decision on the Builder's flag:** persona user IDs such as `persona_priya_nair` stay. They are fixed labels for fictional personas that the Planner specified, not real personal data, so the contract's no-names rule is not breached. Changing them to opaque IDs is a small later change if the human prefers.
 - **Open item (cosmetic, not in the site):** `package.json` still carries the description "Fictional API Platform Demo". The Phase 2 handoff did not allow changing it.
 - **Unverified by design:** browser behavior of the forms (focus after an error, persona prefill, storage, real navigation, reload not emitting) is UNVERIFIED and belongs to Phase 5.
-- **Result:** Phase 2 criteria 1-3 PASS. The push approval is USED. PR #14 (https://github.com/jacksonyang-amp/AmpliGen/pull/14) is open, base `main`, head `fd8bae63dae88216f376c5668ba095daff20c8c1`. Phase 2 is not complete until that PR is merged under a separate named approval. Merging redeploys the public site.
+- **Result:** Phase 2 criteria 1-3 PASS. The push approval is USED. The human approved the merge on 2026-11-25T04:21:00Z. Dispatch `phase-2-merge-014` merges PR #14 once, pinned to `fd8bae63dae88216f376c5668ba095daff20c8c1`. Phase 2 is not complete until that merge and its Pages run are recorded.
 - **Risks:** Phase 2 replaces the placeholder notices on the demo-request and sign-up pages with forms, so two Phase 1 smoke assertions must change (authorized narrowly in the handoff). Browser-level form behavior cannot be verified in a BUILD phase; it is checked in Phase 5. Live bot traffic, target projects, and any cost need explicit authorization; Phase 2 runs the bot in dry-run only. The bot runner and the app must share one contract implementation; if that cannot be done without a new dependency, the Builder logs BLOCKED rather than duplicating logic.
-- **Needs human approval to merge?** Yes.
-- **Git permissions for the Builder:** Branch creation, local commits, the one push, and the one PR are used. Push approval 2026-11-25T04:16:00Z is USED for PR #14 at `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merge: no. Deployment: no. Destructive operations: no.
+- **Needs human approval to merge?** The approval is recorded and RESERVED for this one merge.
+- **Git permissions for the Builder:** Branch creation, local commits, the one push, and the one PR are used. Merge: yes, once, PR #14 only, pinned to `fd8bae63dae88216f376c5668ba095daff20c8c1`, under the RESERVED approval at 2026-11-25T04:21:00Z. Deployment: only that merge's Pages run. Destructive operations: no.
 
 ## Phase 3 — Amplitude analytics and replay
 - **Type:** BUILD
