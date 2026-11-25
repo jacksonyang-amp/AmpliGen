@@ -60,3 +60,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 
 ### Still blocked
 - Builder agent ID remains `<EXISTING_BUILDER_AGENT_ID>`. Handoff status stays IDLE. No Builder was started. No Builder link is recorded in PROJECT_PLAN.md. No merge or deployment is authorized.
+
+## 2026-11-25T02:51:00Z | Phase 0 dispatch phase-0-build-001 | PROCESSED
+- Request source: Cursor chat, 2026-11-24 18:51 America/Los_Angeles (UTC 2026-11-25T02:51:00Z). Not a PR action approval; no approval is created.
+- Exact request text (summary of fields that matter): "Merged. You are the Planner. ... 1. Confirm BUILDER_HANDOFF.md says Status: START with Commit: Yes, Merge: No. 2. Start one Builder agent on that handoff. Record its agent link in PROJECT_PLAN.md. 3. Find channel #<channel> with the Slack MCP, note its ID in PLANNER.md, subscribe to new top-level messages only, and act only on messages that mention @PLANNER. 4. Post a short message mentioning @<approver>: the active phase and what you need from them, if anything. Do not merge to main without my named Approve in Slack."
+- Steps 3 and 4 not executed: the channel and approver were again unspecified placeholders, and the USED 2026-11-25T02:44:00Z authorization replaced Slack with this chat (PLANNER.md "Human communication"). The Slack requirement for merge approval is likewise replaced by a named Approve in this chat. No Slack channel ID is recorded in PLANNER.md.
+- Executed: one Builder created with an IDLE assignment, returned agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`, recorded in BUILDER_HANDOFF.md and PROJECT_PLAN.md. Handoff set to START for dispatch `phase-0-build-001` (Commit: Yes, Merge: No; branch `build/phase-0` only; push, PR creation, merge, deployment: No).
+- Processed once; do not execute again.
+- Merge and deployment remain unauthorized. Merging to main needs a named Approve in this chat naming exactly one PR, its reviewed head commit, and the action.

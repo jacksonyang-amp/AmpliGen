@@ -1,7 +1,9 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: PLANNED. This plan does not start work; the Planner must issue a START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
+- Status: ACTIVE — Phase 0 dispatched (dispatch `phase-0-build-001`, START). The Planner issues each START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
+- Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
+- Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
 - Git authority defaults to none. For every phase, the handoff may grant Commit yes; Merge remains no until a separate, single-use approval dispatch authorizes the exact PR, reviewed head, merge action, and resulting deployment.
 - Branch creation, push, and PR creation require explicit handoff permissions. Never infer them from Commit yes. Every merge below requires human approval because it can deploy the public site.
