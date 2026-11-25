@@ -433,3 +433,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Theme: one dark theme with the contrasting accent colors named in BUILDER_HANDOFF.md. No theme toggle and no new layout.
 - Authorized: dispatch `phase-4-design-020` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. New local commits on the existing `build/phase-4`, on top of `0ad165dc71a471c03fde776b9f9098110d830389`.
 - Not authorized: push, a new pull request, merge, deployment, or any change to events, identity, or Statsig assignment. PR #20 remains at the reviewed head until a later approval names the new commit.
+
+## 2026-11-25T05:55:00Z | Result of dispatch phase-4-design-020 | BLOCKED; correction authorized as phase-4-design-021
+- Handoff set to IDLE for the block, then re-issued below, as PLANNER.md requires.
+- Builder report: BLOCKED. Local `build/phase-4` is `4ff641332950719ba41309b60258a4ce50b7b746` (commits `181ec64` theme and copy, `4ff6413` PHASE_LOG.md). `typecheck`, `build`, `smoke:phase4` (157), `smoke:phase3` (101), `smoke:phase2` (132), `smoke:phase1` (185), and `bot:dry-run` exit 0. `smoke:phase0` exits 1 with 29 passed and 1 failed: "home page has in-page navigation targets".
+- Verified by the Planner: `scripts/smoke-phase0.mjs` requires `id="about"` on the home page. `origin/build/phase-4` is still `0ad165dc71a471c03fde776b9f9098110d830389`, so PR #20 is unchanged.
+- Cause: a Planner error. The 05:46:00Z handoff required removing the About section and forbade editing `smoke-phase0`, which cannot both hold.
+- Decision: the human's direction removes the About section, so the Phase 0 check loses its `id="about"` condition. Authorized as a necessary consequence of that direction: one edit to `scripts/smoke-phase0.mjs`, removing only the `id="about"` condition from that one check. No hidden placeholder element, and no other change to that file. This follows the same pattern as the earlier narrow smoke edits.
+- Authorized: dispatch `phase-4-design-021` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`, new local commits on `build/phase-4` on top of `4ff6413`.
+- Not authorized: push, a new pull request, merge, deployment. The theme and copy are not accepted yet; the Planner reviews the whole revision after this correction.
