@@ -289,10 +289,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Decision on the Builder's flag: persona user IDs containing a fictional name token are accepted (they are fixture labels, not personal data). Reversible later.
 - Next: request the human's push and PR approval bound to `fd8bae63dae88216f376c5668ba095daff20c8c1`. No approval is recorded yet.
 
-## 2026-11-25T04:16:00Z | Approval: push build/phase-2 and open one PR | RESERVED
+## 2026-11-25T04:16:00Z | Approval: push build/phase-2 and open one PR | USED
 - Exact text: "Approve pushing build/phase-2 at commit fd8bae63dae88216f376c5668ba095daff20c8c1 and opening one PR into main, no merge"
 - Source: Cursor chat, 2026-11-24 20:14 America/Los_Angeles, recorded as 2026-11-25T04:16:00Z.
 - Reviewed commit: `fd8bae63dae88216f376c5668ba095daff20c8c1` (branch `build/phase-2` head, verified by the Planner before this record). Review: Phase 2 criteria 1-3 PASS (DECISIONS.md 2026-11-25T04:20:00Z).
 - Authorized action: dispatch `phase-2-push-013` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-2` once, at that commit, to `origin` as `build/phase-2`, and open exactly one PR into `main`. No merge.
 - Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
-- State: RESERVED. Becomes USED after the Builder reports the push and PR URL.
+- State: USED at 2026-11-25T04:18:00Z. Planner verified: `origin/build/phase-2` is `fd8bae63dae88216f376c5668ba095daff20c8c1`; PR #14 (https://github.com/jacksonyang-amp/AmpliGen/pull/14) is OPEN, not a draft, base `main`, head that SHA, auto-merge off; GitHub reports it mergeable. The Builder did not edit or commit any file. A push of `build/phase-2` does not deploy, because `.github/workflows/deploy-pages.yml` runs only on `main`.
+- Still not authorized: merging PR #14. That needs a separate named Approve bound to head `fd8bae63dae88216f376c5668ba095daff20c8c1`. Merging redeploys the public site.
