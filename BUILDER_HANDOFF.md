@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 4 — Statsig experiments and controls
-**Dispatch ID:** phase-4-merge-023
+**Dispatch ID:** phase-4-merge-023 (reviewed; merged as dece677; IDLE)
 **Phase type:** MERGE (merge only; the build and push are already accepted)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

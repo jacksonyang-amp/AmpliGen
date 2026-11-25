@@ -487,5 +487,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
   5. Amplitude replay has recorded every session since the Phase 3 deploy (DECISIONS.md 2026-11-25T05:10:00Z), with form fields unmasked at 100%. This merge does not change that.
   6. The three Statsig console entities and a valid browser client key are UNVERIFIED. Exposure forwarding to Amplitude stays off until the human enables it in the console.
 - Still not authorized: any new commit, force-push, rebase, a second PR, Phase 5 work, or live bot traffic.
-- State: RESERVED at 2026-11-25T06:13:00Z by dispatch `phase-4-merge-023`. It becomes USED after the Planner verifies that `origin/main` is a merge commit whose second parent is `49b8aac462658b6a96481ac4158467a6b972641a`.
+- State: USED at 2026-11-25T06:14:00Z by dispatch `phase-4-merge-023`. Planner verified: PR #20 merged as merge commit `dece677e712168b7312e88df05115b315a93f56f` at 2026-11-25T06:13:37Z; its parents are `48cac6c` and `49b8aac462658b6a96481ac4158467a6b972641a`; `origin/main` is `dece677`.
+
+## 2026-11-25T06:14:00Z | Review of dispatch phase-4-merge-023 | ACCEPTED (merge only)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `origin/main` is `dece677e712168b7312e88df05115b315a93f56f`, a merge commit with parents `48cac6c` and the approved `49b8aac462658b6a96481ac4158467a6b972641a`. PR #20 is MERGED at 2026-11-25T06:13:37Z. Pages run 45559034290 on `dece677` completed with success (build and deploy). The Builder changed no file, made no commit, and pushed no ref.
+- Live check by the Planner: `/AmpliGen/`, `/product/`, `/pricing/`, `/demo-request/`, and `/sign-up/` return HTTP 200. The home page contains none of `simulated`, `nothing is sent`, or `illustrative`.
+- Consequence now live: the dark theme and copy removal are deployed. The site initializes Statsig only if `NEXT_PUBLIC_STATSIG_CLIENT_KEY` is set. Whether that secret exists, whether the three console entities exist, and whether live assignment and event delivery to Statsig work are UNVERIFIED. Exposure forwarding to Amplitude is off until the human enables it in the console. Amplitude replay has recorded at 100% since the Phase 3 deploy.
+- Result: Phase 4 build and merge are complete. Phase 4 is NOT COMPLETE until Phase 5 verifies the live Statsig and Amplitude behavior and the browser flows.
+- Next: Phase 5 (VERIFY) needs a separate human start. No further action is authorized now.
 
