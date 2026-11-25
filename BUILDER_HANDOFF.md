@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 5 — Final verification and demo readiness
-**Dispatch ID:** phase-5-push-025
+**Dispatch ID:** phase-5-push-025 (reviewed 2026-11-25T17:47:00Z; pushed; IDLE)
 **Phase type:** PUSH (dispatch only; no build, no file changes)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

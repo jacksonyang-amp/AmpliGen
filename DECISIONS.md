@@ -587,7 +587,7 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Authorized action: dispatch `phase-5-push-025` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-5` once, at that commit, to `origin` as a new branch `build/phase-5`. A plain push, no PR, no merge.
 - Consequence: a push to a non-main branch does not deploy. The runbook names secrets but holds no key value. A PR and a merge each need their own approval. A merge to `main` runs the Pages workflow and redeploys the site.
 - Still not authorized: a PR, a merge, a new commit, a force-push, deployment, or traffic.
-- State: RESERVED at 2026-11-25T17:45:00Z by dispatch `phase-5-push-025`. It becomes USED after the Planner verifies that `origin/build/phase-5` is `4bf3e265f5c174ad7ccf242a2f69d34f65d712df`.
+- State: USED at 2026-11-25T17:47:00Z by dispatch `phase-5-push-025`. Planner verified: `origin/build/phase-5` is `4bf3e265f5c174ad7ccf242a2f69d34f65d712df`, a new branch; the diff against `origin/main` is 2 files (`PHASE_LOG.md`, `docs/demo-runbook.md`); no PR exists for the branch and no workflow run started.
 
 ## 2026-11-25T17:46:00Z | Finding: Statsig entities read-only check | RECORDED (criterion 4 BLOCKED by configuration)
 - All three entities exist in the `AmpliGen` project (`5IyUpVQB2DLse1abn3E2Oh`), created by the human at about 2026-11-25T17:38Z. Each needs a change before it matches the design.
@@ -596,4 +596,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Dynamic config `pricing_notice` is enabled and its default value is the Statsig placeholder `{"notice": "Your notice text here"}`. That is a non-blank string under 120 characters, so the site accepts it. With the live key, the pricing page should replace "Plans for teams of every size." with "Your notice text here" after Statsig initializes. This is inferred from the code and the config value; it has NOT been observed in a browser, because no new session was generated. Required: set `notice` to the intended text, for example "Plans for teams of every size.".
 - Effect: until the human fixes the config, the public pricing page likely shows placeholder text. Statsig exposure and conversion evidence (criterion 4) needs the experiment started and traffic, and traffic is deferred.
 - The Statsig connection is read-only. The Planner cannot make these changes.
+
+## 2026-11-25T17:47:00Z | Review of dispatch phase-5-push-025 | ACCEPTED (push only; no PR, no merge)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `git ls-remote origin refs/heads/build/phase-5` prints `4bf3e265f5c174ad7ccf242a2f69d34f65d712df`. No PR has `build/phase-5` as its head. No Actions run exists for the branch. The Builder changed no file and made no commit.
+- Result: the runbook draft and the Phase 5 log entry are on origin. Nothing deploys from this branch.
+- Next: none authorized. A PR or merge for `build/phase-5` needs its own approval. Phase 5 criteria 3 and 4 wait on the Statsig console fixes and on traffic, which the human deferred.
 
