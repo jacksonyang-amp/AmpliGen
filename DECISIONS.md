@@ -167,3 +167,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Correction: `PROJECT_PLAN.md` earlier read Phase 0 COMPLETE (merged PR #5) before the record existed. It now reads OPEN pending the Builder’s entry.
 - Dispatch: `phase-0-log-004` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Allowed: append one entry to PHASE_LOG.md; local branch `cursor/phase-0-complete-log-fc41` and commit only. Push, PR, merge, deployment: not authorized.
 - Next approvals needed from the human: push and one PR for that branch; later a merge bound to its head SHA. A docs-only merge does not trigger deployment beyond the existing workflow on `main` (the workflow runs on every push to `main`; a re-deploy of an unchanged site is expected and harmless).
+
+## 2026-11-25T03:22:00Z | Review of dispatch phase-0-log-004 | ACCEPTED, awaiting push approval
+- Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` reported COMPLETE for `phase-0-log-004`. Handoff set to IDLE.
+- Reviewed commit: `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24` on local branch `cursor/phase-0-complete-log-fc41`, based on `origin/main` `9daf225977436ccebb81707e10b3f88a7635ac21`. Not on the remote.
+- Planner inspection: diff is `PHASE_LOG.md` only, 21 additions and 0 deletions; the existing BLOCKED entry is byte-identical; no key-like literals.
+- Content check: the entry records the public URL, deployed revision `c8593de06523a07b596a4cef28967ec0d7f49c2b`, run link https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45538301854, the SHA mapping (`13bca56` from `253badc`, `d0621b0` from `45cf208`, merge `c8593de`), approval references, deviations, and DoD items 1-4 PASS. Planner had already verified the same facts independently on `main` (typecheck, build, smoke exit 0; run 45538301854 success; URL 200).
+- Criterion 4 record part: satisfied once this commit is on `main`. Phase 0 stays OPEN in `PROJECT_PLAN.md` until then.
+- Not yet authorized: push, PR creation, and merge for this branch. Requested from the human: a named Approve for push plus one PR bound to commit `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. A later merge needs its own named Approve bound to the PR head. Any merge to `main` re-runs the Pages workflow and redeploys an unchanged site.
