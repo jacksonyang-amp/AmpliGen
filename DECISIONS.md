@@ -224,3 +224,9 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 ## 2026-11-25T03:43:00Z | Dispatch phase-1-fix-008 issued | RECORDED
 - Same Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Scope: home page alignment only (brand, stale sentence, hero CTAs, fixture, smoke:phase1 checks). It needs no new scope authorization: it is inside the Phase 1 scope authorized at 2026-11-25T03:35:00Z and it leaves `scripts/smoke-phase0.mjs` untouched.
 - Git: local commits on the existing `build/phase-1` only. No push, PR, merge, or deployment.
+
+## 2026-11-25T03:45:00Z | Review of dispatch phase-1-fix-008 | ACCEPTED
+- Handoff set to IDLE before review.
+- Evidence: Planner clean-worktree run at `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`: typecheck 0, build 0, smoke:phase1 0 (105 passed), smoke:phase0 0 (28 passed). Home page title, brand, CTAs, and absence of the stale sentence checked in `dist/index.html`. Changed files: index.html, fixture, smoke:phase1 script, PHASE_LOG.md, plus Phase 1 files from 007.
+- Result: Phase 1 criteria 1-3 PASS on local `build/phase-1`. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
+- Next: request the human's push and PR approval bound to `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`. No approval is recorded yet.
