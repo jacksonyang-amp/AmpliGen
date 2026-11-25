@@ -14,12 +14,12 @@
 ### Approvals and processed Slack messages
 - No Slack messages processed. No approvals recorded. No merge or deployment is authorized.
 
-## 2026-11-25T02:44:00Z | Cursor chat replaces Slack | RESERVED
+## 2026-11-25T02:44:00Z | Cursor chat replaces Slack | USED
 - Source timestamp: 2026-11-24 18:44 America/Los_Angeles, recorded as 2026-11-25T02:44:00Z. No Slack timestamp.
 - PR: none. This is not a pull-request action approval. It does not approve PR #1 or any other PR.
 - Reviewed commit: `791e587aa8cc945e7354578df27b1dabc21243ae` (origin/main at the time the latest remote files were read). Branch tip at authorization was `db668efd5fa8e27801f49a57fca0a8c2014ce36d`; origin/main was merged before editing.
 - Actor: Planner. Dispatch ID: none. Builder ID: none. Not dispatched to a Builder.
-- State: RESERVED for the single documentation action below. It becomes USED only after that commit exists. It cannot be reused.
+- State: USED. Execution evidence is commit `bdc8a6472ba99e84029f66db6ba7b320c41882d0`. This approval cannot be reused.
 
 ### Exact approval text
 ```
