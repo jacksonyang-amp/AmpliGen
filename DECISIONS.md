@@ -199,4 +199,5 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Authorized action: merge PR #9 once with a merge commit, pinned to the head above, via dispatch `phase-0-merge-006` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Nothing else is authorized.
 - Consequence: the merge runs the Pages workflow and redeploys an unchanged site. Merging PR #8 earlier (`596e7ec`) also triggered a Pages run on the docs-only change.
 - Prior record: PR #8 merged at 2026-11-25T03:24:52Z (`596e7ec`). The push approval 2026-11-25T03:18:00Z is USED (PR #9 open at 57ae413).
-- State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.
+- State: USED at 2026-11-25T03:25:58Z. PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45539939585 succeeded on that SHA. The Builder ran the merge once, pinned to the approved head, with no auto-merge.
+- Post-merge check (Planner, 2026-11-25T03:26Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>API Platform Demo</title>`. `main` PHASE_LOG.md holds the COMPLETE entry.

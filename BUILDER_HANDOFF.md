@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 0 — Static scaffold and deployment (correction: record the live-deployment evidence)
-**Dispatch ID:** phase-0-merge-006
+**Dispatch ID:** phase-0-merge-006 (complete)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
@@ -23,3 +23,6 @@ Objective: Merge PR #9 into main, and nothing else. PR #9 is https://github.com/
 
 Git permissions: Commit: No | Branch creation/switching: No | Push: No | PR creation: No | Merge: Yes, once, PR #9 only, pinned to the head above | Deployment: No beyond the merge's own Pages run | Destructive git operations: No.
 - Report: the PR #9 merge commit SHA, the new origin/main SHA, the Pages run URL and conclusion, and any blocker. Then stop.
+
+## Result
+PR #9 merged at `950692b665d86dcf206809a01c5c518592aaa3da`. Pages run 45539939585 succeeded on that SHA. The handoff is IDLE. No further dispatch is open.
