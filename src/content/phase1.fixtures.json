@@ -1,6 +1,6 @@
 {
-  "platformName": "Lumora API Platform",
-  "demoLabel": "Fictional demo",
+  "platformName": "AmpliGen",
+  "footer": "AmpliGen. Product details and pricing shown on this site are illustrative.",
   "basePath": "/AmpliGen/",
   "nav": [
     { "label": "Home", "href": "/AmpliGen/" },
@@ -11,9 +11,15 @@
   ],
   "routes": ["/AmpliGen/", "/AmpliGen/product/", "/AmpliGen/pricing/", "/AmpliGen/demo-request/", "/AmpliGen/sign-up/"],
   "home": {
-    "brand": "Lumora API Platform",
-    "title": "Lumora API Platform Demo",
-    "lede": "A fictional B2B API platform with three products. Explore the products, compare pricing, or request a demo.",
+    "brand": "AmpliGen",
+    "title": "AmpliGen",
+    "eyebrow": "Static site",
+    "lede": "A B2B API platform with three products. Explore the products, compare pricing, or request a demo.",
+    "about": {
+      "navLabel": "About this site",
+      "heading": "About this site",
+      "copy": "This site contains no real customers, leads, accounts, or services, and it does not send data to any backend."
+    },
     "forbiddenText": "will be added in later phases",
     "ctas": [
       { "label": "Explore products", "href": "/AmpliGen/product/" },
@@ -22,29 +28,30 @@
   },
   "products": [
     {
-      "name": "Lumora Gateway",
+      "name": "AmpliGen Gateway",
       "description": "Route, authenticate, and rate-limit API traffic.",
       "ctaLabel": "Request a demo",
       "ctaHref": "/AmpliGen/demo-request/"
     },
     {
-      "name": "Lumora Metrics",
+      "name": "AmpliGen Metrics",
       "description": "See usage and conversion by account and team.",
       "ctaLabel": "Request a demo",
       "ctaHref": "/AmpliGen/demo-request/"
     },
     {
-      "name": "Lumora Connect",
+      "name": "AmpliGen Connect",
       "description": "Send webhooks and connect to prebuilt business tools.",
       "ctaLabel": "Request a demo",
       "ctaHref": "/AmpliGen/demo-request/"
     }
   ],
+  "productPageLede": "Three products that work together to run and measure API programs.",
   "productPageCtas": [
     { "label": "Request a demo", "href": "/AmpliGen/demo-request/" },
     { "label": "View pricing", "href": "/AmpliGen/pricing/" }
   ],
-  "pricingLabel": "Illustrative demo pricing. Not offered.",
+  "pricingLabel": "Illustrative pricing. Not offered.",
   "plans": [
     {
       "name": "Starter",

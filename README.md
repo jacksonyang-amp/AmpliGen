@@ -1,6 +1,6 @@
-# API Platform Demo
+# AmpliGen
 
-A fictional B2B API and software platform demo. It is a static site with repository-held mock data and no backend. All companies, products, and data are simulated.
+A B2B API and software platform site. It is a static site with repository-held mock data and no backend.
 
 ## Local commands
 
@@ -26,8 +26,8 @@ Each route is its own static HTML entry registered in `vite.config.ts` (`build.r
 | Route | Source | Purpose |
 | --- | --- | --- |
 | `/AmpliGen/` | `index.html` | Home page |
-| `/AmpliGen/product/` | `product/index.html` | Fictional Lumora Gateway, Metrics, and Connect products |
-| `/AmpliGen/pricing/` | `pricing/index.html` | Illustrative demo pricing (not offered) with demo and trial CTAs |
+| `/AmpliGen/product/` | `product/index.html` | AmpliGen Gateway, Metrics, and Connect products |
+| `/AmpliGen/pricing/` | `pricing/index.html` | Pricing with demo and trial CTAs |
 | `/AmpliGen/demo-request/` | `demo-request/index.html` | Placeholder notice; no form, nothing is sent |
 | `/AmpliGen/sign-up/` | `sign-up/index.html` | Placeholder notice; no account is created |
 
