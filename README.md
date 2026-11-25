@@ -14,6 +14,7 @@ npm run smoke:phase0  # non-browser check of dist/ under /AmpliGen/ and the depl
 npm run smoke:phase1  # non-browser check of the five routes against src/content/phase1.fixtures.json
 npm run smoke:phase2  # non-browser check of forms, identity, actions, bot dry-run and built routes
 npm run smoke:phase3  # non-browser check of the Amplitude adapter, sink, config and delivery with a fake SDK
+npm run smoke:phase4  # non-browser check of the Statsig experiment, gate, config, events and delivery with a fake client
 npm run bot:dry-run   # replay the four bot journeys in memory and print JSON Lines (dry-run only)
 npm run dev           # local dev server at http://localhost:5173/AmpliGen/
 ```
@@ -80,6 +81,28 @@ The site uses the Amplitude Unified SDK (`@amplitude/unified`, the only Amplitud
 **Before navigation.** Forms fire the action and then navigate. When a sink exists, the form flushes the SDK and waits at most 1000 ms before navigating (`src/analytics/navigation.ts`). With no sink it navigates immediately.
 
 Real delivery to Amplitude, replay capture, account reporting and browser behavior are not covered by `smoke:phase3`.
+
+## Statsig experiments and controls (Phase 4)
+
+Statsig assigns one experiment, one feature gate and one dynamic config through the web client SDK (`@statsig/js-client`, the only Statsig package in `package.json`; its own `@statsig/client-core` dependency comes with it). Session Replay and Web Analytics packages are not used, because Amplitude already records sessions and page views. The only file that imports the SDK is `src/statsig/statsig-adapter.ts`. Everything else uses the small interface in `src/statsig/sdk.ts`, so `npm run smoke:phase4` runs with a fake client and never loads the real package.
+
+**Supplying the key.** The key is read only as `import.meta.env.VITE_STATSIG_CLIENT_KEY` in `src/statsig/entry.ts`. In CI, `.github/workflows/deploy-pages.yml` maps it from the repository secret `NEXT_PUBLIC_STATSIG_CLIENT_KEY`. Use only a browser client key. Locally you can put `VITE_STATSIG_CLIENT_KEY=...` in an untracked `.env.local`. Never commit a key.
+
+**No key, control content.** With no key (or an empty one) no Statsig call is made: the pricing page keeps its control labels and notice, and the product page keeps the Account breakdown section hidden. If setup throws or rejects, the same fallbacks stay and the page works.
+
+**The three entities.** They must exist in the Statsig project (production environment) before live assignment works. This repository does not create them.
+
+- Experiment `pricing_cta_copy`, parameter `label_mode`. `control` (and any missing or unrecognized value) keeps the current labels. `specific` changes the visible labels only: Starter and Growth read "Start a free trial", and Enterprise reads "Talk to sales". The links do not change. Hypothesis: more specific pricing labels increase `Sign Up Completed` among visitors who see pricing; `Demo Request Submitted` is the secondary metric. Synthetic results are not causal evidence.
+- Gate `metrics_account_breakdown` (product page). When it passes, a line under the AmpliGen Metrics card reads "Account breakdown shows usage and conversion for the mapped account." It is hidden otherwise.
+- Dynamic config `pricing_notice`, string parameter `notice`. It replaces the text of the pricing label as plain text. A missing value, a non-string, an empty string, or a string over 120 characters keeps "Illustrative pricing. Not offered."
+
+Each is evaluated once per page load, only on the page that shows it, so each logs one exposure from the Statsig client.
+
+**What is sent.** The Statsig user ID is the contract `user_id` (the visitor ID, or the persona ID while a persona is active), kept in step with the Amplitude identity. Custom attributes are `is_synthetic` and, only when mapped, `account_id`. No email or name is set. The two contract actions, `Demo Request Submitted` and `Sign Up Completed`, are also logged once each to Statsig with the same name and `event_id` that Amplitude receives; metadata values are strings, so booleans arrive as "true" and "false". No other business event is added. The site sends no exposure event to Amplitude and calls no Amplitude method for an exposure; forwarding exposures to Amplitude is a Statsig console integration ("Amplitude Native") that this repository cannot turn on or off. If that integration also forwards custom events, these two would be counted twice in Amplitude.
+
+**Before navigation.** The forms wait at most 1000 ms in total for the Amplitude and Statsig flushes together, then navigate once.
+
+Live Statsig assignment, exposure forwarding, and delivery of the two events to Statsig are not covered by `smoke:phase4`.
 
 ## Deployment
 
