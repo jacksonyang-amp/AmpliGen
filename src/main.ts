@@ -1,4 +1,5 @@
 import './style.css';
+import { startAnalytics } from './analytics/entry.ts';
 import { recordPageView } from './identity/navigation.ts';
 import { getBrowserContext } from './ui/runtime.ts';
 
@@ -10,3 +11,5 @@ skipLink?.addEventListener('click', () => {
 });
 
 recordPageView(getBrowserContext().navigationStorage, window.location.pathname);
+
+startAnalytics();
