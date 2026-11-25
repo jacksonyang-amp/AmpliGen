@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 is not authorized or dispatched. Event contract (`docs/custom-events.yml`) approved for Phase 3 at 2026-11-25T04:35:00Z; one replay-privacy conflict is open (DECISIONS.md, same timestamp).
+- Status: ACTIVE — Phases 0 and 1 COMPLETE. Phase 2 COMPLETE (2026-11-25T04:24:00Z): PR #14 merged at `cc19af9d9c625249dc7283d2eefbdff15ada0f2d`. Phase 3 is ACTIVE: dispatch `phase-3-build-015` (BUILD), authorized 2026-11-25T04:38:00Z. Event contract approved for Phase 3 at 2026-11-25T04:35:00Z; replay is unmasked at 100% by the human's choice (DECISIONS.md 04:38:00Z).
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
@@ -80,8 +80,11 @@
   2. `npm run build` exits 0 with only `@amplitude/unified` as the direct Amplitude dependency and one guarded `initAll()` call; configure Analytics, Session Replay, Feature Experiment, and Guides & Surveys together without Amplitude-controlled variation assignment.
   3. `npm run smoke:phase3` uses a mocked SDK boundary to check one initialization, the agreed page/pricing/conversion event sequence, user/account properties, synthetic labels, no duplicate events, and usable no-key behavior; it also checks no separate Amplitude package was directly installed.
 - **Risks:** Before integration, the Builder must verify current official SDK documentation and required entitlements, including account reporting and replay. The Planner must approve an event contract and replay privacy settings; missing credentials or unsupported capabilities block live integration. Do not separately install `@amplitude/analytics-browser` or any other Amplitude package; transitive dependencies are SDK-managed.
-- **Needs human approval to merge?** Yes.
-- **Git permissions for the Builder:** Commit yes, only when granted in the phase handoff; Merge no, pending a separate approved dispatch.
+- **Status:** ACTIVE — dispatched as `phase-3-build-015` on 2026-11-25T04:38:00Z after the Cursor-chat answers recorded in DECISIONS.md. No push, PR, or merge is authorized for this phase's Builder work yet.
+- **Planner selections (2026-11-25T04:35:00Z and 04:38:00Z):** the event contract is `docs/custom-events.yml` unchanged, two custom events only; Autocapture covers page views and clicks; Session Replay is unmasked at 100% of sessions (the human's decision, with the form-copy mismatch recorded); the user ID is the contract `user_id`; `account_id` is an event property, plus a group only if the docs support it without a new package; one guarded `initAll()` and a sink that attaches only when a key exists; the Builder verifies the SDK's behavior, entitlements, and delivery-on-navigation before integrating.
+- **Open risks:** (1) With unmasked replay and the current form copy, typed names and emails can be recorded once deployed; the Planner restates this at merge approval. (2) The key is the human's statement and cannot be verified by the Planner. (3) Real delivery to Amplitude, replay capture, account-level reporting, and browser behavior are UNVERIFIED until a VERIFY step.
+- **Needs human approval to merge?** Yes. Merging deploys the site with the key and starts recording sessions.
+- **Git permissions for the Builder:** Branch creation: yes, `build/phase-3` only. Commit: yes, local commits on `build/phase-3` only. Push: no. PR creation: no. Merge: no. Deployment: no. Destructive operations: no. Each push and PR needs a separate RESERVED approval in DECISIONS.md.
 
 ## Phase 4 — Statsig experiments and controls
 - **Type:** BUILD
