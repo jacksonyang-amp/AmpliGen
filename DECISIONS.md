@@ -563,3 +563,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Criterion 4 is still BLOCKED. The key is confirmed for the `AmpliGen` project, which has no `pricing_cta_copy`, `metrics_account_breakdown`, or `pricing_notice` entity. The Statsig connection is read-only, so a human must create them in the console. The Planner will read them back once they exist.
 - SDK events remain unplanned by decision. `is_simulated` is unchanged by decision.
 
+## 2026-11-25T17:25:00Z | Planner status check after re-reading the project files | RECORDED
+- Prompt: the human asked the Planner to re-read AGENTS.md, PROJECT_PLAN.md, DECISIONS.md, and the last three PHASE_LOG.md entries (Cursor chat, 2026-11-25 09:24 America/Los_Angeles), state where things stand in two sentences, and act.
+- Origin state: `origin/main` is `dece677`. No PR is open. `build/phase-5` is not on the remote (local only, at `4bf3e26`). The planning branch matches origin. Nothing changed since 2026-11-25T06:33:00Z.
+- Statsig (`AmpliGen`, read-only, re-read): 0 experiments, 0 gates, 0 dynamic configs. Criterion 4 stays BLOCKED.
+- Amplitude (`906170`, `main`, re-read): `Demo Request Submitted` and `Sign Up Completed` are live in the plan, each with volume 1 (the walkthrough). No synthetic traffic has arrived since. SDK events remain unplanned by decision.
+- Correction: the top status line in PROJECT_PLAN.md still said PR #20 was open at `0ad165d` and that the theme was local. PR #20 merged at `dece677` (DECISIONS.md 2026-11-25T06:14:00Z). The line now states that.
+- Synthetic traffic: not RESERVED. The 2026-11-25T06:31:00Z decision named no driver, volume, or window, and the human cancelled the follow-up questions. Nothing runs without them.
+- Authorized next action: none for the Builder. The Builder stays IDLE.
+- Needed from the human, in any order: (1) create the three Statsig entities (`pricing_cta_copy` with `label_mode`, `metrics_account_breakdown`, `pricing_notice` with `notice`); (2) name the driver, volume, and window for synthetic traffic; (3) optionally approve pushing `build/phase-5` for the runbook and log.
+
