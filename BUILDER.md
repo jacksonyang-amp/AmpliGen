@@ -15,7 +15,9 @@
 - Use the Statsig client SDK for all experiment assignments, feature gates, and dynamic configs; do not assign variations through Amplitude.
 - Verify current SDK integration and Statsig exposure-forwarding support against official documentation before implementing integrations; log evidence and unresolved gaps.
 - Implement only assigned journeys and instrumentation; apply scope changes only when the handoff references the approver’s authorization in DECISIONS.md.
-- Never embed secrets in the static app; use only documented browser-safe SDK keys and fictional fixture data.
+- Never embed private credentials in the static app; use only browser-safe Amplitude API/Statsig client SDK keys and fictional fixture data, never Amplitude Secret Keys or Statsig Server/Console keys.
+- On the GitHub Actions build step, map `VITE_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}` and `VITE_STATSIG_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_STATSIG_CLIENT_KEY }}`; commit references only, never key values.
+- Read these as `import.meta.env.VITE_AMPLITUDE_API_KEY` and `import.meta.env.VITE_STATSIG_CLIENT_KEY` when integrating SDKs; browser keys become public in the bundle. Never print values or require keys for the Phase 0 scaffold.
 
 ## Git authority and approvals
 - Treat git mutation authority as none unless the handoff explicitly grants the specific operation for the current phase.

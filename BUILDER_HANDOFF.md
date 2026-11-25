@@ -25,7 +25,16 @@ Objective: Create a minimal static site that GitHub Actions can build and deploy
 3. Create a visible home page with a header, main content, footer, and working in-page navigation. Use a neutral “API Platform Demo” title and label it as a fictional demo. Do not add product/pricing pages, forms, SDKs, or backend functionality in this phase.
 4. Add `npm run typecheck` and `npm run build`; make the build produce static output and use the confirmed Pages base path for asset URLs. Keep generated output out of commits.
 5. Add the GitHub Actions workflow: install locked dependencies, run typecheck and the same build command, upload the static output, and deploy through the GitHub Pages environment after a push to the confirmed default branch. Restrict deployment permissions to the job that needs them; do not enable PR-triggered deployment or run the workflow now.
-6. Implement `npm run smoke:phase0` as one non-browser check: serve the built output under the configured base path, request the home page and referenced local assets, assert HTTP 200 and expected content types, check the workflow’s build command/output path, then stop the temporary server. Exit nonzero on failure.
+   Set these environment mappings on the build step (the existing GitHub repository secret names remain unchanged):
+   ```yaml
+   - name: Build
+     run: npm run build
+     env:
+       VITE_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
+       VITE_STATSIG_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_STATSIG_CLIENT_KEY }}
+   ```
+   Commit only these references, never actual key values. Do not print values. The Phase 0 scaffold must build without keys; defer SDK installation and app reads through `import.meta.env.VITE_AMPLITUDE_API_KEY` / `import.meta.env.VITE_STATSIG_CLIENT_KEY` to their assigned phases.
+6. Implement `npm run smoke:phase0` as one non-browser check: serve the built output under the configured base path, request the home page and referenced local assets, assert HTTP 200 and expected content types, check the workflow’s build command/output path and both exact secret-to-Vite mappings without resolving or printing values, then stop the temporary server. Exit nonzero on failure.
 7. Run typecheck, build, and the smoke command. Fix failures within scope. Do not run full test suites, browser walkthroughs, screenshots, or video.
 8. Document local commands and required Pages/Actions setup in README.md. Commit only phase-owned changes on the existing suitable working branch. Log BLOCKED using the BUILDER.md template with local evidence and “Awaiting authorized PR, merge, and deployment verification” as the remaining blocker; notify the Planner and stop. If the current branch is unsuitable, log BLOCKED rather than creating or switching branches.
 9. After the Planner reviews local evidence, obtain a new Phase 0 dispatch through the same Builder thread for any authorized push/PR work and approval-bound merge/deployment. Do not execute those operations under this dispatch.
@@ -34,7 +43,7 @@ Objective: Create a minimal static site that GitHub Actions can build and deploy
 ## Definition of done
 - [ ] `npm run typecheck` exits 0.
 - [ ] `npm run build` exits 0 and generates the home page/navigation shell as static output with no server runtime requirement.
-- [ ] `npm run smoke:phase0` exits 0: the built home page and referenced local assets resolve under the configured base path, and the workflow builds/uploads the matching output.
+- [ ] `npm run smoke:phase0` exits 0: the built home page and referenced local assets resolve under the configured base path, and the workflow builds/uploads the matching output with both exact secret-to-Vite mappings.
 - [ ] After separately authorized merge/deployment, the successful Actions run corresponds to the approved revision and the public URL returns HTTP 200 with the expected home page; the URL and evidence are recorded in PHASE_LOG.md.
 
 Git permissions: Commit: Yes | Merge: No
