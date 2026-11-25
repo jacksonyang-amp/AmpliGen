@@ -239,3 +239,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Kept (Planner interpretation, to be reported to the human): the "Demo request" nav label, the `/demo-request/` route, "Request a demo" CTAs, and the demo-request notice. They name a request feature rather than describing the site. The sign-up notice keeps "Mock", as the brief requires simulated sign-up to be labeled.
 - Not authorized by this entry: any change to `PROJECT_BRIEF.md`, which still describes the platform as fictional; push, PR, merge, or deployment.
 - Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-1-fix-009`. Local commits on `build/phase-1` only.
+
+## 2026-11-25T03:48:00Z | Review of dispatch phase-1-fix-009 | ACCEPTED
+- Handoff set to IDLE before review.
+- Evidence: Planner clean-worktree run at `937b0f52d4921b96b8bd898c88c5a87e8b838609`: typecheck 0, build 0, smoke:phase1 0 (144 passed), smoke:phase0 0 (28 passed). Built HTML scan for `lumora|fictional|demonstration|demo-banner|api platform demo` outside attribute values: 0 hits. `git diff` of `scripts/smoke-phase0.mjs` is 4 lines (two assertions replaced).
+- Result: Phase 1 criteria 1-3 PASS. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
+- Next: request the human's push and PR approval bound to `937b0f52d4921b96b8bd898c88c5a87e8b838609`. No approval is recorded yet.
+- Note: PROJECT_BRIEF.md still describes the platform as fictional. It was not edited, because the authorization did not name it.
