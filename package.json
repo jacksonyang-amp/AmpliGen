@@ -13,7 +13,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "smoke:phase0": "node scripts/smoke-phase0.mjs",
-    "smoke:phase1": "node scripts/smoke-phase1.mjs"
+    "smoke:phase1": "node scripts/smoke-phase1.mjs",
+    "smoke:phase2": "node --experimental-strip-types scripts/smoke-phase2.mjs",
+    "bot:dry-run": "node --experimental-strip-types scripts/bot-runner.mjs --dry-run"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
