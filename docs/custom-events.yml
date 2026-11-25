@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "conventions": {
+    "naming": "Use the exact Title Case event name in both Amplitude and Statsig.",
+    "delivery": "Send each completed business action once to each platform.",
+    "identity": "Use the same stable synthetic user ID in both platforms.",
+    "privacy": "Do not send raw email addresses, names, or free-text form responses.",
+    "revenue": "No event carries revenue; the demo does not process purchases.",
+    "properties": {
+      "event_id": {
+        "type": "string",
+        "required": true,
+        "description": "Unique ID generated once per business action and reused across both platforms."
+      },
+      "user_id": {
+        "type": "string",
+        "required": true,
+        "description": "Stable visitor ID preserved through mock sign-up."
+      },
+      "account_id": {
+        "type": "string",
+        "required": false,
+        "description": "Fictional company ID; omit until mapped."
+      },
+      "is_synthetic": {
+        "type": "boolean",
+        "required": true
+      },
+      "traffic_source": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "manual_demo",
+          "bot",
+          "visitor"
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "name": "Demo Request Submitted",
+      "journey": "Request a demo",
+      "platforms": [
+        "Amplitude",
+        "Statsig"
+      ],
+      "fires_at": {
+        "component": "DemoRequestForm",
+        "trigger": "After validation passes and the simulated submission succeeds, before navigating to the success page.",
+        "exclusions": [
+          "Do not fire on a button click, validation failure, or destination-page reload."
+        ]
+      },
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "required": true
+        },
+        "plan_id": {
+          "type": "string",
+          "required": false
+        },
+        "entry_point": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "product",
+            "pricing",
+            "navigation",
+            "direct"
+          ]
+        },
+        "is_simulated": {
+          "type": "boolean",
+          "required": true,
+          "const": true
+        },
+        "submission_id": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "carries_revenue": false,
+      "revenue_property": null
+    },
+    {
+      "name": "Sign Up Completed",
+      "journey": "Sign up",
+      "platforms": [
+        "Amplitude",
+        "Statsig"
+      ],
+      "fires_at": {
+        "component": "SignUpForm",
+        "trigger": "After validation succeeds and mock account state is saved, before navigating to the mock product landing page.",
+        "exclusions": [
+          "Do not fire on a button click, validation failure, or destination-page reload."
+        ]
+      },
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "required": true
+        },
+        "plan_id": {
+          "type": "string",
+          "required": true
+        },
+        "entry_point": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "product",
+            "pricing",
+            "navigation",
+            "direct"
+          ]
+        },
+        "is_simulated": {
+          "type": "boolean",
+          "required": true,
+          "const": true
+        },
+        "identity_method": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "predefined_persona",
+            "company_email"
+          ]
+        },
+        "account_mapping_status": {
+          "type": "string",
+          "required": true,
+          "enum": [
+            "mapped",
+            "unmapped"
+          ]
+        }
+      },
+      "carries_revenue": false,
+      "revenue_property": null
+    }
+  ],
+  "excluded_actions": [
+    {
+      "action": "Browse",
+      "reason": "Product browsing and pricing page views/clicks are covered by Autocapture; do not duplicate them."
+    },
+    {
+      "action": "Add To Cart",
+      "reason": "No cart exists in the approved scope."
+    },
+    {
+      "action": "Checkout",
+      "reason": "Checkout and payments are out of scope."
+    },
+    {
+      "action": "Sign In",
+      "reason": "The brief includes mock sign-up, not sign-in."
+    },
+    {
+      "action": "Sign Out",
+      "reason": "No sign-out journey; persona reset is not sign-out."
+    },
+    {
+      "action": "Experiment Exposure",
+      "reason": "Use the verified Statsig exposure-forwarding integration, not a duplicate business event."
+    },
+    {
+      "action": "Guide Or Survey Interaction",
+      "reason": "Guide and survey creation is deferred."
+    }
+  ]
+}
