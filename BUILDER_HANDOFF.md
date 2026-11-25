@@ -1,5 +1,5 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 4 — Statsig experiments and controls
 **Dispatch ID:** phase-4-design-021
 **Phase type:** BUILD (correction to `phase-4-design-020`)
