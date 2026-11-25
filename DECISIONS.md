@@ -454,3 +454,17 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Open items for the human, none blocking: `README.md` route table and Phase 2 lines still say "Simulated" and "Nothing is sent" because they describe code behavior; the `package.json` description still reads "Fictional API Platform Demo".
 - Result: the design revision is ACCEPTED as local commits. Phase 4 is NOT COMPLETE. Push of `49b8aac` to update PR #20 needs its own RESERVED approval. Merge needs a separate one.
 
+## 2026-11-25T06:09:00Z | Record: PR #19 merged as a docs-only squash | RECORDED
+- PR #19 (https://github.com/jacksonyang-amp/AmpliGen/pull/19) merged to `main` as squash `48cac6c07931721af6adc3339cbd6edcd960c60c` at 2026-11-25T06:08:59Z. The merge carried planning files only and re-ran the Pages workflow: run 45558474311 succeeded on `48cac6c`. It redeployed current `main` and added no Phase 4 code or theme.
+- Planner verified: `origin/main` is `48cac6c`, and its planning files match `cursor/phase-4-handoff-fc41` at `aebc7f7`.
+
+## 2026-11-25T06:09:00Z | Approval: push build/phase-4 to update PR #20 | RESERVED
+- Exact text: "Approve pushing build/phase-4 at commit 49b8aac462658b6a96481ac4158467a6b972641a to update PR #20, no merge"
+- Source: Cursor chat, 2026-11-24 22:09 America/Los_Angeles, recorded as 2026-11-25T06:09:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/20 (OPEN, not a draft, base `main`, auto-merge off, head `0ad165dc71a471c03fde776b9f9098110d830389`). This approval updates that PR. It does not authorize a second PR.
+- Reviewed commit: `49b8aac462658b6a96481ac4158467a6b972641a` (local `build/phase-4` head, reviewed at DECISIONS.md 2026-11-25T06:05:00Z). It is a fast-forward of `0ad165dc71a471c03fde776b9f9098110d830389`.
+- Authorized action: dispatch `phase-4-push-022` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-4` once, at that commit, to `origin` as `build/phase-4`, as a plain fast-forward. Nothing else.
+- Consequence: a push to a non-main branch does not deploy. PR #20 then carries the dark theme, the copy removal, and the `smoke-phase0` edit. Merging PR #20 later would deploy the dark theme and the Statsig code, and with the client key present it would start Statsig evaluation and event logging. That merge is not approved and needs its own RESERVED approval naming PR #20 and its head SHA.
+- Still not authorized: merging PR #20, any new commit, any force-push, PR creation or edits, deployment, or live verification.
+- State: RESERVED at 2026-11-25T06:09:00Z by dispatch `phase-4-push-022`. It becomes USED after the Planner verifies `origin/build/phase-4` is `49b8aac462658b6a96481ac4158467a6b972641a`.
+
