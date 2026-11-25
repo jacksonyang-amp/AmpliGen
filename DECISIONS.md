@@ -347,3 +347,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - UNVERIFIED (carried to the merge decision and Phase 5): live delivery to Amplitude; replay capture; whether the Amplitude project sets its own mask level, which would override these local settings; account-level reporting and the Accounts add-on; browser behavior of the forms, the identity sync, the bounded flush, and Autocapture; and whether the `NEXT_PUBLIC_AMPLITUDE_API_KEY` secret exists as a valid browser key.
 - Result: Phase 3 build criteria 1-3 PASS on local `build/phase-3`. Phase 3 is NOT COMPLETE: push, PR, and merge are not authorized. Merging deploys the site with the key and starts recording sessions unmasked at 100%.
 - Next: request the human's push and PR approval bound to `8127b0dc321ba56d206f8ead26b739afdeaf5705`. No such approval is recorded yet.
+
+## 2026-11-25T04:59:00Z | Approval: push build/phase-3 and open one PR | RESERVED
+- Exact text: "Approve pushing build/phase-3 at commit 8127b0dc321ba56d206f8ead26b739afdeaf5705 and opening one PR into main, no merge"
+- Source: Cursor chat, 2026-11-24 20:59 America/Los_Angeles, recorded as 2026-11-25T04:59:00Z.
+- Reviewed commit: `8127b0dc321ba56d206f8ead26b739afdeaf5705` (local branch `build/phase-3` head, verified by the Planner before this record). Review: Phase 3 criteria 1-3 PASS (DECISIONS.md 2026-11-25T04:50:00Z).
+- Authorized action: dispatch `phase-3-push-016` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-3` once, at that commit, to `origin` as `build/phase-3`, and open exactly one PR into `main`. No merge.
+- Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow, redeploys the public site with the Amplitude key, and starts recording sessions unmasked at 100%. That merge is not approved.
+- State: RESERVED for dispatch `phase-3-push-016`. Not yet USED.
+- Still not authorized: merging the resulting PR, any new commit, any force-push, deployment, Statsig, or live verification.
