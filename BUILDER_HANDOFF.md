@@ -1,5 +1,5 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 0 — Static scaffold and deployment
 **Dispatch ID:** phase-0-build-001
 **Phase type:** BUILD
@@ -8,7 +8,7 @@
 Objective: Create a minimal static site that GitHub Actions can build and deploy to GitHub Pages.
 
 ## Prerequisites
-- The Planner must replace the Builder ID placeholder with the existing Builder’s actual ID before dispatch; do not start a replacement thread.
+- No Builder exists yet. Create the first Builder in Cursor with instructions to read BUILDER.md and remain IDLE; record its actual returned agent ID here before issuing START. Do not guess an ID or start replacement threads.
 - Read BUILDER.md, PROJECT_BRIEF.md, PROJECT_PLAN.md, and PHASE_LOG.md. Stop if this dispatch already has a COMPLETE or BLOCKED entry.
 - Inspect the repository, current branch, existing stack, package manager, and deployment configuration. Preserve unrelated work; log BLOCKED if required repository details or permissions cannot be determined.
 

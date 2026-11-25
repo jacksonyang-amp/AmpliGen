@@ -44,7 +44,7 @@
 - Keep phase completion separate from approval to merge or deploy.
 
 ## Slack rules
-- Use channel ID <SLACK_CHANNEL_ID> and approver Slack user ID <APPROVER_SLACK_USER_ID>; stop Slack-dependent work until both are configured.
+- Use channel ID C0CLAC05FPZ and approver Slack user ID U0AAZNJ5JC8; stop Slack-dependent work until both are configured.
 - Attempt to read the channel first every turn; if unavailable, record the blocker and continue Builder reviews within existing authorization, but block new Slack-dependent instructions and approvals.
 - For Slack-originated requests, act only on top-level, non-self messages explicitly mentioning @PLANNER; ignore threads and unmentioned messages.
 - Separately process agent-channel completion and blocker notifications from the recorded Builder ID for the active dispatch.
@@ -73,7 +73,7 @@
 - Continue only independent, already-authorized planning while a blocker is unresolved; never treat elapsed time as approval.
 
 ## Resume the same Builder
-- Record the Builder’s returned agent ID in BUILDER_HANDOFF.md when the Builder is first assigned; keep one Builder for this project.
+- If no Builder exists, create the first Builder in Cursor with an IDLE assignment; record its actual returned agent ID in BUILDER_HANDOFF.md before issuing START. Keep that one Builder for this project.
 - Resume or message that exact agent ID using the available agent tool; include the phase ID, handoff path, review findings, and requested next action.
 - Do not spawn a replacement to bypass a blocker or lost context; if the ID is missing or unavailable, record the issue and request recovery or replacement authorization.
 - Require the resumed Builder to read BUILDER_HANDOFF.md and PHASE_LOG.md before continuing and to update PHASE_LOG.md with results and evidence.
