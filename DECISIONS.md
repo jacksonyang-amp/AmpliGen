@@ -603,3 +603,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: the runbook draft and the Phase 5 log entry are on origin. Nothing deploys from this branch.
 - Next: none authorized. A PR or merge for `build/phase-5` needs its own approval. Phase 5 criteria 3 and 4 wait on the Statsig console fixes and on traffic, which the human deferred.
 
+## 2026-11-25T18:01:00Z | Approval: open PR for build/phase-5 | USED
+- Exact text: "Approve opening one PR from build/phase-5 at commit 4bf3e265f5c174ad7ccf242a2f69d34f65d712df into main, no merge"
+- Source: Cursor chat, 2026-11-25 10:01 America/Los_Angeles, recorded as 2026-11-25T18:01:00Z.
+- Reviewed commit: `4bf3e265f5c174ad7ccf242a2f69d34f65d712df` (reviewed at DECISIONS.md 2026-11-25T06:25:00Z; pushed under 2026-11-25T17:45:00Z).
+- Authorized action: open one PR with head `build/phase-5` and base `main`. No merge.
+- Result: the Planner opened https://github.com/jacksonyang-amp/AmpliGen/pull/21 at 2026-11-25T18:02:00Z through the PR tool, with the branch-prefix check skipped because the approval names `build/phase-5`. Head is `4bf3e265f5c174ad7ccf242a2f69d34f65d712df`, base `main`, 2 files. The Planner, not the Builder, opened it; no Builder dispatch was needed.
+- Consequence: opening a PR does not deploy. A merge to `main` runs the Pages workflow and redeploys the site.
+- Still not authorized: a merge, a new commit, a force-push, deployment, or traffic. A merge needs its own approval naming PR #21 and this commit.
+
