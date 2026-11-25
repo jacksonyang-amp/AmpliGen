@@ -246,3 +246,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: Phase 1 criteria 1-3 PASS. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
 - Next: request the human's push and PR approval bound to `937b0f52d4921b96b8bd898c88c5a87e8b838609`. No approval is recorded yet.
 - Note: PROJECT_BRIEF.md still describes the platform as fictional. It was not edited, because the authorization did not name it.
+
+## 2026-11-25T03:49:00Z | Approval: push build/phase-1 and open one PR | RESERVED
+- Exact text: "Approve pushing build/phase-1 at commit 937b0f52d4921b96b8bd898c88c5a87e8b838609 and opening one PR into main, no merge"
+- Source: Cursor chat, 2026-11-24 19:48 America/Los_Angeles, recorded as 2026-11-25T03:49:00Z.
+- Reviewed commit: `937b0f52d4921b96b8bd898c88c5a87e8b838609` (branch `build/phase-1` head, verified by the Planner). Review: Phase 1 criteria 1-3 PASS (DECISIONS.md 2026-11-25T03:48:00Z).
+- Authorized action: dispatch `phase-1-push-010` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-1` once, at that commit, to `origin` as `build/phase-1`, and open exactly one PR into `main`. No merge.
+- Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. That merge is not approved.
+- Dispatch: `phase-1-push-010`. State: RESERVED. Becomes USED after the Builder reports the push and PR result.
