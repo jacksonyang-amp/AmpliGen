@@ -154,3 +154,24 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Phase 0 is COMPLETE in PROJECT_PLAN.md (criterion 4 PASS).
 - Open follow-up: `PHASE_LOG.md` on `main` still holds only the earlier BLOCKED entry for `phase-0-build-001`. The Builder-owned completion entry is not yet recorded; request it from the Builder through a new dispatch, not by Planner edit.
 - Still not authorized: any other merge, and any Phase 1 work. Phase 1 needs its own START dispatch and approval.
+
+## 2026-11-25T03:20:00Z | Phase 0 review | SENT BACK (narrow fix)
+- Request: Cursor chat 2026-11-24 19:15 America/Los_Angeles (2026-11-25T03:15:00Z): `The Builder finished. Review its latest PHASE_LOG.md entry and the PR diff against the phase's definition of done. Check that tests, typecheck, and build passed, and that nothing outside the phase changed. Then do one of: Approve ... Send back ...`. Not a PR action approval.
+- Finding: the latest PHASE_LOG.md entry on `main` is still `2026-11-25T02:53:36Z | Phase 0 | BLOCKED`; no newer Builder entry or open PR exists.
+- Criterion 1 typecheck: PASS (exit 0 on `main` `9daf225`, Planner re-run).
+- Criterion 2 build: PASS (exit 0; static `dist/`).
+- Criterion 3 smoke: PASS (exit 0; 23 passed).
+- “Tests”: Phase 0 is a BUILD phase; its only named check is `npm run smoke:phase0`. There is no test suite and running one is not permitted until the VERIFY phase.
+- Criterion 4: live part PASS (Pages run 45538301854 success on `c8593de`; public URL 200 with expected title and assets). Record part FAIL: the required PHASE_LOG.md record of URL, revision, and run link is absent.
+- Scope: PASS. PR #6 changed 13 files, all in the handoff allowed list or PHASE_LOG.md; no `node_modules/`, `dist/`, Planner files, or key literals.
+- Correction: `PROJECT_PLAN.md` earlier read Phase 0 COMPLETE (merged PR #5) before the record existed. It now reads OPEN pending the Builder’s entry.
+- Dispatch: `phase-0-log-004` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Allowed: append one entry to PHASE_LOG.md; local branch `cursor/phase-0-complete-log-fc41` and commit only. Push, PR, merge, deployment: not authorized.
+- Next approvals needed from the human: push and one PR for that branch; later a merge bound to its head SHA. A docs-only merge does not trigger deployment beyond the existing workflow on `main` (the workflow runs on every push to `main`; a re-deploy of an unchanged site is expected and harmless).
+
+## 2026-11-25T03:22:00Z | Review of dispatch phase-0-log-004 | ACCEPTED, awaiting push approval
+- Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` reported COMPLETE for `phase-0-log-004`. Handoff set to IDLE.
+- Reviewed commit: `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24` on local branch `cursor/phase-0-complete-log-fc41`, based on `origin/main` `9daf225977436ccebb81707e10b3f88a7635ac21`. Not on the remote.
+- Planner inspection: diff is `PHASE_LOG.md` only, 21 additions and 0 deletions; the existing BLOCKED entry is byte-identical; no key-like literals.
+- Content check: the entry records the public URL, deployed revision `c8593de06523a07b596a4cef28967ec0d7f49c2b`, run link https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45538301854, the SHA mapping (`13bca56` from `253badc`, `d0621b0` from `45cf208`, merge `c8593de`), approval references, deviations, and DoD items 1-4 PASS. Planner had already verified the same facts independently on `main` (typecheck, build, smoke exit 0; run 45538301854 success; URL 200).
+- Criterion 4 record part: satisfied once this commit is on `main`. Phase 0 stays OPEN in `PROJECT_PLAN.md` until then.
+- Not yet authorized: push, PR creation, and merge for this branch. Requested from the human: a named Approve for push plus one PR bound to commit `57ae413a5df1e1f19dfa1b2dc2201ac336e3ae24`. A later merge needs its own named Approve bound to the PR head. Any merge to `main` re-runs the Pages workflow and redeploys an unchanged site.
