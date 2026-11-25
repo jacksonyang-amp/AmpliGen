@@ -612,3 +612,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Consequence: opening a PR does not deploy. A merge to `main` runs the Pages workflow and redeploys the site.
 - Still not authorized: a merge, a new commit, a force-push, deployment, or traffic. A merge needs its own approval naming PR #21 and this commit.
 
+## 2026-11-25T18:04:00Z | Approval: merge PR #21 | RESERVED
+- Exact text: "Approve #21 merge of commit 4bf3e265f5c174ad7ccf242a2f69d34f65d712df"
+- Source: Cursor chat, 2026-11-25 10:04 America/Los_Angeles, recorded as 2026-11-25T18:04:00Z.
+- Reviewed commit: `4bf3e265f5c174ad7ccf242a2f69d34f65d712df` (PR #21 head; checked before merge: head unchanged, mergeable, base `main` at `dece677`, no CI checks reported).
+- Authorized action: merge PR #21 into `main` with a merge commit, at that head only. Adds `docs/demo-runbook.md` and the Phase 5 entry in `PHASE_LOG.md`. No other change.
+- Consequence: the merge runs the Pages workflow on `main` and redeploys the site. The site code does not change. Phase 5 criteria 3 and 4 stay open.
+- Still not authorized: a new commit, a force-push, traffic, or any change to the Statsig console.
+
