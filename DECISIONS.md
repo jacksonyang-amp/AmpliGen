@@ -423,3 +423,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Evidence: `git ls-remote` shows `refs/heads/build/phase-4` at `0ad165dc71a471c03fde776b9f9098110d830389`. PR #20 is open, not a draft, base `main`, head `build/phase-4` at that SHA, auto-merge off. The Builder changed no files and made no commit.
 - Result: the push and the one PR are complete. Phase 4 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #20 and head `0ad165dc71a471c03fde776b9f9098110d830389`.
 - Next: none without the human's merge approval.
+
+## 2026-11-25T05:46:00Z | Human direction: theme, copy, and later exposure forwarding | AUTHORIZED (local commits only)
+- Exact text: "The exposure forwarding will be handled later when I enable it. The data is starting to show up in Amplitude. I want a less bland design for the site (think dark mode with contrasting colors) and remove the text on the site that says things are simulated - no public traffic is actually going to engage with this site in any sort of real way, it's clear that it's fake and will only be used by bots and internal testing"
+- Source: Cursor chat, 2026-11-24 21:46 America/Los_Angeles, recorded as 2026-11-25T05:46:00Z.
+- Exposure forwarding: the human will enable it later in the Statsig console. No client-side forwarder is authorized. The Phase 4 choice to log exposures only to Statsig stands.
+- Amplitude delivery: the human reports that data is appearing in the Amplitude project. The Planner has not opened that project. Recorded as the human's statement. Replay, account reporting, and browser behavior stay UNVERIFIED.
+- Copy: this replaces the earlier choice to keep the "nothing is sent" and "simulated" sentences (DECISIONS.md 2026-11-25T04:38:00Z). Those sentences, and the pricing and footer lines that say the content is illustrative or not offered, come off the site. "Request a demo" and the demo-request route stay. The audience is bots and internal testing; the pages should read as the product.
+- Theme: one dark theme with the contrasting accent colors named in BUILDER_HANDOFF.md. No theme toggle and no new layout.
+- Authorized: dispatch `phase-4-design-020` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. New local commits on the existing `build/phase-4`, on top of `0ad165dc71a471c03fde776b9f9098110d830389`.
+- Not authorized: push, a new pull request, merge, deployment, or any change to events, identity, or Statsig assignment. PR #20 remains at the reviewed head until a later approval names the new commit.
