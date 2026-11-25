@@ -1,59 +1,41 @@
 # BUILDER_HANDOFF
-**Status:** IDLE
-**Phase:** 0 — Static scaffold and deployment
-**Dispatch ID:** phase-0-build-001
+**Status:** START
+**Phase:** 0 — Static scaffold and deployment (correction: record the live-deployment evidence)
+**Dispatch ID:** phase-0-log-004
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
-Objective: Create a minimal static site that GitHub Actions can build and deploy to GitHub Pages.
+Objective: Close Phase 0 definition-of-done item 4 by recording the deployment evidence in PHASE_LOG.md. The live check already passes; the required record is missing.
+
+## Review finding (Planner, 2026-11-25)
+- Criteria 1-3: PASS. Planner re-ran `npm run typecheck`, `npm run build`, `npm run smoke:phase0` on `main` at `9daf225`: all exit 0, smoke 23 passed. PR #6 changed only Phase 0 allowed files; no `node_modules/`, `dist/`, Planner files, or key values.
+- Criterion 4: live part PASS, record part FAIL. `PHASE_LOG.md` on `main` holds one entry (`2026-11-25T02:53:36Z`, BLOCKED) that says item 4 is UNVERIFIED and cites branch `build/phase-0` and commits `253badc`/`45cf208` that did not land on `main` under those SHAs.
 
 ## Prerequisites
-- Prerequisites are resolved: PROJECT_BRIEF.md exists in the repository and the one Builder exists with the agent ID above. Do not start a replacement thread; if this ID is unavailable, log BLOCKED.
-- Execute only if you are agent `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` and this dispatch ID has no COMPLETE or BLOCKED entry in PHASE_LOG.md.
-- Create `build/phase-0` from the current HEAD (the checkout's present commit); do not rebase, reset, or touch other branches. Commit only the allowed files below, never BUILDER_HANDOFF.md, PROJECT_PLAN.md, DECISIONS.md, PLANNER.md, or BUILDER.md.
-- Read BUILDER.md, PROJECT_BRIEF.md, PROJECT_PLAN.md, and PHASE_LOG.md. Stop if this dispatch already has a COMPLETE or BLOCKED entry.
-- Inspect the repository, current branch, existing stack, package manager, and deployment configuration. Preserve unrelated work; log BLOCKED if required repository details or permissions cannot be determined.
+- Read BUILDER.md, PROJECT_PLAN.md, and PHASE_LOG.md. Execute only as agent `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; this dispatch ID has no log entry yet. Do not start a replacement thread.
+- Start from current `origin/main` (`git fetch origin main`).
 
 ## Allowed files
-- Scaffold source and styles under src/, static assets under public/, and root index.html.
-- Package manifest and the repository’s single package-manager lockfile; TypeScript and build-tool configuration; .gitignore.
-- scripts/smoke-phase0.* and .github/workflows/deploy-pages.yml.
-- README.md for local build/deployment instructions and PHASE_LOG.md for evidence.
-- Request a revised handoff before changing other paths; do not edit Planner-owned files.
+- PHASE_LOG.md only. Append one new entry; never edit or delete the existing entry. Change nothing else.
 
-## Steps
-1. Confirm the repository’s owner/name, default branch, and Pages URL/base path from existing configuration or read-only repository metadata. Record the target and any setup blockers in PHASE_LOG.md; do not change repository settings.
-2. Reuse the existing static stack. If the repository is empty, scaffold a minimal TypeScript static app with Vite and npm. If an existing package manager requires different validation commands, return the exact equivalents to the Planner for a revised handoff before implementation.
-3. Create a visible home page with a header, main content, footer, and working in-page navigation. Use a neutral “API Platform Demo” title and label it as a fictional demo. Do not add product/pricing pages, forms, SDKs, or backend functionality in this phase.
-4. Add `npm run typecheck` and `npm run build`; make the build produce static output and use the confirmed Pages base path for asset URLs. Keep generated output out of commits.
-5. Add the GitHub Actions workflow: install locked dependencies, run typecheck and the same build command, upload the static output, and deploy through the GitHub Pages environment after a push to the confirmed default branch. Restrict deployment permissions to the job that needs them; do not enable PR-triggered deployment or run the workflow now.
-   Set these environment mappings on the build step (the existing GitHub repository secret names remain unchanged):
-   ```yaml
-   - name: Build
-     run: npm run build
-     env:
-       VITE_AMPLITUDE_API_KEY: ${{ secrets.NEXT_PUBLIC_AMPLITUDE_API_KEY }}
-       VITE_STATSIG_CLIENT_KEY: ${{ secrets.NEXT_PUBLIC_STATSIG_CLIENT_KEY }}
-   ```
-   Commit only these references, never actual key values. Do not print values. The Phase 0 scaffold must build without keys; defer SDK installation and app reads through `import.meta.env.VITE_AMPLITUDE_API_KEY` / `import.meta.env.VITE_STATSIG_CLIENT_KEY` to their assigned phases.
-6. Implement `npm run smoke:phase0` as one non-browser check: serve the built output under the configured base path, request the home page and referenced local assets, assert HTTP 200 and expected content types, check the workflow’s build command/output path and both exact secret-to-Vite mappings without resolving or printing values, then stop the temporary server. Exit nonzero on failure.
-7. Run typecheck, build, and the smoke command. Fix failures within scope. Do not run full test suites, browser walkthroughs, screenshots, or video.
-8. Document local commands and required Pages/Actions setup in README.md. Create and switch to `build/phase-0` if not already on it, then commit only phase-owned changes there. Do not push. Log BLOCKED using the BUILDER.md template with local evidence and “Awaiting authorized PR, merge, and deployment verification” as the remaining blocker; notify the Planner through PHASE_LOG.md and the agent channel, and stop.
-9. After the Planner reviews local evidence, obtain a new Phase 0 dispatch through the same Builder thread for any authorized push/PR work and approval-bound merge/deployment. Do not execute those operations under this dispatch.
-10. Under the follow-up dispatch, check that the approved revision has a successful Pages Actions run and the public URL returns HTTP 200 with the expected home-page content. Record the clickable URL, deployed revision, run link, and command result in PHASE_LOG.md; only then log COMPLETE for Phase 0 and notify the Planner.
+## Required fix
+1. Re-run, read-only, and record fresh results with a UTC timestamp:
+   - `gh run view 45538301854 --repo jacksonyang-amp/AmpliGen --json headSha,status,conclusion,url` (expect headSha `c8593de06523a07b596a4cef28967ec0d7f49c2b`, completed, success).
+   - `curl -sS -o /tmp/p0.html -w '%{http_code}' https://jacksonyang-amp.github.io/AmpliGen/` (expect 200; page contains `<title>API Platform Demo</title>`) and HTTP status of each referenced asset under `/AmpliGen/`.
+   - In a clean checkout of `origin/main`: `npm ci`, `npm run typecheck`, `npm run build`, `npm run smoke:phase0` (expect exit 0 each; smoke 23 passed). Do not commit node_modules or dist. No browser, full suites, or screenshots.
+2. Append a BUILDER.md-template entry `## <UTC timestamp> | Phase 0 | COMPLETE` for Dispatch ID `phase-0-log-004`. It must include:
+   - Clickable public URL https://jacksonyang-amp.github.io/AmpliGen/, deployed revision `c8593de06523a07b596a4cef28967ec0d7f49c2b`, and the Actions run link https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45538301854, plus the command results from step 1.
+   - SHA mapping on `main`: scaffold `13bca56` (cherry-pick of `253badc`), log `d0621b0` (cherry-pick of `45cf208`), merge commit `c8593de06523a07b596a4cef28967ec0d7f49c2b` for PR #6 at head `d0621b02c8ddb1b2e8b69088e5190bbe0c2c364f`.
+   - Git actions with approval references (DECISIONS.md entries 2026-11-25T03:08:00Z for the push and PR, 2026-11-25T03:11:00Z for the merge).
+   - Definition-of-done check: items 1-4 as PASS with the evidence above; item 4 now cites this log entry.
+   - Deviations: PR #6 was opened and merged with the `gh` CLI because no PR tool was available to the Builder; Node engine `>=22.12.0`; TypeScript `^5.9.3`. Blocker: None.
+   - State plainly that this entry supersedes the BLOCKED entry's statement that item 4 is UNVERIFIED.
 
-## Definition of done
-- [ ] `npm run typecheck` exits 0.
-- [ ] `npm run build` exits 0 and generates the home page/navigation shell as static output with no server runtime requirement.
-- [ ] `npm run smoke:phase0` exits 0: the built home page and referenced local assets resolve under the configured base path, and the workflow builds/uploads the matching output with both exact secret-to-Vite mappings.
-- [ ] After separately authorized merge/deployment, the successful Actions run corresponds to the approved revision and the public URL returns HTTP 200 with the expected home page; the URL and evidence are recorded in PHASE_LOG.md.
+## Validation
+- The diff against `origin/main` shows only PHASE_LOG.md, with additions only. No secrets or key-like values printed or committed.
 
-Git permissions: Commit: Yes | Merge: No
-
-- Branch creation/switching: Yes, only to create and switch to `build/phase-0`. Push: No. PR creation: No. Deployment execution: No. Destructive git operations: No.
-- Commit permission applies only on `build/phase-0` and only to this phase’s allowed changes. Inspect staged files before committing and exclude unrelated changes.
-- Push, merge, and deployment remain disallowed until separately authorized. The Planner must issue separate permissions for pushing or opening a PR, and an approval-bound dispatch for merge or deployment.
-- Log BLOCKED for missing credentials, unapproved cost, unclear scope, or missing permissions. Report only through PHASE_LOG.md and the agent channel. Do not contact the human.
-- Report passing local checks as ready for merge review, with deployment verification still BLOCKED. Keep Phase 0 open until the follow-up live check passes; do not begin Phase 1 beforehand. This HTTP check does not authorize a full browser walkthrough.
-
-Do NOT proceed past this phase without checking in.
+## Git permissions: Commit: Yes | Merge: No
+- Branch creation/switching: Yes, only to create and switch to `cursor/phase-0-complete-log-fc41` from `origin/main`. Commit PHASE_LOG.md only, on that branch.
+- Push: No. PR creation: No. Merge: No. Deployment: No. Destructive git operations: No. Pushing and a PR need a fresh named approval from the human, requested by the Planner.
+- Report only through PHASE_LOG.md and the agent channel; do not contact the human. Log BLOCKED if the live checks fail or permissions are unclear.
+- After committing, reply with the branch, commit SHA, the diff file list, and all command results, then stop. Do not start Phase 1.

@@ -154,3 +154,16 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Phase 0 is COMPLETE in PROJECT_PLAN.md (criterion 4 PASS).
 - Open follow-up: `PHASE_LOG.md` on `main` still holds only the earlier BLOCKED entry for `phase-0-build-001`. The Builder-owned completion entry is not yet recorded; request it from the Builder through a new dispatch, not by Planner edit.
 - Still not authorized: any other merge, and any Phase 1 work. Phase 1 needs its own START dispatch and approval.
+
+## 2026-11-25T03:20:00Z | Phase 0 review | SENT BACK (narrow fix)
+- Request: Cursor chat 2026-11-24 19:15 America/Los_Angeles (2026-11-25T03:15:00Z): `The Builder finished. Review its latest PHASE_LOG.md entry and the PR diff against the phase's definition of done. Check that tests, typecheck, and build passed, and that nothing outside the phase changed. Then do one of: Approve ... Send back ...`. Not a PR action approval.
+- Finding: the latest PHASE_LOG.md entry on `main` is still `2026-11-25T02:53:36Z | Phase 0 | BLOCKED`; no newer Builder entry or open PR exists.
+- Criterion 1 typecheck: PASS (exit 0 on `main` `9daf225`, Planner re-run).
+- Criterion 2 build: PASS (exit 0; static `dist/`).
+- Criterion 3 smoke: PASS (exit 0; 23 passed).
+- “Tests”: Phase 0 is a BUILD phase; its only named check is `npm run smoke:phase0`. There is no test suite and running one is not permitted until the VERIFY phase.
+- Criterion 4: live part PASS (Pages run 45538301854 success on `c8593de`; public URL 200 with expected title and assets). Record part FAIL: the required PHASE_LOG.md record of URL, revision, and run link is absent.
+- Scope: PASS. PR #6 changed 13 files, all in the handoff allowed list or PHASE_LOG.md; no `node_modules/`, `dist/`, Planner files, or key literals.
+- Correction: `PROJECT_PLAN.md` earlier read Phase 0 COMPLETE (merged PR #5) before the record existed. It now reads OPEN pending the Builder’s entry.
+- Dispatch: `phase-0-log-004` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Allowed: append one entry to PHASE_LOG.md; local branch `cursor/phase-0-complete-log-fc41` and commit only. Push, PR, merge, deployment: not authorized.
+- Next approvals needed from the human: push and one PR for that branch; later a merge bound to its head SHA. A docs-only merge does not trigger deployment beyond the existing workflow on `main` (the workflow runs on every push to `main`; a re-deploy of an unchanged site is expected and harmless).
