@@ -3,14 +3,14 @@
 **Phase:** 0 — Static scaffold and deployment
 **Dispatch ID:** phase-0-build-001
 **Phase type:** BUILD
-**Builder agent ID:** <EXISTING_BUILDER_AGENT_ID>
+**Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
 Objective: Create a minimal static site that GitHub Actions can build and deploy to GitHub Pages.
 
 ## Prerequisites
-- PROJECT_BRIEF.md must exist in the repository before a Builder is created. Do not start a Builder while it is missing.
-- No Builder exists yet. After PROJECT_BRIEF.md exists, the Planner creates one Builder in Cursor with instructions to read BUILDER.md and remain IDLE, then records its actual returned agent ID here. Do not guess an ID or start replacement threads.
-- Keep this handoff IDLE until those prerequisites are resolved and the placeholder Builder agent ID is replaced with that actual ID. Do not issue START before then.
+- Prerequisites are resolved: PROJECT_BRIEF.md exists in the repository and the one Builder exists with the agent ID above. Do not start a replacement thread; if this ID is unavailable, log BLOCKED.
+- Execute only if you are agent `bc-26af2fe0-92fa-5211-810f-eb3a21fea559` and this dispatch ID has no COMPLETE or BLOCKED entry in PHASE_LOG.md.
+- Create `build/phase-0` from the current HEAD (the checkout's present commit); do not rebase, reset, or touch other branches. Commit only the allowed files below, never BUILDER_HANDOFF.md, PROJECT_PLAN.md, DECISIONS.md, PLANNER.md, or BUILDER.md.
 - Read BUILDER.md, PROJECT_BRIEF.md, PROJECT_PLAN.md, and PHASE_LOG.md. Stop if this dispatch already has a COMPLETE or BLOCKED entry.
 - Inspect the repository, current branch, existing stack, package manager, and deployment configuration. Preserve unrelated work; log BLOCKED if required repository details or permissions cannot be determined.
 
