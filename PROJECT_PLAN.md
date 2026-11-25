@@ -112,3 +112,14 @@
 - **Needs human approval to merge?** Yes, if verification produces a PR; otherwise no merge is needed.
 - **Git permissions for the Builder:** Commit yes for assigned evidence/runbook changes when granted in the handoff; Merge no, pending a separate approved dispatch.
 - **Status:** COMPLETE WITH WAIVERS (2026-11-25T18:16:27Z). Human decision 2026-11-25T18:16:27Z: gate targeting deferred until Statsig has an `account_id` field; this joins the traffic waiver of 2026-11-25T18:12:11Z. Criteria 3 and 4 are closed by waiver, not evidence, and stay UNVERIFIED. Human decision 2026-11-25T18:12:11Z: synthetic traffic is no longer required for Phase 5; traffic-only evidence is WAIVED and stays UNVERIFIED. Criteria 1, 2, and 5 PASS (`phase-5-verify-024`, `build/phase-5` at `4bf3e26`, PR #21 merged as `4d67783`; Pages run success). Criterion 3: the two contract events are live in the Amplitude tracking plan; funnel, journey, replay masking, and account mapping are WAIVED, UNVERIFIED. Criterion 4: Statsig console read 2026-11-25T18:12:11Z: experiment `pricing_cta_copy` and config `pricing_notice` match the design; gate `metrics_account_breakdown` has a public 50% rule instead of an account rule, so gate targeting is NOT met until the human fixes or accepts it. Exposures and conversions are WAIVED, UNVERIFIED. The runbook on `main` still marks the Statsig entities UNVERIFIED and holds analysis-link placeholders; updating it needs a new BUILD dispatch and PR. The `is_simulated` property stays by human decision.
+
+## Phase 6 — Statsig parameter stores and layers
+- **Type:** BUILD
+- **Objective:** Per the human's task text (not yet in the repo): add Statsig parameter stores and layers, with `getPageParams` and `docs/statsig-params.yml`. The Planner fills in the objective, definition of done, and validation commands when the human pastes that text.
+- **Status:** DEFINED, NOT DISPATCHED (2026-11-25T18:26:10Z). `BUILDER_HANDOFF.md` stays IDLE until the task text arrives.
+- **Allowed files (from the Builder's message, to be confirmed):** `src/**`, `docs/statsig-params.yml`, one new test, `PHASE_LOG.md`.
+- **Human decisions (DECISIONS.md 2026-11-25T18:26:10Z):** the Builder may create layers and parameter stores in Statsig; it must not touch experiments, gates, or dynamic configs, nor the three existing entities.
+- **Git permissions for the Builder:** create and commit on a local `build/phase-6` branch only. Push no, PR no, merge no, deployment no.
+- **Needs human approval to merge?** Yes, if it produces a PR. None is authorized.
+- **Risks:** the task text is missing; Statsig writes are live changes that are not covered by git; the project had a final VERIFY phase (Phase 5) before this phase existed. Owner: human supplies the text and decides on VERIFY or waiver afterward.
+
