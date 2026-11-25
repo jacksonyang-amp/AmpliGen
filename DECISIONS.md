@@ -497,3 +497,11 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Result: Phase 4 build and merge are complete. Phase 4 is NOT COMPLETE until Phase 5 verifies the live Statsig and Amplitude behavior and the browser flows.
 - Next: Phase 5 (VERIFY) needs a separate human start. No further action is authorized now.
 
+## 2026-11-25T06:16:00Z | Human instruction: Go ahead (Phase 5 start) | AUTHORIZED (scope limited)
+- Exact text: "Go ahead"
+- Source: Cursor chat, 2026-11-24 22:16 America/Los_Angeles, recorded as 2026-11-25T06:16:00Z. The Planner had asked for this go-ahead to start Phase 5 (DECISIONS.md 2026-11-25T06:14:00Z).
+- Scope: start Phase 5 (VERIFY) by dispatch `phase-5-verify-024` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Covered: criterion 1 (checks), criterion 2 (browser walkthrough of the live site), and criterion 5 (runbook draft), with evidence recorded in PHASE_LOG.md. Commits only on a local `build/phase-5` branch from `origin/main` at `dece677`.
+- Limits: the live walkthrough is internal testing only. It runs two sessions, one desktop and one mobile, each with a sample visitor selected, and at most one valid demo request and one valid sign-up across both. No live bot runs. No console change. No product code change; a defect is reported as BLOCKED, not fixed.
+- Not authorized by this entry: synthetic traffic volume for criteria 3 and 4 (funnel, journey, experiment, and gate analysis). Those need a separate RESERVED approval that names the target project, the volume, and the time window. Also not authorized: push, PR, merge, deployment, or any change to Statsig or Amplitude configuration.
+- State: AUTHORIZED at 2026-11-25T06:16:00Z for dispatch `phase-5-verify-024`.
+
