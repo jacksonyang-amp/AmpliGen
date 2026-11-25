@@ -1,7 +1,7 @@
 # B2B software demo project plan
 
 ## Execution rules
-- Status: ACTIVE — Phase 0 dispatched (dispatch `phase-0-build-001`, START). The Planner issues each START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
+- Status: ACTIVE — Phase 0 local dispatch `phase-0-build-001` is BLOCKED and the handoff is IDLE. The Planner issues each START handoff with a unique dispatch ID, phase ID/type, Builder ID, allowed files, commands, and permissions.
 - Builder (the one Builder for this project): agent ID `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`; link https://cursor.com/agents/bc-26af2fe0-92fa-5211-810f-eb3a21fea559. Never start a replacement.
 - Human communication and approvals happen only in the Cursor chat with the Planner; the Builder reports through PHASE_LOG.md and the agent channel.
 - Execute phases in order with one Builder. Keep every merged revision usable on GitHub Pages; use safe defaults when SDK configuration or network requests are unavailable.
@@ -21,7 +21,7 @@
   3. `npm run smoke:phase0` serves the built output under the configured repository base path and confirms the home page and referenced local assets return HTTP 200; the workflow uses the same build command and uploads that output to Pages.
   4. After the approved merge/deployment, a follow-up dispatch confirms a successful Actions run for the merged revision and HTTP 200 with the expected home-page content at the public URL; record the URL, revision, and run link in PHASE_LOG.md. Keep Phase 0 open until this passes.
 - **Risks:** Repository/base-path configuration, Pages availability, and Actions permissions may need human setup. The Planner reviews local checks for merge readiness, obtains approval, and dispatches deployment verification within Phase 0; do not mark the phase complete or start Phase 1 before the live check passes.
-- **Review of dispatch `phase-0-build-001` (UTC 2026-11-25):** Builder logged BLOCKED in PHASE_LOG.md at `build/phase-0` commit `45cf208` (code `253badc`); not pushed. Planner independently re-ran in a clean worktree: `npm run typecheck` exit 0 (PASS); `npm run build` exit 0 with static `dist/` (PASS); `npm run smoke:phase0` exit 0, 23 passed (PASS). Scope check: only allowed files changed; no SDKs, forms, backend, or key literals (secret scan clean). Criterion 4 (public deployment verified) is UNVERIFIED. **Phase 0 stays open; Phase 1 not started.** Next: separate push/PR permission, then a named Approve in the Cursor chat before merge, because the workflow deploys on push to `main`.
+- **Review of dispatch `phase-0-build-001` (UTC 2026-11-25):** Builder logged BLOCKED in PHASE_LOG.md at `build/phase-0` commit `45cf2089a3d903f09061d5717b873c39f0037b12` (code `253badcf20a5a232fc5150a33fdab3c7e2251ba8`); not pushed. Planner independently re-ran in a clean worktree: `npm run typecheck` exit 0 (PASS); `npm run build` exit 0 with static `dist/` (PASS); `npm run smoke:phase0` exit 0, 23 passed (PASS). Scope check: only allowed files changed; no SDKs, forms, backend, or key literals (secret scan clean). Criterion 4 (public deployment verified) is UNVERIFIED. **Phase 0 stays open; Phase 1 not started.** Push and PR creation for `build/phase-0` are authorized and held until PR #2 is on `main`. Merge and deployment are not authorized.
 - **Needs human approval to merge?** Yes.
 - **Git permissions for the Builder:** When the Phase 0 handoff grants it, create and switch to `build/phase-0` and commit there. Push, merge, and deployment remain no until separately authorized.
 
