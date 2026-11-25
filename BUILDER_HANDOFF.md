@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 5 — Final verification and demo readiness
-**Dispatch ID:** phase-5-verify-024
+**Dispatch ID:** phase-5-verify-024 (reviewed 2026-11-25T06:25:00Z; criteria 1, 2, 5 local; IDLE)
 **Phase type:** VERIFY (evidence and runbook only; local commits on `build/phase-5`)
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 

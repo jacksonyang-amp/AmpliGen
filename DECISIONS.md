@@ -524,3 +524,26 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Next: after the walkthrough submits one valid demo request and one valid sign-up, re-read the events. The two contract events must appear with the sample visitor's `vis_` user id and `is_synthetic` set.
 - Still not authorized: any change to the Amplitude taxonomy, replay settings, or data. Any synthetic volume beyond the walkthrough limit.
 
+## 2026-11-25T06:25:00Z | Review of dispatch phase-5-verify-024 | ACCEPTED for criteria 1, 2, and 5 (criteria 3 and 4 open)
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: local `build/phase-5` in `/tmp/ampligen-phase5`, on `dece677`, with two commits: `f30dfcd` (`docs/demo-runbook.md`) and `4bf3e26` (`PHASE_LOG.md`, append only). Nothing was pushed, no PR was opened, and nothing was merged or deployed. The Planner confirmed the scope: 2 files, no product, smoke, workflow, or secret change. A secret-pattern scan found no key value in the runbook; the only 32-hex strings in the log are screenshot md5 sums.
+- Criterion 1 (PASS): `npm ci`, `typecheck`, and `build` exit 0. `smoke:phase0` 30, `phase1` 185, `phase2` 132, `phase3` 101, and `phase4` 157 pass with no failures. `bot:dry-run` exits 0 with hash `205798d3580a275d7f1c05f9761d6a2f`. There is no other test script. Pages run 45559034290 succeeded on `dece677`, and the served CSS declares `color-scheme: dark`.
+- Criterion 2 (PASS for the scripted walkthrough, 52 of 52 checks): desktop 1280x800 and mobile 390x844, headless Chrome. Covered: product, pricing, invalid and valid forms, sign-up, welcome, direct navigation and reload on all seven routes, keyboard order, and focus. One valid demo request (desktop) and one valid sign-up (mobile) were submitted, within the two-session limit. No console errors or failed site requests. 32 screenshots are in `/tmp/phase5/`, not committed. One cosmetic item is left unfixed: on the pricing page at 1280 px, the Enterprise secondary button sits about 1 px lower than the primary buttons.
+- Criterion 5 (PASS for the draft): `docs/demo-runbook.md` covers the URL and routes, personas and identity rules, reset steps, secrets by name, integration status, and placeholder analysis links marked UNVERIFIED. The Planner read it and found no claim beyond the evidence.
+- Limits: the Builder had no console access, and the browser was headless Chrome only, with no real phones and no other browsers.
+
+## 2026-11-25T06:25:00Z | Finding: Amplitude read-only check after the walkthrough | RECORDED (criterion 3 PARTIAL)
+- Re-read of AmpliGen (`906170`, `main`) after the walkthrough: `Demo Request Submitted` (volume 1) and `Sign Up Completed` (volume 1) have arrived. Both are `unexpected`, meaning they are NOT in the tracking plan. Each carries these properties: `event_id`, `user_id`, `is_synthetic`, `product_id`, `plan_id`, `entry_point`, `submission_id`, `traffic_source`, and `is_simulated`. The `account_id` property is absent, which matches the two unmapped walkthrough visitors.
+- The SDK's automatic events also arrive as `unexpected`: `[Amplitude] Form Started`, `Form Submitted`, `Element Changed`, `Element Clicked`, `Page Viewed`, `Replay Captured`, `Viewport Content Updated`, `session_start`, `session_end`, and `[Guides-Surveys] Engagement Booted`.
+- Not yet verified: the replay masking itself, the funnel and journey analysis, account mapping (no mapped persona was submitted), and the `is_synthetic` value for the walkthrough submissions.
+- Decisions needed from the human before criterion 3 can pass:
+  1. Adopt the two contract events, and the SDK events the team accepts, into the tracking plan. Adoption is a taxonomy change, which is not authorized here.
+  2. The `is_simulated` property name. It is in the event contract (`docs/custom-events.yml`) and always set to `true`. The site copy no longer says "simulated", so the name is now misleading for the data. Renaming it changes the contract and needs a new BUILD phase, so it is a human choice. Leave it as is until decided.
+- Criterion 4 is still BLOCKED by the missing Statsig entities (DECISIONS.md 2026-11-25T06:19:00Z). The walkthrough's Statsig posts returned 202 in the browser. That shows the client sent them, not that Statsig stored them. The Statsig console was not checked.
+
+## 2026-11-25T06:25:00Z | Result: Phase 5 status | RECORDED
+- Phase 5 is IN PROGRESS. Criteria 1, 2, and 5 PASS as local evidence on `build/phase-5`. The runbook draft and log are NOT pushed; a push or PR needs its own approval.
+- Criterion 3: NOT complete. Events are arriving, but unplanned. Needs the human decisions above and a separate approval for synthetic volume, naming the project, volume, and time window.
+- Criterion 4: BLOCKED until the human creates the three entities or confirms the project of the client key.
+- Next: none authorized. Awaiting the human's decisions and approvals.
+
