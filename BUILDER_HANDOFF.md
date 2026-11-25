@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 3 — Amplitude analytics and replay
-**Dispatch ID:** phase-3-build-015
+**Dispatch ID:** phase-3-build-015 (reviewed; COMPLETE logged; local build/phase-3 at 8127b0d)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
