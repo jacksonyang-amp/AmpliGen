@@ -13,6 +13,7 @@ npm run build         # static production build into dist/
 npm run smoke:phase0  # non-browser check of dist/ under /AmpliGen/ and the deploy workflow
 npm run smoke:phase1  # non-browser check of the five routes against src/content/phase1.fixtures.json
 npm run smoke:phase2  # non-browser check of forms, identity, actions, bot dry-run and built routes
+npm run smoke:phase3  # non-browser check of the Amplitude adapter, sink, config and delivery with a fake SDK
 npm run bot:dry-run   # replay the four bot journeys in memory and print JSON Lines (dry-run only)
 npm run dev           # local dev server at http://localhost:5173/AmpliGen/
 ```
@@ -59,6 +60,26 @@ Identity rules:
 - Actions and stored records contain no email, name or free text.
 
 `npm run bot:dry-run` replays the bot journeys through the same handlers with in-memory storage and a deterministic counter. Dry-run is the only mode; any other argument exits nonzero. `npm run smoke:phase2` requires `npm run build` first and checks the built routes too. Browser behavior of the forms is not covered by these scripts.
+
+## Amplitude analytics and replay (Phase 3)
+
+The site uses the Amplitude Unified SDK (`@amplitude/unified`, the only Amplitude package in `package.json`) through one guarded `initAll()` call in `src/analytics/amplitude-adapter.ts`. All SDK imports live in that file. Everything else uses the small interface in `src/analytics/sdk.ts`, so `npm run smoke:phase3` runs with a fake SDK and never loads the real package.
+
+**Supplying the key.** The key is read only as `import.meta.env.VITE_AMPLITUDE_API_KEY` in `src/analytics/entry.ts`. In CI, `.github/workflows/deploy-pages.yml` maps it from the repository secret `NEXT_PUBLIC_AMPLITUDE_API_KEY`. Use only an Amplitude browser API key; it becomes public in the bundle. Locally you can put `VITE_AMPLITUDE_API_KEY=...` in an untracked `.env.local`. Never commit a key.
+
+**No key, no analytics.** With no key (or an empty one) the SDK is never created or called, no sink is registered, and no request is made. The site behaves as in Phase 2. If setup throws or rejects, the error is caught and the sink is removed.
+
+**What is sent.**
+
+- Two custom actions from `docs/custom-events.yml`, through an `ActionSink` named `amplitude` on the action registry: `Demo Request Submitted` and `Sign Up Completed`, with the properties `src/contract/actions.ts` builds. `event_id` is also sent as `insert_id`. The bot runner and `smoke:phase2` attach no sink.
+- The Amplitude user ID is the contract `user_id` (visitor ID, or the persona ID while a persona is active). It is set at startup, after a persona swap or reset, and again from the action immediately before each `track`. User properties are `is_synthetic` and, only when mapped, `account_id`. When mapped, the user is also put in an `account` group (account reporting needs the Accounts add-on in Amplitude).
+- Autocapture sends page views, sessions and clicks (plus the SDK defaults for attribution and form interactions). Network tracking, web vitals and frustration interactions are off. Autocapture records no text typed into fields.
+- Session Replay records 100% of sessions with no masking of form inputs (human decision, DECISIONS.md 2026-11-25T04:38:00Z). The settings are in `src/analytics/config.ts`. Because the replay is unmasked, it can record a name or email typed into the forms, even though the form pages say nothing is sent. A mask level set in the Amplitude project overrides these local settings.
+- Feature Experiment and Guides and Surveys are initialized by `initAll()` as capabilities only. The Experiment client is configured to fetch no variants and track no exposure, and no guide or survey content exists.
+
+**Before navigation.** Forms fire the action and then navigate. When a sink exists, the form flushes the SDK and waits at most 1000 ms before navigating (`src/analytics/navigation.ts`). With no sink it navigates immediately.
+
+Real delivery to Amplitude, replay capture, account reporting and browser behavior are not covered by `smoke:phase3`.
 
 ## Deployment
 
