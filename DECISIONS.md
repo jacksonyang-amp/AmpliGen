@@ -556,5 +556,10 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Item 4, `is_simulated`: stays as it is in the contract. No rename.
 - Item 5, tracking plan gaps: the human accepts that other items may remain unplanned.
 - Item 6, "I approve synthetic volume": the approval covers the principle only. Volume, time window, and driver were not named. Under the Phase 5 rule, traffic needs an approval naming the project, volume, and time window, so it is NOT yet RESERVED. The Planner has asked the human for those three details. The repository has no live bot mode. The human's own bots are a possible driver, which the human would run.
-- State: item 2 AUTHORIZED at 2026-11-25T06:31:00Z, pending the write.
+- State: item 2 USED at 2026-11-25T06:32:00Z. The Planner ran `manage_amp_events` create (kind event, project `906170`, branch `main`). Both events moved from Unexpected to Live (`isInSchema: true`, `isQueryable: true`), with category `Demo` and the contract descriptions. A re-read confirmed both are live on `main`. The adoption added no properties and changed no other event.
+
+## 2026-11-25T06:33:00Z | Planner status after human decisions | RECORDED
+- Criterion 3 next steps: the two contract events are now in the plan. Funnel, journey, replay masking, and account mapping remain unverified. The "I approve synthetic volume" decision does not yet name the volume, window, or driver, so no traffic is RESERVED. The human has been asked for those three details.
+- Criterion 4 is still BLOCKED. The key is confirmed for the `AmpliGen` project, which has no `pricing_cta_copy`, `metrics_account_breakdown`, or `pricing_notice` entity. The Statsig connection is read-only, so a human must create them in the console. The Planner will read them back once they exist.
+- SDK events remain unplanned by decision. `is_simulated` is unchanged by decision.
 
