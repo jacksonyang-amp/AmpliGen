@@ -362,3 +362,19 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Evidence: `git ls-remote` shows `refs/heads/build/phase-3` at `8127b0dc321ba56d206f8ead26b739afdeaf5705`. PR #17 is open, not a draft, base `main`, head `build/phase-3` at that SHA, auto-merge off, and its body states that merging deploys and starts recording.
 - Result: the push and the one PR are complete. Phase 3 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #17 and head `8127b0dc321ba56d206f8ead26b739afdeaf5705`, with the replay consequence restated.
 - Next: none without the human's merge approval.
+
+## 2026-11-25T05:05:00Z | Approval: merge PR #17 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/17 merge of commit 8127b0dc321ba56d206f8ead26b739afdeaf5705"
+- Source: Cursor chat, 2026-11-24 21:05 America/Los_Angeles, recorded as 2026-11-25T05:05:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/17 (OPEN, not a draft, base `main`, auto-merge off). Reviewed head: `8127b0dc321ba56d206f8ead26b739afdeaf5705`, confirmed on `origin/build/phase-3`.
+- Base moved: `origin/main` is `e8cb9ba`, the squash of PR #16 (planning files only). `git merge-tree --write-tree origin/main origin/build/phase-3` exits 0. The approved head did not change. Do not rebase or add a commit.
+- Authorized action: dispatch `phase-3-merge-017` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #17 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence, accepted with this approval: the merge runs the Pages workflow and redeploys the public site with the Amplitude key. Session Replay then records every session with form fields unmasked, so a name or email typed into the demo-request or sign-up form can be sent to Amplitude while those pages say nothing is sent.
+- State: USED at 2026-11-25T05:06:43Z by dispatch `phase-3-merge-017`. Planner verified: PR #17 merged as merge commit `b982f973d3e5fc93c1e9cb953a3fe61356670317` (parents `e8cb9ba` and `8127b0dc321ba56d206f8ead26b739afdeaf5705`); `origin/main` is that commit.
+
+## 2026-11-25T05:10:00Z | Review of dispatch phase-3-merge-017 | ACCEPTED
+- Handoff set to IDLE before review, as PLANNER.md requires.
+- Evidence: `origin/main` is `b982f973d3e5fc93c1e9cb953a3fe61356670317`, a merge commit whose second parent is the approved `8127b0dc321ba56d206f8ead26b739afdeaf5705`. Pages run 45551295975 (push to `b982f97`) completed with build and deploy both successful. Live HTTP 200 for `/AmpliGen/`, `/product/`, `/pricing/`, `/demo-request/`, `/demo-request/success/`, `/sign-up/`, and `/welcome/`. The deployed main bundle contains the Amplitude Unified SDK and its US endpoints. The key value was not inspected or printed.
+- Result: Phase 3 build and deployment checks PASS. Live Amplitude delivery, replay capture, the Amplitude project's own mask setting, account reporting, and browser form behavior are UNVERIFIED. The SDK's bundled defaults include `fetchOnStart: true`; this build passes `false` for Feature Experiment, which Phase 5 must confirm at runtime.
+- Consequence now live: Session Replay records every session at 100% with form fields unmasked. The form pages say nothing is sent. This is the accepted choice from DECISIONS.md 2026-11-25T04:38:00Z and 2026-11-25T05:05:00Z.
+- Next: Phase 5 VERIFY, which must test the live site with the key before the project is declared complete. Phase 4 is not started and needs its own scope authorization.
