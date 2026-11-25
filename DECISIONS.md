@@ -268,3 +268,16 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Merged at 2026-11-25T03:50:36Z as `2abd6ff9dc6205a884e3ccf0555e452282becf32` (merge commit; `origin/main` now at that SHA). Pinned to head `937b0f52d4921b96b8bd898c88c5a87e8b838609` with `--match-head-commit`, once, no auto-merge.
 - Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45542736922 succeeded on `2abd6ff9dc6205a884e3ccf0555e452282becf32`.
 - Planner post-merge check (2026-11-25T03:52Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>AmpliGen</title>`; `/product/`, `/pricing/`, `/demo-request/`, and `/sign-up/` return HTTP 200 with titles `Product | AmpliGen`, `Pricing | AmpliGen`, `Request a demo | AmpliGen`, and `Sign up | AmpliGen`. The home page contains no `lumora`, `fictional`, or `demo-banner`.
+
+## 2026-11-25T03:57:00Z | Scope authorization: start Phase 2 | RECORDED (scope only; no git action)
+- Exact text: "Start Phase 2"
+- Source: Cursor chat, 2026-11-24 19:56 America/Los_Angeles, recorded as 2026-11-25T03:57:00Z.
+- Authorized: Planner dispatches `phase-2-build-012` (BUILD, simulated conversions and identities) to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. The Builder may create `build/phase-2` from `origin/main`, commit locally there, and run the listed checks.
+- Authorized with it, as a necessary consequence of replacing the placeholder notices with forms: edits to `scripts/smoke-phase1.mjs` and `src/content/phase1.fixtures.json`, limited to (a) the "no form controls" check, which must no longer apply to `/demo-request/` and `/sign-up/`, and (b) the placeholder-notice checks and fixture copy for those two pages. Every other Phase 1 check stays.
+- Not authorized by this entry: push, PR creation, merge, deployment, live bot traffic, or any vendor SDK.
+
+## 2026-11-25T03:57:00Z | Planner selections for Phase 2 | RECORDED
+- Contract basis: `docs/custom-events.yml`, written by the human (commit `91dc9b7`). Phase 2's action and identity contract mirrors its two business actions and its identity properties. This is NOT final approval of the Phase 3 event contract; the Planner will ask the human to approve it before Phase 3.
+- Identity and mapping rules, privacy rules, synthetic labeling, and routes are fixed in PROJECT_PLAN.md Phase 2 and BUILDER_HANDOFF.md. Reason: the plan requires the Planner to define email-to-account mapping, unknown-domain behavior, and synthetic labeling before dispatch.
+- Departure from a first draft: user IDs are not derived from an email hash. The contract file says `user_id` is a stable visitor ID preserved through sign-up, which is also safer.
+- Scope check: no excluded feature is added. There is no real authentication, no password field, no backend, no lead delivery, and no payments.
