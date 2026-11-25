@@ -80,8 +80,8 @@ async function checkServedSite(origin) {
     'home page content type is text/html',
     (home.headers.get('content-type') ?? '').startsWith('text/html'),
   );
-  record('home page shows API Platform Demo title', html.includes('API Platform Demo'));
-  record('home page labels itself as a fictional demo', html.includes('Fictional demo'));
+  record('home page shows AmpliGen title', html.includes('<title>AmpliGen</title>'));
+  record('home page includes the AmpliGen brand', html.includes('<span class="brand-name">AmpliGen</span>'));
   record(
     'home page has in-page navigation targets',
     html.includes('href="#overview"') && html.includes('id="capabilities"') && html.includes('id="about"'),

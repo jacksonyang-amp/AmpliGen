@@ -1,0 +1,82 @@
+{
+  "platformName": "AmpliGen",
+  "footer": "AmpliGen. Product details and pricing shown on this site are illustrative.",
+  "basePath": "/AmpliGen/",
+  "nav": [
+    { "label": "Home", "href": "/AmpliGen/" },
+    { "label": "Product", "href": "/AmpliGen/product/" },
+    { "label": "Pricing", "href": "/AmpliGen/pricing/" },
+    { "label": "Demo request", "href": "/AmpliGen/demo-request/" },
+    { "label": "Sign up", "href": "/AmpliGen/sign-up/" }
+  ],
+  "routes": ["/AmpliGen/", "/AmpliGen/product/", "/AmpliGen/pricing/", "/AmpliGen/demo-request/", "/AmpliGen/sign-up/"],
+  "home": {
+    "brand": "AmpliGen",
+    "title": "AmpliGen",
+    "eyebrow": "Static site",
+    "lede": "A B2B API platform with three products. Explore the products, compare pricing, or request a demo.",
+    "about": {
+      "navLabel": "About this site",
+      "heading": "About this site",
+      "copy": "This site contains no real customers, leads, accounts, or services, and it does not send data to any backend."
+    },
+    "forbiddenText": "will be added in later phases",
+    "ctas": [
+      { "label": "Explore products", "href": "/AmpliGen/product/" },
+      { "label": "View pricing", "href": "/AmpliGen/pricing/" }
+    ]
+  },
+  "products": [
+    {
+      "name": "AmpliGen Gateway",
+      "description": "Route, authenticate, and rate-limit API traffic.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    },
+    {
+      "name": "AmpliGen Metrics",
+      "description": "See usage and conversion by account and team.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    },
+    {
+      "name": "AmpliGen Connect",
+      "description": "Send webhooks and connect to prebuilt business tools.",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    }
+  ],
+  "productPageLede": "Three products that work together to run and measure API programs.",
+  "productPageCtas": [
+    { "label": "Request a demo", "href": "/AmpliGen/demo-request/" },
+    { "label": "View pricing", "href": "/AmpliGen/pricing/" }
+  ],
+  "pricingLabel": "Illustrative pricing. Not offered.",
+  "plans": [
+    {
+      "name": "Starter",
+      "price": "$49 per month",
+      "ctaLabel": "Start a trial",
+      "ctaHref": "/AmpliGen/sign-up/"
+    },
+    {
+      "name": "Growth",
+      "price": "$249 per month",
+      "ctaLabel": "Start a trial",
+      "ctaHref": "/AmpliGen/sign-up/"
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom pricing",
+      "ctaLabel": "Request a demo",
+      "ctaHref": "/AmpliGen/demo-request/"
+    }
+  ],
+  "demoRequest": {
+    "copy": "Demo requests are not connected yet. This page is a placeholder, and nothing you enter is sent anywhere."
+  },
+  "signUp": {
+    "copy": "Mock sign-up is not available yet. No account is created.",
+    "backLink": { "label": "Back to pricing", "href": "/AmpliGen/pricing/" }
+  }
+}

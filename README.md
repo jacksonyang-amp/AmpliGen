@@ -1,6 +1,6 @@
-# API Platform Demo
+# AmpliGen
 
-A fictional B2B API and software platform demo. It is a static site with repository-held mock data and no backend. All companies, products, and data are simulated.
+A B2B API and software platform site. It is a static site with repository-held mock data and no backend.
 
 ## Local commands
 
@@ -11,12 +11,27 @@ npm ci                # install locked dependencies
 npm run typecheck     # TypeScript type check (tsc --noEmit)
 npm run build         # static production build into dist/
 npm run smoke:phase0  # non-browser check of dist/ under /AmpliGen/ and the deploy workflow
+npm run smoke:phase1  # non-browser check of the five routes against src/content/phase1.fixtures.json
 npm run dev           # local dev server at http://localhost:5173/AmpliGen/
 ```
 
 The Vite base path is `/AmpliGen/` (see `vite.config.ts`), which matches the GitHub project Pages URL for this repository.
 
 `npm run smoke:phase0` requires `npm run build` to have run first. It serves `dist/` on a temporary local port, checks that the home page and its local assets return HTTP 200 with expected content types, and checks `.github/workflows/deploy-pages.yml` for the build command, the `dist` upload path, and the two secret-to-Vite mappings. It prints check names only, never secret values.
+
+## Routes
+
+Each route is its own static HTML entry registered in `vite.config.ts` (`build.rollupOptions.input`) and served under the `/AmpliGen/` base path.
+
+| Route | Source | Purpose |
+| --- | --- | --- |
+| `/AmpliGen/` | `index.html` | Home page |
+| `/AmpliGen/product/` | `product/index.html` | AmpliGen Gateway, Metrics, and Connect products |
+| `/AmpliGen/pricing/` | `pricing/index.html` | Pricing with demo and trial CTAs |
+| `/AmpliGen/demo-request/` | `demo-request/index.html` | Placeholder notice; no form, nothing is sent |
+| `/AmpliGen/sign-up/` | `sign-up/index.html` | Placeholder notice; no account is created |
+
+Product names, plan prices, CTA labels and destinations, and the temporary copy live in `src/content/phase1.fixtures.json`. `npm run smoke:phase1` compares the built HTML against that file, so edit the fixture and the page together. Like `smoke:phase0`, it requires `npm run build` to have run first.
 
 ## Deployment
 
