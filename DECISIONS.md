@@ -119,3 +119,13 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - The cherry-picked commits get new SHAs, so the original approval for `45cf208` does not cover them. Fresh approval is required (PLANNER.md: “Require fresh approval for a changed scope or commit”).
 - Still not authorized: merge, deployment, and any merge of this proposed Phase 0 PR. A merge to `main` deploys the site via `.github/workflows/deploy-pages.yml`.
 - Required approval text (named Approve, one PR-or-branch, one action): to be issued in chat after the proposed branch exists and its head SHA is reported.
+
+## 2026-11-25T03:08:00Z | Approval: push Phase 0 cherry-pick branch and open one PR | RESERVED
+- Source timestamp: 2026-11-24 19:08 America/Los_Angeles, recorded as 2026-11-25T03:08:00Z.
+- Exact text: `I already merged PR #4, Approve pushing the Phase 0 cherry-pick branch and opening one PR into main, no merge`
+- Confirmed: PR #4 merged as `754e818ff77fb0c844bda2900390413ec8943bc8` (2026-11-25T03:07:38Z). `main` contains no `node_modules/` or `dist/`.
+- Approval scope: this is an action approval for one new branch and one new PR. It names no existing PR, so the PR binding is to the new branch. Merge and deployment are NOT approved.
+- Action: from `origin/main` at `754e818`, cherry-pick `253badcf20a5a232fc5150a33fdab3c7e2251ba8` then `45cf2089a3d903f09061d5717b873c39f0037b12` onto branch `cursor/phase-0-scaffold-fc41`; run the Phase 0 BUILD checks; push that branch; open exactly one PR into `main`.
+- Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-0-push-002`.
+- Reviewed commit: none existed at approval. The head SHA the Builder reports is not yet approved for merge. A later merge needs a named Approve bound to that SHA.
+- State: RESERVED for dispatch `phase-0-push-002`. Becomes USED after the Builder reports the push and PR.
