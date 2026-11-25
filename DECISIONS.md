@@ -263,3 +263,8 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Authorized action: dispatch `phase-1-merge-011` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #12 once, as a merge commit, pinned to that head. Nothing else.
 - Consequence: the merge runs the Pages workflow and redeploys the public site with the AmpliGen pages.
 - State: RESERVED. Becomes USED after the Builder reports the merge commit and Pages run.
+
+## 2026-11-25T03:52:00Z | Approval: merge PR #12 | USED
+- Merged at 2026-11-25T03:50:36Z as `2abd6ff9dc6205a884e3ccf0555e452282becf32` (merge commit; `origin/main` now at that SHA). Pinned to head `937b0f52d4921b96b8bd898c88c5a87e8b838609` with `--match-head-commit`, once, no auto-merge.
+- Pages run https://github.com/jacksonyang-amp/AmpliGen/actions/runs/45542736922 succeeded on `2abd6ff9dc6205a884e3ccf0555e452282becf32`.
+- Planner post-merge check (2026-11-25T03:52Z): https://jacksonyang-amp.github.io/AmpliGen/ returns HTTP 200 with `<title>AmpliGen</title>`; `/product/`, `/pricing/`, `/demo-request/`, and `/sign-up/` return HTTP 200 with titles `Product | AmpliGen`, `Pricing | AmpliGen`, `Request a demo | AmpliGen`, and `Sign up | AmpliGen`. The home page contains no `lumora`, `fictional`, or `demo-banner`.

@@ -1,7 +1,7 @@
 # BUILDER_HANDOFF
-**Status:** START
+**Status:** IDLE
 **Phase:** 1 — Product and pricing pages (merge only)
-**Dispatch ID:** phase-1-merge-011
+**Dispatch ID:** phase-1-merge-011 (complete; PR #12 merged)
 **Phase type:** BUILD
 **Builder agent ID:** bc-26af2fe0-92fa-5211-810f-eb3a21fea559
 
