@@ -408,3 +408,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Privacy change to restate at merge: with a key, the deployed site sends the user ID, the two business events (with `event_id`, `user_id`, `is_synthetic`, `account_id` when mapped, and product and plan properties), and the exposures to Statsig. The Statsig client also stores a device ID in `localStorage`, sends its own diagnostics, attaches the page URL, and exposes the request IP and user agent to Statsig servers. The form and welcome pages still say nothing is sent. No email, name, or free text is sent by this repository.
 - UNVERIFIED: live Statsig assignment; exposure forwarding to Amplitude through the console integration; delivery of the two events to Statsig; that the three console entities exist; that `NEXT_PUBLIC_STATSIG_CLIENT_KEY` is a valid browser client key; browser behavior, including the label switch after load and the flush before navigation.
 - Next: request the human's push and PR approval bound to `0ad165dc71a471c03fde776b9f9098110d830389`. No such approval is recorded yet.
+
+## 2026-11-25T05:42:00Z | Approval: push build/phase-4 and open one PR | RESERVED
+- Exact text: "Approve pushing build/phase-4 at commit 0ad165dc71a471c03fde776b9f9098110d830389 and opening one PR into main, no merge"
+- Source: Cursor chat, 2026-11-24 21:39 America/Los_Angeles, recorded as 2026-11-25T05:42:00Z.
+- Reviewed commit: `0ad165dc71a471c03fde776b9f9098110d830389` (local branch `build/phase-4` head, verified by the Planner before this record). Review: Phase 4 criteria 1-3 PASS (DECISIONS.md 2026-11-25T05:40:00Z).
+- Authorized action: dispatch `phase-4-push-019` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Push `build/phase-4` once, at that commit, to `origin` as `build/phase-4`, and open exactly one PR into `main`. No merge.
+- Consequence: a push to a non-main branch does not deploy. Merging the PR later re-runs the Pages workflow and redeploys the public site. If the Statsig client key is present, that deploy initializes Statsig and sends the two business actions and the exposures. That merge is not approved.
+- State: RESERVED for dispatch `phase-4-push-019`. Not yet USED.
+- Still not authorized: merging the resulting PR, any new commit, any force-push, deployment, or live verification.
