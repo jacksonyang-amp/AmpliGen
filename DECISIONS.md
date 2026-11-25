@@ -230,3 +230,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Evidence: Planner clean-worktree run at `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`: typecheck 0, build 0, smoke:phase1 0 (105 passed), smoke:phase0 0 (28 passed). Home page title, brand, CTAs, and absence of the stale sentence checked in `dist/index.html`. Changed files: index.html, fixture, smoke:phase1 script, PHASE_LOG.md, plus Phase 1 files from 007.
 - Result: Phase 1 criteria 1-3 PASS on local `build/phase-1`. Phase 1 is NOT COMPLETE: push, PR, merge, and deployment are not yet authorized.
 - Next: request the human's push and PR approval bound to `3a1a163a624d050fbb9906c4e4a1b4f59c286ba8`. No approval is recorded yet.
+
+## 2026-11-25T03:43:00Z | Human instruction: rename the product and remove fictional/demo labels | AUTHORIZED (content only; no git action)
+- Exact text: "This all looks good, but change "Lumora" to "AmpliGen" - that should be the name of the product moving forward. I also don't want any references on the site to it being "fictional" or "demo" either"
+- Source: Cursor chat, 2026-11-24 19:43 America/Los_Angeles, recorded as 2026-11-25T03:43:00Z.
+- Authorized: dispatch `phase-1-fix-009` renames the product to AmpliGen across the Phase 1 site, removes the "Fictional demo" banner, and removes "fictional" and "demo" wording that describes the site or its content.
+- Authorized edit of `scripts/smoke-phase0.mjs`, lines 83-84 only, because they assert the removed wording. Its other checks are unchanged.
+- Kept (Planner interpretation, to be reported to the human): the "Demo request" nav label, the `/demo-request/` route, "Request a demo" CTAs, and the demo-request notice. They name a request feature rather than describing the site. The sign-up notice keeps "Mock", as the brief requires simulated sign-up to be labeled.
+- Not authorized by this entry: any change to `PROJECT_BRIEF.md`, which still describes the platform as fictional; push, PR, merge, or deployment.
+- Builder: `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Dispatch: `phase-1-fix-009`. Local commits on `build/phase-1` only.
