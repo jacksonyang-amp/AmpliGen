@@ -362,3 +362,12 @@ The attached brief was supplied as `PROJECT_BRIEF.md`.
 - Evidence: `git ls-remote` shows `refs/heads/build/phase-3` at `8127b0dc321ba56d206f8ead26b739afdeaf5705`. PR #17 is open, not a draft, base `main`, head `build/phase-3` at that SHA, auto-merge off, and its body states that merging deploys and starts recording.
 - Result: the push and the one PR are complete. Phase 3 remains BUILD REVIEWED, not COMPLETE. Merge needs its own RESERVED approval naming PR #17 and head `8127b0dc321ba56d206f8ead26b739afdeaf5705`, with the replay consequence restated.
 - Next: none without the human's merge approval.
+
+## 2026-11-25T05:05:00Z | Approval: merge PR #17 | RESERVED
+- Exact text: "Approve https://github.com/jacksonyang-amp/AmpliGen/pull/17 merge of commit 8127b0dc321ba56d206f8ead26b739afdeaf5705"
+- Source: Cursor chat, 2026-11-24 21:05 America/Los_Angeles, recorded as 2026-11-25T05:05:00Z.
+- PR: https://github.com/jacksonyang-amp/AmpliGen/pull/17 (OPEN, not a draft, base `main`, auto-merge off). Reviewed head: `8127b0dc321ba56d206f8ead26b739afdeaf5705`, confirmed on `origin/build/phase-3`.
+- Base moved: `origin/main` is `e8cb9ba`, the squash of PR #16 (planning files only). `git merge-tree --write-tree origin/main origin/build/phase-3` exits 0. The approved head did not change. Do not rebase or add a commit.
+- Authorized action: dispatch `phase-3-merge-017` to Builder `bc-26af2fe0-92fa-5211-810f-eb3a21fea559`. Merge PR #17 once, as a merge commit, pinned to that head. Nothing else.
+- Consequence, accepted with this approval: the merge runs the Pages workflow and redeploys the public site with the Amplitude key. Session Replay then records every session with form fields unmasked, so a name or email typed into the demo-request or sign-up form can be sent to Amplitude while those pages say nothing is sent.
+- State: RESERVED for dispatch `phase-3-merge-017`. Not yet USED.
