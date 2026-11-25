@@ -1,3 +1,4 @@
+import { getAnalytics } from '../analytics/handle.ts';
 import type { FieldErrorCode, FieldErrors, FormField } from '../contract/validation.ts';
 import { activatePersona, readIdentity, resetSampleVisitor, submitDemoRequest, submitSignUp } from '../flow/handlers.ts';
 import { PERSONAS, findPersona } from '../fixtures/personas.ts';
@@ -99,13 +100,18 @@ export function initForm(kind: FormKind): void {
     clearErrors();
     if (personaSelect.value === '') {
       resetSampleVisitor(ctx);
+      getAnalytics().syncIdentity();
       return;
     }
-    if (activatePersona(ctx, personaSelect.value)) applyPersona(personaSelect.value);
+    if (activatePersona(ctx, personaSelect.value)) {
+      applyPersona(personaSelect.value);
+      getAnalytics().syncIdentity();
+    }
   });
 
   resetButton.addEventListener('click', () => {
     resetSampleVisitor(ctx);
+    getAnalytics().syncIdentity();
     form.reset();
     personaSelect.value = '';
     clearErrors();
@@ -131,7 +137,7 @@ export function initForm(kind: FormKind): void {
     clearErrors();
     submitting = true;
     submitButton.disabled = true;
-    window.location.assign(result.destination);
+    getAnalytics().navigateAfterFlush(() => window.location.assign(result.destination));
   });
 
   form.hidden = false;
@@ -145,6 +151,7 @@ export function initResetOnly(): void {
   const ctx = getBrowserContext();
   resetButton.addEventListener('click', () => {
     resetSampleVisitor(ctx);
+    getAnalytics().syncIdentity();
     if (status) status.textContent = 'Sample visitor reset.';
   });
 }

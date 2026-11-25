@@ -566,23 +566,39 @@ async function listFiles(dir) {
 
 async function checkSources() {
   const sourceFiles = (await listFiles(join(ROOT, 'src'))).filter((file) => /\.(ts|js)$/.test(file));
+  const ANALYTICS_DIR = join(ROOT, 'src', 'analytics') + sep;
+  const ALLOWED_KEY_READ = 'import.meta.env.VITE_AMPLITUDE_API_KEY';
   const banned = [
-    ['fetch call', /\bfetch\s*\(/],
-    ['XMLHttpRequest', /XMLHttpRequest/],
-    ['sendBeacon', /sendBeacon/],
-    ['WebSocket', /WebSocket/],
-    ['EventSource', /EventSource/],
-    ['Amplitude or Statsig', /amplitude|statsig/i],
-    ['initAll', /initAll/],
-    ['password', /password/i],
-    ['environment access', /process\.env|import\.meta\.env/],
+    ['fetch call', /\bfetch\s*\(/, false],
+    ['XMLHttpRequest', /XMLHttpRequest/, false],
+    ['sendBeacon', /sendBeacon/, false],
+    ['WebSocket', /WebSocket/, false],
+    ['EventSource', /EventSource/, false],
+    ['Amplitude', /amplitude/i, true],
+    ['Statsig', /statsig/i, false],
+    ['initAll', /initAll/, true],
+    ['password', /password/i, false],
+    ['environment access', /process\.env|import\.meta\.env/, true],
   ];
   const offenders = [];
   for (const file of sourceFiles) {
     const text = await readFile(file, 'utf8');
-    for (const [label, pattern] of banned) if (pattern.test(text)) offenders.push(`${file.replace(ROOT + sep, '')}: ${label}`);
+    const inAnalytics = file.startsWith(ANALYTICS_DIR);
+    for (const [label, pattern, allowedInAnalytics] of banned) {
+      if (allowedInAnalytics && inAnalytics) {
+        if (label === 'environment access' && pattern.test(text.split(ALLOWED_KEY_READ).join(''))) {
+          offenders.push(`${file.replace(ROOT + sep, '')}: ${label} beyond ${ALLOWED_KEY_READ}`);
+        }
+        continue;
+      }
+      if (pattern.test(text)) offenders.push(`${file.replace(ROOT + sep, '')}: ${label}`);
+    }
   }
-  record('src/ has no network API, SDK, password or environment access', sourceFiles.length > 0 && offenders.length === 0, offenders.join('; '));
+  record(
+    'src/ has no network API, Statsig, password or environment access (Amplitude, initAll and the one key read only inside src/analytics/)',
+    sourceFiles.length > 0 && offenders.length === 0,
+    offenders.join('; '),
+  );
 
   const runner = await readFile(BOT_RUNNER, 'utf8');
   record(
@@ -591,7 +607,10 @@ async function checkSources() {
   );
 
   const manifest = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
-  record('package.json has no runtime dependencies', Object.keys(manifest.dependencies ?? {}).length === 0);
+  record(
+    'the only runtime dependency in package.json is @amplitude/unified',
+    same(Object.keys(manifest.dependencies ?? {}), ['@amplitude/unified']),
+  );
   record(
     'package.json dev dependencies are only typescript and vite',
     same(Object.keys(manifest.devDependencies ?? {}).sort(), ['typescript', 'vite']),
